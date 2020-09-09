@@ -5,7 +5,7 @@ export default function Index() {
     <div className="flex flex-col">
       <div className="flex justify-between">
         <div className="flex">=</div>
-        <div className="flex">the NYtimes</div>
+        <div className="flex">the NY times</div>
         <div className="flex">P</div>
       </div>
       <div className="flex justify-between">
