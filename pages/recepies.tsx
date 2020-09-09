@@ -15,7 +15,7 @@ export default function Recepti(props: apiRecepiesI) {
             className="border border-gray-400 p-3 rounded-lg text-lg"
             placeholder="search..."
             onChange={async (e) => {
-              setReceipes(await apiRecepiesSearch(e.target.value));
+              setReceipes(await apiRecepiesSearch({ value: e.target.value }));
             }}
           />
         </div>
