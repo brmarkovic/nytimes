@@ -5,7 +5,7 @@ export interface apiRecepiesI {
 }
 
 export default async (req, res) => {
-  const output: apiRecepiesI = {
+  const output = {
     title: 'Search recepies',
   };
   res.status(200).json(output);
@@ -16,7 +16,6 @@ export async function apiRecepies() {
   const [err, data] = await Axios.get(url)
     .then((r) => [null, r?.data])
     .catch((e) => [e]);
-
   const output = err ? {} : data;
 
   return output;

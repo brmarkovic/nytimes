@@ -17,8 +17,7 @@ export default async (req, res) => {
   const [err, data] = await Axios.get(`http://www.recipepuppy.com/api/?q=${q}`)
     .then((r) => [null, r?.data])
     .catch((e) => [e]);
-
-  const output: apiRecepiesSearchI = err ? {} : data;
+  const output = err ? {} : data;
 
   res.status(200).json(output);
 };
@@ -29,7 +28,7 @@ export async function apiRecepiesSearch({ value }: { value: string }) {
   const [err, data] = await Axios.get(url)
     .then((r) => [null, r?.data])
     .catch((e) => [e]);
-
   const output = err ? {} : data;
+
   return output;
 }
