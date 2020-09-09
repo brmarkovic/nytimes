@@ -50,6 +50,8 @@ export default function Recepti(props: apiRecepiesI) {
 
 export async function getServerSideProps() {
   return {
-    props: await apiRecepies(),
+    props: {
+      ...(await apiRecepies()),
+    },
   };
 }
