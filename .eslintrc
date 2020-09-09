@@ -1,0 +1,45 @@
+{
+  "root": true,
+  "parser": "babel-eslint",
+  "plugins": [ "prettier"],
+  "extends": [
+    "airbnb",
+    "prettier",
+    "prettier/react"
+  ],
+  "env": {
+    "browser": true,
+    "node": true,
+    "jquery": true
+  },
+  "rules": {
+    "consistent-return": 0,
+    "global-require": 0,
+    "import/extensions": 0,
+    "import/prefer-default-export": 0,
+    "jsx-a11y/href-no-hash": 0,
+    "no-underscore-dangle": 0,
+    "object-curly-spacing": ["error", "always"],
+    "react/require-default-props": 0,
+    "react/jsx-filename-extension": 0,
+    "react/no-danger": 0,
+    "no-restricted-syntax": [0, "ForOfStatement"],
+    "no-await-in-loop": 0,
+    "import/no-named-as-default": 0,
+    "import/named": 0,
+    "import/no-unresolved": "off",
+    "camelcase": 0,
+    "no-nested-ternary": 0,
+    "no-unused-vars": 1,
+    "no-param-reassign": ["error", { "props": true, "ignorePropertyModificationsFor": ["c"] }], // xstate/immer context assign named as c is allowed
+    "prettier/prettier": [
+      "error",
+      {
+        "singleQuote": true,
+        "semi": true,
+        "trailingComma": "all",
+        "printWidth": 120
+      }
+    ]
+  }
+}

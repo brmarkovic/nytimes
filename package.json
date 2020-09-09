@@ -1,15 +1,66 @@
 {
   "name": "nextapp1",
+  "resolutions": {
+    "webpack": "^5.0.0-beta.28"
+  },
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "extensions": "code --install-extension bradlc.vscode-tailwindcss && code --install-extension heybourn.headwind && code --install-extension dbaeumer.vscode-eslint && code --install-extension christian-kohler.npm-intellisense && code --install-extension christian-kohler.path-intellisense && code --install-extension chakrounanas.turbo-console-log",
+    "test": "jest --watch",
     "dev": "next dev",
     "build": "next build",
     "start": "next start"
   },
   "dependencies": {
+    "@next/bundle-analyzer": "9.5.3",
+    "@xstate/immer": "0.1.0",
+    "@xstate/react": "0.8.1",
+    "antd": "4.6.3",
+    "axios": "0.20.0",
+    "date-fns": "2.16.1",
+    "deep-object-diff": "1.1.0",
+    "flatted": "3.0.4",
+    "formidable": "1.2.2",
+    "formik": "2.1.5",
+    "framer-motion": "2.6.8",
+    "immer": "7.0.8",
+    "joi": "17.2.1",
+    "jsonwebtoken": "8.5.1",
+    "nanoid": "3.1.12",
     "next": "9.5.3",
+    "next-seo": "4.7.3",
+    "pouchdb": "7.2.2",
     "react": "16.13.1",
-    "react-dom": "16.13.1"
+    "react-dom": "16.13.1",
+    "recharts": "1.8.5",
+    "swr": "0.3.2",
+    "tailwindcss": "1.8.5",
+    "use-debounce": "4.0.0",
+    "xstate": "4.13.0"
+  },
+  "devDependencies": {
+    "@fullhuman/postcss-purgecss": "2.3.0",
+    "@testing-library/jest-dom": "5.11.4",
+    "@testing-library/react": "11.0.2",
+    "@types/jest": "26.0.13",
+    "@types/node": "14.6.4",
+    "@types/react": "16.9.49",
+    "babel-eslint": "10.1.0",
+    "babel-jest": "26.3.0",
+    "eslint": "7.8.1",
+    "eslint-config-airbnb": "18.2.0",
+    "eslint-config-prettier": "6.11.0",
+    "eslint-plugin-import": "2.22.0",
+    "eslint-plugin-jsx-a11y": "6.3.1",
+    "eslint-plugin-prettier": "3.1.4",
+    "eslint-plugin-react": "7.20.6",
+    "eslint-plugin-react-hooks": "4.1.0",
+    "jest": "26.4.2",
+    "postcss-preset-env": "6.7.0",
+    "prettier": "2.1.1",
+    "prettier-eslint": "11.0.0",
+    "react-test-renderer": "16.13.1",
+    "ts-jest": "26.3.0"
   }
 }
