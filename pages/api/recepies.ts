@@ -4,7 +4,7 @@ export interface apiRecepiesI {
   title: string;
 }
 export async function apiRecepies(): Promise<apiRecepiesI> {
-  const apiServer = process.env.NEXT_PUBLIC_API_SERVER_ROOT || 'http://localhost:3000';
+  const apiServer = process.env.NEXT_PUBLIC_API_SERVER || 'http://localhost:3000';
   const url = `${apiServer}/api/recepies`;
   const [err, data] = await Axios.get(url)
     .then((r) => [null, r?.data])
@@ -26,7 +26,7 @@ export interface apiRecepiesSearchI {
   }[];
 }
 export async function apiRecepiesSearch({ value }: { value: string }): Promise<apiRecepiesSearchI> {
-  const apiServer = process.env.NEXT_PUBLIC_API_SERVER_ROOT || 'http://localhost:3000';
+  const apiServer = process.env.NEXT_PUBLIC_API_SERVER || 'http://localhost:3000';
   const valuePlus = value?.split(' ').join('+');
   const url = `${apiServer}/api/recepies?search=${valuePlus}`;
   const [err, data] = await Axios.get(url)
