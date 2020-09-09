@@ -5,6 +5,7 @@
 
 # Install programs on local machine
 
+- install nodejs from `https://nodejs.org/en/download/`
 - install vscode from `https://code.visualstudio.com/download`
 - install git from `https://git-scm.com/downloads`
 - open terminal
