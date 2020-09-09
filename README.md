@@ -12,6 +12,7 @@
 - open terminal
 - `git config --global user.name "FIRST_NAME LAST_NAME"` - to set name
 - `git config --global user.email "MY_NAME@gmail.com"` - to set email
+- create `a` folder next to Desktop folder, just goto terminal and `mkdir a` and `cd a`
 
 
 # Link local machine to github account
