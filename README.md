@@ -7,6 +7,7 @@
 
 - install nodejs from `https://nodejs.org/en/download/`
 - install vscode from `https://code.visualstudio.com/download`
+  - start editor to see if it works, if not run from terminal `code --disable-gpu`
 - install git from `https://git-scm.com/downloads`
 - open terminal
 - `git config --global user.name "FIRST_NAME LAST_NAME"` - to set name
