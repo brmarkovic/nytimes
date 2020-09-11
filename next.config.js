@@ -1,6 +1,6 @@
-const withBundleAnalyzer = require('@next/bundle-analyzer')({
-  enabled: process.env.ANALYZE === 'true',
-});
-module.exports = withBundleAnalyzer({
-  // basePath: '/docs',
-});
+module.exports = {
+  typescript: {
+    ignoreBuildErrors: true,
+    ignoreDevErrors: true
+  }
+};

@@ -1,0 +1,39 @@
+p - padding
+px - padding x osa
+py - padding y osa
+m - margin
+mx
+my
+
+border    - sve 4 strane
+border-b  - samo dole
+border-t  - samo gore
+border-l  - samo levo
+border-r  - samo desno
+border-BOJA-BROJ - farbanje bordera
+
+text-...
+font-...
+
+font-sans (deafult) - moderno
+font-serif - starinski
+font-mono - programiranje
+
+tracking-.. - horizontalni razmak karaktera
+leading-.. - vertikalini razmak karaktera
+
+flex
+flex-col
+justify-start - slozi nalevo (x-osa na flex, y-osa na flex-col)
+justify-between - razmakni ravnomerno
+justify-end - slozi nadesno
+items-center - centriraj
+
+****
+flex +
+justify-start   |123                   |
+justify-between |1         2          3|
+justify-end     |                   123|
++
+items-center
+****
