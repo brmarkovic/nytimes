@@ -5,7 +5,7 @@ export default function NYTimesMenu() {
     <div>
       <div className="flex justify-between">
         <div className="flex">=</div>
-        <div className="flex font-bold">the NY times</div>
+        <div className="flex text-xl font-bold">the NY times</div>
         <div className="flex">P</div>
       </div>
       <div className="flex justify-between">
