@@ -1,4 +1,4 @@
-import CNNHeader  from '@/parts/CNNHeader';
+import CNNHeader from '@/parts/CNNHeader';
 import React from 'react';
 
 export default function Article1() {
@@ -6,8 +6,8 @@ export default function Article1() {
     <div>
       <CNNHeader />
       <div>
-      <div className="mt-2 font-sans text-4xl font-bold leading-7 text-center">
-          Trump mocks social distancing with dngerous rally
+        <div className="mt-2 font-sans text-4xl font-bold leading-7 text-center ">
+          Trump mocks social distancing with dangerous rally
         </div>
         <div className="p-2 mt-3">
           <img
@@ -23,6 +23,6 @@ export default function Article1() {
           </div>
         </div>
       </div>
-     
-      </div>
-      }
+    </div>
+  );
+}
