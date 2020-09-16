@@ -1,4 +1,4 @@
-import CNNHeader from '@/parts/CNNHeader';
+import CNNHeader from 'parts/CNNHeader';
 import React from 'react';
 
 export default function Article2() {

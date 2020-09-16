@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import CNNHeader from '@/parts/CNNHeader';
+import CNNHeader from 'parts/CNNHeader';
 import Link from 'next/link';
 import React from 'react';
 
