@@ -24,8 +24,14 @@ export default function Article1() {
         </div>
       </div>
       <div className="flex m-2 border-t-2 border-gray-500">
-        <div className="w-1/4 px-2 text-xl font-bold">Opinion:</div>
-        <div className="text-xl text-gray-600">Trumps town hall didn't go well</div>
+        <div className="flex w-1/6 px-2 text-xl font-bold ">Opinion:</div>
+        <div className="flex w-5/6 px-3 text-xl text-gray-600 ">Trumps town hall didn't go well</div>
+      </div>
+      <div className="flex m-2 border-t-2 border-gray-500">
+        <div className="flex px-2 text-lg">
+          {' '}
+          <font color="red"> LIVE UPDATES</font> CDC rols backcontroversial testing
+        </div>
       </div>
     </div>
   );
