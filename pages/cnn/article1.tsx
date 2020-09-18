@@ -23,6 +23,10 @@ export default function Article1() {
           </div>
         </div>
       </div>
+      <div className="flex m-2 border-t-2 border-gray-500">
+        <div className="w-1/4 px-2 text-xl font-bold">Opinion:</div>
+        <div className="text-xl text-gray-600">Trumps town hall didn't go well</div>
+      </div>
     </div>
   );
 }
