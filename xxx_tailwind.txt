@@ -1,3 +1,7 @@
+<div> - struktura
+<span> - stilizazija
+
+
 p - padding
 px - padding x osa
 py - padding y osa

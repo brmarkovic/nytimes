@@ -13,14 +13,14 @@ export default function B92Menu() {
         </div>
         <div className="flex justify-end w-1/6 text-4xl font-bold"> = </div>
       </div>
-      <div className="flex justify-between px-2 py-3 text-blue-900 bg-gray-300">
-        <div>NOVO</div>
+      <div className="flex justify-between px-2 text-blue-900 bg-gray-300">
+        <div className="p-2">NOVO</div>
         <div>
           <Link href="/b92/info">
             <a>INFO</a>
           </Link>
         </div>
-        <div className="flex px-2 text-white bg-orange-600 ">KORONAVIRUS</div>
+        <div className="flex p-2 text-white bg-orange-600 ">KORONAVIRUS</div>
         <div>
           <Link href="/b92/sport">
             <a>SPORT</a>

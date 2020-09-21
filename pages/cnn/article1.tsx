@@ -12,9 +12,11 @@ export default function Article1() {
         </div>
         <div className="p-2 mt-3">
           <img
+            className="z-10"
             src="https://cdn.cnn.com/cnnnext/dam/assets/200914095325-02-trump-rally-nevada-exlarge-tease.jpg"
             alt="trump"
           />
+          <div className="z-20 flex p-2 -mt-10 font-bold text-red-500 bg-blue-600">Trump and voters!</div>
         </div>
         <div className="flex pb-2 ml-2 ">
           <div className="flex w-1/6 text-xl font-bold flex- coll">Analysis:</div>
@@ -31,7 +33,7 @@ export default function Article1() {
       <div className="flex m-2 border-t-2 border-gray-500">
         <div className="flex px-2 text-lg">
           {' '}
-          <font color="red"> LIVE UPDATES</font> CDC rols backcontroversial testing
+          <span className="pr-2 font-bold text-red-500"> LIVE UPDATES</span> CDC rols backcontroversial testing
         </div>
       </div>
     </div>
