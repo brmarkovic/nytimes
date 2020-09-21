@@ -1,4 +1,4 @@
-import NYTimesMenu from '@/parts/NYTimesMenu';
+import NYTimesMenu from 'parts/NYTimesMenu';
 import React from 'react';
 
 export default function Corona() {
