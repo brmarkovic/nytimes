@@ -8,6 +8,7 @@ export default function B92() {
       <div>
         {' '}
         <img src="https://www.b92.net/news/pics/2020/09/19/18537083375f65eb380a5f7353365493_v4_big.jpg" alt="" />
+        <div className="z-20 px-6 -mt-12 text-2xl text-red-500">Iran napada</div>
       </div>
       <div className="flex px-2">
         <div className="flex flex-col w-2/3">

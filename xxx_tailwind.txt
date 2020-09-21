@@ -2,14 +2,14 @@
 <span> - stilizazija
 
 
-p - padding
+p - padding - unutra
 px - padding x osa
 py - padding y osa
-m - margin
+m - margin - spolja
 mx
 my
 
-border    - sve 4 strane
+border    - sve 4 strane ivica
 border-b  - samo dole
 border-t  - samo gore
 border-l  - samo levo
@@ -40,4 +40,8 @@ justify-between |1         2          3|
 justify-end     |                   123|
 +
 items-center
+
+kako obojiti rec u recenici <span> 
+
+
 ****
