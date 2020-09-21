@@ -60,7 +60,7 @@ export default function B92() {
       <div className="flex py-4 m-4 border-t border-gray-400">
         <div className="flex flex-col w-2/3">
           <div className="px-2 py-4 text-xl text-gray-700 ">
-            Druga volonterka "Astra Zeneke" dobila tesko neurolosko oboljenje
+            Druga volonterka Astra Zeneke dobila tesko neurolosko oboljenje
           </div>
           <div className="flex justify-start text-gray-500 ">
             <div className="p-2">ZDRAVLJE</div>

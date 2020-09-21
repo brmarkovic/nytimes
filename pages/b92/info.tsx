@@ -1,4 +1,4 @@
-import B92Menu from 'parts/b92Menu';
+import B92Menu from 'parts/B92Menu';
 import React from 'react';
 
 export default function Info() {
