@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import CNNHeader from 'parts/CNNHeader';
 import React from 'react';
 
