@@ -14,12 +14,29 @@ export default function B92Menu() {
       </div>
       <div className="flex justify-between px-2 py-3 text-blue-900 bg-gray-300">
         <div>NOVO</div>
-        <div>INFO</div>
+        <div>
+          <Link href="/b92/info">
+            <a>INFO</a>
+          </Link>
+        </div>
         <div className="flex px-2 text-white bg-orange-600 ">KORONAVIRUS</div>
-        <div>SPORT</div>
-        <div>BIZ</div>
+        <div>
+          <Link href="/b92/sport">
+            <a>SPORT</a>
+          </Link>
+        </div>
+        <div>
+          {' '}
+          <Link href="/b92/biz">
+            <a>BIZ</a>
+          </Link>
+        </div>
         <div>ZIVOT</div>
-        <div>ZDRAVLJE</div>
+        <div>
+          <Link href="/b92/zdravlje">
+            <a>ZDRAVLJE</a>
+          </Link>
+        </div>
       </div>
     </div>
   );
