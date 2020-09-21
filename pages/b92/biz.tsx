@@ -5,7 +5,7 @@ export default function Biz() {
   return (
     <div>
       <B92Menu />
-      <div className="flex py-4 m-4 border-t border-gray-400">
+      <div className="flex py-4 m-4">
         <div className="flex flex-col w-2/3">
           <div className="px-2 py-4 text-xl text-gray-700 ">
             Izgradnja nove pasarele kod Ade Ciganilje je u toku: Pogledajete kako teku radovi FOTO

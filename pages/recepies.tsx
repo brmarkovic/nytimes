@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { apiRecepies, apiRecepiesI, apiRecepiesSearch, apiRecepiesSearchI } from '@/pages/api/recepies';
+import { apiRecepies, apiRecepiesI, apiRecepiesSearch, apiRecepiesSearchI } from 'pages/api/recepies';
 
 export default function Recepti(props: apiRecepiesI) {
   const { title } = props;
