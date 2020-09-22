@@ -11,7 +11,12 @@ export default function B92Menu() {
             <a>b92</a>
           </Link>
         </div>
-        <div className="flex justify-end w-1/6 text-4xl font-bold"> = </div>
+        <div className="flex justify-end w-1/6 text-4xl font-bold">
+          {' '}
+          <Link href="/b92/pregled">
+            <a>=</a>
+          </Link>{' '}
+        </div>
       </div>
       <div className="flex justify-between px-2 text-blue-900 bg-gray-300">
         <div className="p-2">NOVO</div>
