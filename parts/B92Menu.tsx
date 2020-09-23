@@ -36,7 +36,11 @@ export default function B92Menu() {
             <a>BIZ</a>
           </Link>
         </div>
-        <div className="p-2">ZIVOT</div>
+        <div className="p-2">
+          <Link href="/b92/zivot">
+            <a>ZIVOT</a>
+          </Link>
+        </div>
         <div className="p-2">
           <Link href="/b92/zdravlje">
             <a>ZDRAVLJE</a>
