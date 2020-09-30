@@ -14,7 +14,11 @@ export default function DexycoHeader() {
         <div className="flex justify-center w-9/12">
           <img src="https://www.dexy.co.rs/files/images/logo/dexyco-logo.webp" alt="" />
         </div>
-        <div className="flex w-1/12 text-3xl">P</div>
+        <div className="flex w-1/12 text-3xl">
+          <Link href="/dexyco/pretrazi">
+            <a>P</a>
+          </Link>
+        </div>
         <div className="flex justify-center w-1/12 text-3xl bg-green-600">K</div>
       </div>
     </div>
