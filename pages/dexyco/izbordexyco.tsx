@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable prettier/prettier */
 import React from 'react';
 import DexycoHeader from 'parts/DexycoHeader';
@@ -16,8 +17,16 @@ export default function Izbordexyco() {
       <div className="px-2 text-black">MK</div>
       <div className="p-2 text-base font-bold bg-gray-500">PRIJAVITE SE</div>
       <div className="p-2 text-base font-bold bg-gray-500 border-t-2 border-white">REGISTRUJTE SE</div>
-      <div className="p-3 font-bold">HOME</div>
-      <div className="p-3 font-bold">SKOLA</div>
+      <div className="p-3 font-bold">
+      <Link href="/dexyco">
+        <a>HOME</a>
+      </Link>
+      </div>
+      <div className="p-3 font-bold">
+      <Link href="/dexyco/skola">
+        <a>SKOLA</a>
+      </Link>
+      </div>
       <div className="p-3 font-bold">IGRACKE</div>
       <div className="p-3 font-bold">BEBE</div>
       <div className="p-3 font-bold">ODECA</div>
