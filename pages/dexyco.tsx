@@ -34,26 +34,22 @@ export default function dexyco() {
       </div>
       <div className="flex flex-col p-2">
         <div className="flex justify-center text-xl">Izdvajamo</div>
-        <div className="flex">
+        <div className="flex flex-wrap">
           <div className="w-1/2">
             {' '}
             <img
               src="https://www.dexy.co.rs/files/thumbs/files/images/slike_proizvoda/thumbs_600/CBF240318_600_600px.jpg"
               alt=""
             />
+            <div className="flex justify-center w-1/2 text-xl">Igracke</div>
           </div>
           <div className="w-1/2">
             <img
               src="https://www.dexy.co.rs/files/thumbs/files/images/slike_proizvoda/thumbs_600/AB12000011000_600_600px.jpg"
               alt=""
             />
+            <div className="flex justify-center w-1/2 text-xl">Bebe</div>
           </div>
-        </div>
-        <div className="flex">
-          <div className="flex justify-center w-1/2 text-xl">Igracke</div>
-          <div className="flex justify-center w-1/2 text-xl">Bebe</div>
-        </div>
-        <div className="flex">
           <div className="w-1/2">
             {' '}
             <img

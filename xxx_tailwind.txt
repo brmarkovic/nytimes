@@ -1,7 +1,16 @@
 <div> - struktura
 <span> - stilizazija
 
+HTML se zove
+class="" - osnovno
+style=""- gazi class
 
+REACTU se zove
+className=""
+style={{}}
+
+w - sirina
+h - visina
 p - padding - unutra
 px - padding x osa
 py - padding y osa
@@ -45,3 +54,43 @@ kako obojiti rec u recenici <span>
 
 
 ****
+
+LINKOVANJE SLIKE
+====================================================
+<Link href="/dexyco">
+  <a>
+    <img className="w-20" src="https://www.dexy.co.rs/files/images/logo/dexyco-logo.webp" alt="" />
+  </a>
+</Link>
+
+
+GRADIENT
+====================================================
+<div className="h-24 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500" />
+
+
+IKONICE tj SVG
+====================================================
+1. ides na entypo.com
+2. na ikonicu ides desno dugme pa open new tab
+3. na new tabu ides desno dugme i view source
+4. kopiras
+5. google: "omgsvg"
+6. ides paste i onda kliknes kopi ikonicu
+7. onda ubacis u html i prepravis da ima ovakav html              
+<svg className="mt-4 text-white fill-current w-7 h-7" viewBox="0 0 20 20">
+  <path d="M17.545 15.467l-3.779-3.779a6.15 6.15 0 00.898-3.21c0-3.417-2.961-6.377-6.378-6.377A6.185 6.185 0 002.1 8.287c0 3.416 2.961 6.377 6.377 6.377a6.15 6.15 0 003.115-.844l3.799 3.801a.953.953 0 001.346 0l.943-.943c.371-.371.236-.84-.135-1.211zM4.004 8.287a4.282 4.282 0 014.282-4.283c2.366 0 4.474 2.107 4.474 4.474a4.284 4.284 0 01-4.283 4.283c-2.366-.001-4.473-2.109-4.473-4.474z" />
+</svg>
+
+
+FLEX WRAP
+======================================================
+<div className="flex flex-wrap justify-start">
+  <div className="w-1/3 laptop:w-1/6">...</div>
+  <div className="w-1/3 laptop:w-1/6">...</div>
+  <div className="w-1/3 laptop:w-1/6">...</div>
+  <div className="w-1/3 laptop:w-1/6">...</div>
+  <div className="w-1/3 laptop:w-1/6">...</div>
+  <div className="w-1/3 laptop:w-1/6">...</div>
+  <div className="w-1/3 laptop:w-1/6">...</div>
+</div>

@@ -15,7 +15,10 @@ export default function Pregled() {
             <a>Info</a>
           </Link>
         </div>
-        <div className="flex justify-center p-3 text-lg text-blue-800 underline border-b-2 border-gray-400">
+        <div
+          className="flex justify-center p-3 text-lg text-blue-800 underline border-b-2 border-gray-400"
+          style={{ textDecorationColor: 'red' }}
+        >
           Koronavirus
         </div>
         <div className="flex justify-center p-3 text-lg font-bold text-blue-800 border-b-2 border-gray-400">

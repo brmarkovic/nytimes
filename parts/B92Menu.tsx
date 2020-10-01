@@ -25,7 +25,7 @@ export default function B92Menu() {
             <a>INFO</a>
           </Link>
         </div>
-        <div className="flex p-2 text-white bg-orange-600 ">KORONAVIRUS</div>
+        <div className="flex p-2 text-white bg-orange-600">KORONAVIRUS</div>
         <div className="p-2">
           <Link href="/b92/sport">
             <a>SPORT</a>

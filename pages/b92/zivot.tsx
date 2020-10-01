@@ -6,7 +6,8 @@ export default function Zivot() {
   return (
     <div>
       <div className="flex flex-col">
-        <div className="flex text-white bg-red-600">
+        <div className="flex flex-col text-white bg-red-600">
+          <div className="h-24 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500" />
           <div className="flex justify-start w-5/6 px-2 text-4xl tracking-wide">ZIVOT</div>
           <div className="flex justify-end w-1/6 pr-2 text-4xl font-bold">=</div>
         </div>
