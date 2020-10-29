@@ -94,3 +94,96 @@ FLEX WRAP
   <div className="w-1/3 laptop:w-1/6">...</div>
   <div className="w-1/3 laptop:w-1/6">...</div>
 </div>
+
+
+
+REACT
+
+// boolean
+const showInfo = true; // true
+// string, numbers
+const name = 'Milenko';
+const age = 33;
+// objekat nema tacan redosled
+const person = {
+  name: 'Milanko',
+  lastname: 'Milankovic',
+  country: {
+    name: 'Serbia',
+  },
+};
+// array ima tacan redosled
+const valute = [
+  { label: 'eur', ratio: 1 },
+  { label: 'rsd', ratio: 118.5 },
+];
+// funkcija definisanje
+const popUpAlerter = () => {
+  alert('popup!');
+};
+
+// definsanje
+const PrvaKomponenta = ({ nameInput, ageInput, personInput, valuteInput, popUpAlerterInput, showInfoInput }) => {
+  // ne moze nista slati parentu nagore
+  // jedini nacin da ova komponenta posalje bilo sta parentu
+  // je da joj parent posalje "referencu" ka nekoj funkciji
+  return (
+    <>
+      {/* tekst stampanje */}
+      <div>
+        moje ime je{' '}
+        <span className="font-bold">
+          {nameInput} ({ageInput})
+        </span>
+      </div>
+      {/* objekat stampanje */}
+      <div>
+        ---{personInput.name} X {personInput.lastname} X {personInput.country.name}---
+      </div>
+      {/* array stampanje */}
+      {valuteInput.map((r) => {
+        return (
+          <>
+            {r.label} ({r.ratio})<br />
+          </>
+        );
+      })}
+      {/* funkcija pozivanje */}
+      <button className="mx-10 bg-gray-500 rounded" onClick={popUpAlerterInput}>
+        Alert me!
+      </button>
+      {/* pali/gasi vidljivost */}
+      {!showInfoInput && (
+        <>
+          <div>osnovni info</div>
+        </>
+      )}
+      {showInfoInput && (
+        <>
+          <div>ovo je dodatni info...</div>
+        </>
+      )}
+    </>
+  );
+};
+
+
+// aplikacija
+export default function App() {
+  return (
+    <>
+      <div className="flex flex-col">
+        <div>...</div>
+        <PrvaKomponenta
+          nameInput={name}
+          ageInput={age}
+          personInput={person}
+          valuteInput={valute}
+          popUpAlerterInput={popUpAlerter}
+          showInfoInput={showInfo}
+        />
+        <div>...</div>
+      </div>
+    </>
+  );
+}
