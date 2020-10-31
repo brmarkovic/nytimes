@@ -1,6 +1,7 @@
+/* eslint-disable no-alert */
+/* eslint-disable spaced-comment */
 /* eslint-disable react/button-has-type */
 /* eslint-disable react/prop-types */
-/* eslint-disable no-alert */
 import React from 'react';
 import DexycoHeader from 'parts/DexycoHeader';
 
@@ -33,14 +34,14 @@ const PrvaKomponenta = ({
 }) => {
   return (
     <>
-      <div>
+      <div className="px-2">
         Unesite rec za pretragu{' '}
         <span className="font-bold">
           {proizvodInput} ({polInput})
         </span>
       </div>
 
-      <div>
+      <div className="px-2">
         Unesite dodatne podatke :{' '}
         <span className="font-bold">
           {' '}
@@ -48,14 +49,15 @@ const PrvaKomponenta = ({
         </span>
       </div>
 
-      {velicinaInput.map((r) => {
-        return (
-          <>
-            {r.num} ({r.godine})<br />
-          </>
-        );
-      })}
-
+      <div className="px-2">
+        {velicinaInput.map((r) => {
+          return (
+            <>
+              broj {r.num} ({r.godine})<br />
+            </>
+          );
+        })}
+      </div>
       <button className="mx-10 bg-gray-500 rounded" onClick={popUpAlerterInput}>
         Posalji upit!
       </button>
