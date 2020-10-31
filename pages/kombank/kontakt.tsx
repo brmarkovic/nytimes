@@ -28,18 +28,18 @@ const popUpAlerter = () => {
 const PrvaKomponenta = ({ nameInput, ageInput, personInput, valuteInput, popUpAlerterInput, showInfoInput }) => {
   return (
     <>
-      {}
+      
       <div>
         Unesite korisnicko ime {' '}
         <span className="font-bold">
           {nameInput} ({ageInput})
         </span>
       </div>
-      {}
+    
       <div>
         Unesite ime i prezime: <span className="font-bold" > {personInput.name}  {personInput.lastname} iz  {personInput.country.name} </span> 
       </div>
-      {}
+      
       {valuteInput.map((r) => {
         return (
           <>
@@ -47,11 +47,11 @@ const PrvaKomponenta = ({ nameInput, ageInput, personInput, valuteInput, popUpAl
           </>
         );
       })}
-      {}
+      
       <button className="mx-10 bg-gray-500 rounded" onClick={popUpAlerterInput}>
         Posalji upit!
       </button>
-      {}
+      
       {!showInfoInput && (
         <>
           <div>osnovni info</div>

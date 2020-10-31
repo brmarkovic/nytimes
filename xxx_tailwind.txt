@@ -123,7 +123,8 @@ const popUpAlerter = () => {
 };
 
 // definsanje
-const PrvaKomponenta = ({ nameInput, ageInput, personInput, valuteInput, popUpAlerterInput, showInfoInput }) => {
+const PrvaKomponenta = ({ nameInput, ageInput, personInput, valuteInput, popUpAlerterInput, 
+showInfoInput }) => {
   // ne moze nista slati parentu nagore
   // jedini nacin da ova komponenta posalje bilo sta parentu
   // je da joj parent posalje "referencu" ka nekoj funkciji
