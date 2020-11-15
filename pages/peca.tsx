@@ -70,7 +70,6 @@ export default function Peca() {
         showInfoInput={showInfo}
         popUpAlerterInput={popUpAlerter}
       />
-      <div>Test</div>
     </>
   );
 }
