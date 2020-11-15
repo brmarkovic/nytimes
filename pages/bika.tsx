@@ -30,7 +30,9 @@ const PrvaKomponenta = ({ nameInput, ageInput, personInput, valuteInput, showInf
   return (
    <>
    <div>
-  Moje ime je {nameInput} ({ageInput})
+  Moje ime je <span className="font-bold text-red-600">
+  {nameInput} </span>
+  ({ageInput})
    </div>
    <div>
     {personInput.name} {personInput.lastname} iz {personInput.country.name}
