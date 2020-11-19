@@ -22,8 +22,8 @@ interface Istates {
   };
 }
 
-export const SimpleMachine = Machine<Icontext, Istates, Ievents>({
-  id: 'SimpleMachine',
+export const XstateSimpleMachine = Machine<Icontext, Istates, Ievents>({
+  id: 'XstateSimpleMachine',
   context: {
     show: false,
   },
