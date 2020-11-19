@@ -99,6 +99,9 @@ export const XstateSimpleMachine = Machine<Icontext, Istates, Ievents>({
           },
         ],
         ABORT: {
+          actions: (cx) => {
+            cx.kritikaTekst = '';
+          },
           target: 'idle',
         },
       },
