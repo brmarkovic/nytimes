@@ -31,7 +31,7 @@
     "camelcase": 0,
     "no-nested-ternary": 0,
     "no-unused-vars": 1,
-    "no-param-reassign": ["error", { "props": true, "ignorePropertyModificationsFor": ["c"] }], // xstate/immer context assign named as c is allowed
+    "no-param-reassign": ["error", { "props": true, "ignorePropertyModificationsFor": ["cx"] }], // xstate/immer context assign named as c is allowed
     "prettier/prettier": [
       "error",
       {
