@@ -88,7 +88,13 @@ export function XstateSimple() {
             <div className="flex flex-col">
               <div>Kritika</div>
               <div>
-                <textarea className="border border-gray-500" />
+                <textarea
+                  value={cx?.kritikaTekst}
+                  onChange={(ev) => {
+                    send({ type: 'INPUT', data: ev.target.value });
+                  }}
+                  className="border border-gray-500"
+                />
               </div>
             </div>
             <div>
