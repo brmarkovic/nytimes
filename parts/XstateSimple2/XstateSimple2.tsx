@@ -17,7 +17,7 @@ export function XstateSimple2() {
   const machine = useMachine(XstateSimple2Machine, {
     show: false,
   });
-  const [{ context: cx, matches: ma }, send] = machine || [{}];
+  const [{ context: cx }, send] = machine || [{}];
   useXstateDebugger({ machine, name: '__' });
 
   useEffect(() => {

@@ -5,7 +5,6 @@ import { assign } from '@xstate/immer';
 // Icontext
 export interface Icontext {
   show: boolean;
- 
 }
 
 // Ievents
@@ -14,13 +13,23 @@ type eSHOW = {
   data: boolean;
 };
 
-export type Ievents = { type: 'idle' } | eSHOW;
+export type Ievents =
+  | { type: 'idle' }
+  | { type: 'FEEDBACK' }
+  | { type: 'YES' }
+  | { type: 'NO' }
+  | { type: 'SUBMIT' }
+  | { type: 'ABORT' }
+  | eSHOW;
 const send = (sendEvent: Ievents, sendOptions?: any) => untypedSend(sendEvent, sendOptions);
 
 interface Istates {
   states: {
     ssr: {};
     idle: {};
+    pitanje: {};
+    kritika: {};
+    zahvalnica: {};
   };
 }
 
@@ -30,7 +39,6 @@ export const XstateSimple2Machine = Machine<Icontext, Istates, Ievents>({
   // BIKA FOKUS >>>>>>>>>>
   context: {
     show: false,
-   
   },
   // BIKA FOKUS END <<<<<<
   states: {
@@ -49,10 +57,35 @@ export const XstateSimple2Machine = Machine<Icontext, Istates, Ievents>({
             }),
           ],
         },
-     
-    // BIKA FOKUS >>>>>>>>
-    
-
-    // BIKA FOCUS END <<<<
+        FEEDBACK: {
+          target: 'pitanje',
+        },
+      },
+    },
+    pitanje: {
+      on: {
+        YES: {
+          target: 'zahvalnica',
+        },
+        NO: {
+          target: 'kritika',
+        },
+      },
+    },
+    kritika: {
+      on: {
+        SUBMIT: {
+          target: 'zahvalnica',
+        },
+        ABORT: {
+          target: 'idle',
+        },
+      },
+    },
+    zahvalnica: {
+      1000: {
+        target: 'idle',
+      },
+    },
   },
 });
