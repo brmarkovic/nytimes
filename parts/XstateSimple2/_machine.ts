@@ -5,6 +5,7 @@ import { assign } from '@xstate/immer';
 // Icontext
 export interface Icontext {
   show: boolean;
+  kritikaTekst: string;
 }
 
 // Ievents
@@ -12,8 +13,12 @@ type eSHOW = {
   type: 'SHOW';
   data: boolean;
 };
-
+type eINPUT = {
+  type: 'INPUT';
+  data: string;
+};
 export type Ievents =
+  | eINPUT
   | { type: 'idle' }
   | { type: 'FEEDBACK' }
   | { type: 'YES' }
@@ -39,6 +44,7 @@ export const XstateSimple2Machine = Machine<Icontext, Istates, Ievents>({
   // BIKA FOKUS >>>>>>>>>>
   context: {
     show: false,
+    kritikaTekst: '',
   },
   // BIKA FOKUS END <<<<<<
   states: {
@@ -74,17 +80,36 @@ export const XstateSimple2Machine = Machine<Icontext, Istates, Ievents>({
     },
     kritika: {
       on: {
-        SUBMIT: {
-          target: 'zahvalnica',
+        INPUT: {
+          actions: (cx, ev: eINPUT) => {
+            cx.kritikaTekst = ev?.data || '';
+          },
         },
+        SUBMIT: [
+          {
+            cond: (cx) => cx?.kritikaTekst?.length === 0 || false,
+            target: 'kritika',
+          },
+          {
+            actions: (cx) => {
+              cx.kritikaTekst = '';
+            },
+            target: 'zahvalnica',
+          },
+        ],
         ABORT: {
+          actions: (cx) => {
+            cx.kritikaTekst = '';
+          },
           target: 'idle',
         },
       },
     },
     zahvalnica: {
-      1000: {
-        target: 'idle',
+      after: {
+        1000: {
+          target: 'idle',
+        },
       },
     },
   },

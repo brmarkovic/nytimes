@@ -17,7 +17,7 @@ export function XstateSimple2() {
   const machine = useMachine(XstateSimple2Machine, {
     show: false,
   });
-  const [{ context: cx }, send] = machine || [{}];
+  const [{ context: cx, matches: ma }, send] = machine || [{}];
   useXstateDebugger({ machine, name: '__' });
 
   useEffect(() => {
@@ -39,6 +39,86 @@ export function XstateSimple2() {
           toggle show
         </button>
         {cx?.show && <div>prikazujem...</div>}
+      </div>
+      <div>
+        <div>FORMULAR</div>
+        <hr />
+        {['idle'].some(ma) && (
+          <div>
+            <button
+              className="p-1 mx-1 bg-red-500 rounded-lg"
+              type="button"
+              onClick={() => {
+                send({ type: 'FEEDBACK' });
+              }}
+            >
+              vas utisak?
+            </button>
+          </div>
+        )}
+
+        {['pitanje'].some(ma) && (
+          <div>
+            <div>Da li ste zadovoljni</div>
+            <div>
+              <button
+                className="p-1 mx-1 bg-green-500 rounded-lg"
+                type="button"
+                onClick={() => {
+                  send({ type: 'YES' });
+                }}
+              >
+                DA
+              </button>
+              <button
+                className="p-1 mx-1 bg-red-500 rounded-lg"
+                type="button"
+                onClick={() => {
+                  send({ type: 'NO' });
+                }}
+              >
+                NE
+              </button>
+            </div>
+          </div>
+        )}
+        {['kritika'].some(ma) && (
+          <div className="flex flex-col">
+            <div className="flex flex-col">
+              <div> Kritika </div>
+              <div>
+                <textarea
+                  value={cx?.kritikaTekst}
+                  onChange={(ev) => {
+                    send({ type: 'INPUT', data: ev.target.value });
+                  }}
+                  className="border border-gray-500"
+                />
+              </div>
+            </div>
+            <div>
+              <button
+                className="p-1 mx-1 bg-red-500 rounded-lg"
+                type="button"
+                onClick={() => {
+                  send({ type: 'SUBMIT' });
+                }}
+              >
+                Posalji
+              </button>
+              <button
+                className="p-1 mx-1 bg-red-500 rounded-lg"
+                type="button"
+                onClick={() => {
+                  send({ type: 'ABORT' });
+                }}
+              >
+                Odustani
+              </button>
+            </div>
+          </div>
+        )}
+        {['zahvalnica'].some(ma) && <div> zahvaljujemo se!!! </div>}
       </div>
     </div>
   );
