@@ -40,6 +40,164 @@ export function XstateSimple3() {
         </button>
         {cx?.show && <div>prikazujem...</div>}
       </div>
+      <div>
+        <div>FORMULAR</div>
+        <hr />
+        {['idle'].some(ma) && (
+          <div>
+            <button
+              className="p-1 mx-1 bg-red-500 rounded-lg"
+              type="button"
+              onClick={() => {
+                send({ type: 'FORMULAR' });
+              }}
+            >
+              Ime I prezime
+            </button>
+          </div>
+        )}
+        {['imeprezime'].some(ma) && (
+          <div className="flex flex-col">
+            <div className="flex flex-col">
+              <div> Unesite Ime i Prezime </div>
+              <div>
+                <textarea
+                  value={cx?.imePrezime}
+                  onChange={(ev) => {
+                    send({ type: 'INPUT', data: ev.target.value });
+                  }}
+                  className="border border-gray-500"
+                />
+              </div>
+            </div>
+            <div>
+              <button
+                className="p-1 mx-1 bg-green-500 rounded-lg"
+                type="button"
+                onClick={() => {
+                  send({ type: 'SUBMIT' });
+                }}
+              >
+                Posalji
+              </button>
+              <button
+                className="p-1 mx-1 bg-red-500 rounded-lg"
+                type="button"
+                onClick={() => {
+                  send({ type: 'ABORT' });
+                }}
+              >
+                Odustani
+              </button>
+            </div>
+          </div>
+        )}
+        {['pol'].some(ma) && (
+          <div>
+            <button
+              className="p-1 mx-1 bg-blue-500 rounded-lg"
+              type="button"
+              onClick={() => {
+                send({ type: 'MUSKI' });
+              }}
+            >
+              MUSKI
+            </button>
+            <button
+              className="p-1 mx-1 bg-yellow-500 rounded-lg"
+              type="button"
+              onClick={() => {
+                send({ type: 'ZENSKI' });
+              }}
+            >
+              ZENSKI
+            </button>
+
+            <button
+              className="p-1 mx-1 bg-red-500 rounded-lg"
+              type="button"
+              onClick={() => {
+                send({ type: 'ABORT' });
+              }}
+            >
+              Odustani
+            </button>
+          </div>
+        )}
+        {['parfem'].some(ma) && (
+          <div className="flex flex-col">
+            <div className="flex flex-col">
+              <div> Unesite omiljeni parfem </div>
+              <div>
+                <textarea
+                  value={cx?.parfemTekst}
+                  onChange={(ev) => {
+                    send({ type: 'INPUT', data: ev.target.value });
+                  }}
+                  className="border border-gray-500"
+                />
+              </div>
+            </div>
+            <div>
+              <button
+                className="p-1 mx-1 bg-green-500 rounded-lg"
+                type="button"
+                onClick={() => {
+                  send({ type: 'SUBMIT' });
+                }}
+              >
+                Posalji
+              </button>
+              <button
+                className="p-1 mx-1 bg-red-500 rounded-lg"
+                type="button"
+                onClick={() => {
+                  send({ type: 'ABORT' });
+                }}
+              >
+                Odustani
+              </button>
+            </div>
+          </div>
+        )}
+        {['auto'].some(ma) && (
+          <div className="flex flex-col">
+            <div className="flex flex-col">
+              <div> Unesite omiljeni auto </div>
+              <div>
+                <textarea
+                  value={cx?.autoTekst}
+                  onChange={(ev) => {
+                    send({ type: 'INPUT', data: ev.target.value });
+                  }}
+                  className="border border-gray-500"
+                />
+              </div>
+            </div>
+            <div>
+              <button
+                className="p-1 mx-1 bg-green-500 rounded-lg"
+                type="button"
+                onClick={() => {
+                  send({ type: 'SUBMIT' });
+                }}
+              >
+                Posalji
+              </button>
+              <button
+                className="p-1 mx-1 bg-red-500 rounded-lg"
+                type="button"
+                onClick={() => {
+                  send({ type: 'ABORT' });
+                }}
+              >
+                Odustani
+              </button>
+            </div>
+          </div>
+        )}
+        {['zahvalnica'].some(ma) && <div> Zahvaljujemo se na pounjenom formularu! </div>}
+      </div>
     </div>
   );
 }

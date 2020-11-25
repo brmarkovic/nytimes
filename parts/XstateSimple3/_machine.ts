@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Machine, spawn } from 'xstate';
 import { send as untypedSend, cancel, sendUpdate } from 'xstate/lib/actions';
 import { assign } from '@xstate/immer';
@@ -5,6 +6,9 @@ import { assign } from '@xstate/immer';
 // Icontext
 export interface Icontext {
   show: boolean;
+  imePrezime: string;
+  parfemTekst: string;
+  autoTekst: string;
 }
 
 // Ievents
@@ -12,8 +16,14 @@ type eSHOW = {
   type: 'SHOW';
   data: boolean;
 };
+type eINPUT = {
+  type: 'INPUT';
+  data: string;
+};
+
 
 export type Ievents =
+  | eINPUT
   | { type: 'idle' }
   | { type: 'SUBMIT' }
   | { type: 'ABORT' }
@@ -41,6 +51,9 @@ export const XstateSimple3Machine = Machine<Icontext, Istates, Ievents>({
   // BIKA FOKUS >>>>>>>>>>
   context: {
     show: false,
+    imePrezime:'',
+    parfemTekst:'',
+    autoTekst:'',
   },
   // BIKA FOKUS END <<<<<<
   states: {
@@ -66,11 +79,28 @@ export const XstateSimple3Machine = Machine<Icontext, Istates, Ievents>({
     },
     imeprezime: {
       on: {
-        SUBMIT: {
-          target: 'pol',
+        INPUT: {
+          actions: (cx, ev: eINPUT) => {
+            cx.imePrezime = ev?.data || '';
+          },
         },
+        SUBMIT: [
+          {
+            cond: (cx) => cx?.imePrezime?.length === 0 || false,
+            target: 'imeprezime',
+          },
+          {
+            actions: (cx) => {
+              cx.imePrezime = '';
+            },
+            target: 'pol',
+          },
+        ],
         ABORT: {
-          target: 'zahvalnica',
+          actions: (cx) => {
+            cx.imePrezime = '';
+          },
+          target: 'idle',
         },
       },
     },
@@ -83,27 +113,62 @@ export const XstateSimple3Machine = Machine<Icontext, Istates, Ievents>({
           target: 'auto',
         },
         ABORT: {
-          target: 'zahvalnica',
+          target: 'idle',
         },
       },
     },
     parfem: {
       on: {
-        SUBMIT: {
-          target: 'zahvalnica',
+        INPUT: {
+          actions: (cx, ev: eINPUT) => {
+            cx.parfemTekst = ev?.data || '';
+          },
         },
+        SUBMIT: [
+          {
+            cond: (cx) => cx?.parfemTekst?.length === 0 || false,
+            target: 'parfem',
+          },
+          {
+            actions: (cx) => {
+              cx.parfemTekst = '';
+            },
+            target: 'zahvalnica',
+          },
+        ],
         ABORT: {
-          target: 'zahvalnica',
+          actions: (cx) => {
+            cx.parfemTekst = '';
+          },
+          target: 'idle',
         },
       },
+      
     },
     auto: {
       on: {
-        SUBMIT: {
-          target: 'zahvalnica',
+        INPUT: {
+          actions: (cx, ev: eINPUT) => {
+            cx.autoTekst = ev?.data || '';
+          },
         },
+        SUBMIT: [
+          {
+            cond: (cx) => cx?.autoTekst?.length === 0 || false,
+            target: 'auto',
+          },
+          {
+            actions: (cx) => {
+              cx.autoTekst = '';
+            },
+            target: 'zahvalnica',
+          },
+        ],
         ABORT: {
-          target: 'zahvalnica',
+          actions: (cx) => {
+            cx.autoTekst = '';
+          },
+          target: 'idle',
         },
       },
     },
