@@ -93,35 +93,37 @@ export function XstateSimple3() {
           </div>
         )}
         {['pol'].some(ma) && (
-          <div>
-            <button
-              className="p-1 mx-1 bg-blue-500 rounded-lg"
-              type="button"
-              onClick={() => {
-                send({ type: 'MUSKI' });
-              }}
-            >
-              MUSKI
-            </button>
-            <button
-              className="p-1 mx-1 bg-yellow-500 rounded-lg"
-              type="button"
-              onClick={() => {
-                send({ type: 'ZENSKI' });
-              }}
-            >
-              ZENSKI
-            </button>
-
-            <button
-              className="p-1 mx-1 bg-red-500 rounded-lg"
-              type="button"
-              onClick={() => {
-                send({ type: 'ABORT' });
-              }}
-            >
-              Odustani
-            </button>
+          <div className="flex flex-col">
+            <div> izaberite pol</div>
+            <div>
+              <button
+                className="p-1 mx-1 bg-blue-500 rounded-lg"
+                type="button"
+                onClick={() => {
+                  send({ type: 'MUSKI' });
+                }}
+              >
+                MUSKI
+              </button>
+              <button
+                className="p-1 mx-1 bg-yellow-500 rounded-lg"
+                type="button"
+                onClick={() => {
+                  send({ type: 'ZENSKI' });
+                }}
+              >
+                ZENSKI
+              </button>
+              <button
+                className="p-1 mx-1 bg-red-500 rounded-lg"
+                type="button"
+                onClick={() => {
+                  send({ type: 'ABORT' });
+                }}
+              >
+                Odustani
+              </button>{' '}
+            </div>
           </div>
         )}
         {['parfem'].some(ma) && (
