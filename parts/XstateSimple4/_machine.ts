@@ -6,6 +6,7 @@ import { assign } from '@xstate/immer';
 export interface Icontext {
   show: boolean;
   brracuna: string;
+  brkartice: string;
 }
 
 // Ievents
@@ -59,6 +60,7 @@ export const XstateSimple4Machine = Machine<Icontext, Istates, Ievents>({
   context: {
     show: false,
     brracuna: '',
+    brkartice: '',
   },
   // BIKA FOKUS END <<<<<<
   states: {

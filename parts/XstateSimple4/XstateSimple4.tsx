@@ -161,6 +161,47 @@ export function XstateSimple4() {
           </div>
         </div>
       )}
+      {['brkartice'].some(ma) && (
+        <div className="flex flex-col">
+          <div className="flex flex-col ">
+            <div>Unesite br kartice koju zelite da blokirate!</div>
+            <div>
+              <textarea
+                value={cx?.brkartice}
+                onChange={(ev) => {
+                  send({ type: 'INPUT', data: ev.target.value });
+                }}
+                className="border border-gray-500"
+              />
+            </div>
+          </div>
+          <div>
+            <button
+              className="p-1 mx-1 bg-green-500 rounded-lg"
+              type="button"
+              onClick={() => {
+                send({ type: 'SUBMIT' });
+              }}
+            >
+              Potvrdi
+            </button>
+            <button
+              className="p-1 mx-1 bg-red-500 rounded-lg"
+              type="button"
+              onClick={() => {
+                send({ type: 'ABORT' });
+              }}
+            >
+              Odustani
+            </button>
+          </div>
+        </div>
+      )}
+      {['stanjepoTR'].some(ma) && (
+        <div className="flex flex-col">
+          <div> iznos stanja po vasem TR je 10.000,00! </div>
+        </div>
+      )}
     </div>
   );
 }
