@@ -127,6 +127,40 @@ export function XstateSimple4() {
           </div>
         </div>
       )}
+      {['transakcija'].some(ma) && (
+        <div className="flex flex-col">
+          <div> Izaberite zeljenu transakciju! </div>
+          <div>
+            <button
+              className="p-1 mx-1 bg-purple-500 rounded-lg"
+              type="button"
+              onClick={() => {
+                send({ type: 'STANJE' });
+              }}
+            >
+              Proveri stanje po TR
+            </button>
+            <button
+              className="p-1 mx-1 bg-yellow-500 rounded-lg"
+              type="button"
+              onClick={() => {
+                send({ type: 'CEKOVI' });
+              }}
+            >
+              Poruci Cekove!
+            </button>
+            <button
+              className="p-1 mx-1 bg-red-500 rounded-lg"
+              type="button"
+              onClick={() => {
+                send({ type: 'BLOKADA' });
+              }}
+            >
+              Blokiraj karticu
+            </button>{' '}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
