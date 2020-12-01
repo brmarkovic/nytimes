@@ -199,9 +199,252 @@ export function XstateSimple4() {
       )}
       {['stanjepoTR'].some(ma) && (
         <div className="flex flex-col">
-          <div> iznos stanja po vasem TR je 10.000,00! </div>
+          <div> raspolozivo stanje po vasem TR je 10.000,00! </div>
+          <div>
+            <button
+              className="p-1 mx-1 bg-green-500 rounded-lg"
+              type="button"
+              onClick={() => {
+                send({ type: 'YES' });
+              }}
+            >
+              Potvrdi
+            </button>
+            <button
+              className="p-1 mx-1 bg-red-500 rounded-lg"
+              type="button"
+              onClick={() => {
+                send({ type: 'NO' });
+              }}
+            >
+              Odustani
+            </button>
+          </div>
         </div>
       )}
+      {['brcekova'].some(ma) && (
+        <div className="flex flex-col">
+          <div className="flex flex-col ">
+            <div>Unesite br cekova koji zelite da porucite!</div>
+            <div>
+              <textarea
+                value={cx?.brcekova}
+                onChange={(ev) => {
+                  send({ type: 'INPUT', data: ev.target.value });
+                }}
+                className="border border-gray-500"
+              />
+            </div>
+          </div>
+          <div>
+            <button
+              className="p-1 mx-1 bg-green-500 rounded-lg"
+              type="button"
+              onClick={() => {
+                send({ type: 'SUBMIT' });
+              }}
+            >
+              Potvrdi
+            </button>
+            <button
+              className="p-1 mx-1 bg-red-500 rounded-lg"
+              type="button"
+              onClick={() => {
+                send({ type: 'ABORT' });
+              }}
+            >
+              Odustani
+            </button>
+          </div>
+        </div>
+      )}
+      {['novausluga'].some(ma) && (
+        <div className="flex flex-col">
+          <div> Da li zelite da izvrsite jos neku transakciju?</div>
+          <div>
+            <button
+              className="p-1 mx-1 bg-green-500 rounded-lg"
+              type="button"
+              onClick={() => {
+                send({ type: 'SUBMIT' });
+              }}
+            >
+              Potvrdi
+            </button>
+            <button
+              className="p-1 mx-1 bg-red-500 rounded-lg"
+              type="button"
+              onClick={() => {
+                send({ type: 'ABORT' });
+              }}
+            >
+              Odustani
+            </button>
+          </div>
+        </div>
+      )}
+      {['otvoritiracun'].some(ma) && (
+        <div className="flex flex-col">
+          <div> Da li zelite da otvorite TR? </div>
+          <div>
+            <button
+              className="p-1 mx-1 bg-green-500 rounded-lg"
+              type="button"
+              onClick={() => {
+                send({ type: 'SUBMIT' });
+              }}
+            >
+              Potvrdi
+            </button>
+            <button
+              className="p-1 mx-1 bg-red-500 rounded-lg"
+              type="button"
+              onClick={() => {
+                send({ type: 'ABORT' });
+              }}
+            >
+              Odustani
+            </button>
+          </div>
+        </div>
+      )}
+      {['imeprezime'].some(ma) && (
+        <div className="flex flex-col">
+          <div className="flex flex-col ">
+            <div>Unesite vase Ime i prezime!</div>
+            <div>
+              <textarea
+                value={cx?.imeprezime}
+                onChange={(ev) => {
+                  send({ type: 'INPUT', data: ev.target.value });
+                }}
+                className="border border-gray-500"
+              />
+            </div>
+          </div>
+          <div>
+            <button
+              className="p-1 mx-1 bg-green-500 rounded-lg"
+              type="button"
+              onClick={() => {
+                send({ type: 'SUBMIT' });
+              }}
+            >
+              Potvrdi
+            </button>
+            <button
+              className="p-1 mx-1 bg-red-500 rounded-lg"
+              type="button"
+              onClick={() => {
+                send({ type: 'ABORT' });
+              }}
+            >
+              Odustani
+            </button>
+          </div>
+        </div>
+      )}
+      {['jmbg'].some(ma) && (
+        <div className="flex flex-col">
+          <div className="flex flex-col ">
+            <div>Unesite vas JMBG!</div>
+            <div>
+              <textarea
+                value={cx?.jmbg}
+                onChange={(ev) => {
+                  send({ type: 'INPUT', data: ev.target.value });
+                }}
+                className="border border-gray-500"
+              />
+            </div>
+          </div>
+          <div>
+            <button
+              className="p-1 mx-1 bg-green-500 rounded-lg"
+              type="button"
+              onClick={() => {
+                send({ type: 'SUBMIT' });
+              }}
+            >
+              Potvrdi
+            </button>
+            <button
+              className="p-1 mx-1 bg-red-500 rounded-lg"
+              type="button"
+              onClick={() => {
+                send({ type: 'ABORT' });
+              }}
+            >
+              Odustani
+            </button>
+          </div>
+        </div>
+      )}
+      {['telefon'].some(ma) && (
+        <div className="flex flex-col">
+          <div className="flex flex-col ">
+            <div>Unesite vas br telefona!</div>
+            <div>
+              <textarea
+                value={cx?.telefon}
+                onChange={(ev) => {
+                  send({ type: 'INPUT', data: ev.target.value });
+                }}
+                className="border border-gray-500"
+              />
+            </div>
+          </div>
+          <div>
+            <button
+              className="p-1 mx-1 bg-green-500 rounded-lg"
+              type="button"
+              onClick={() => {
+                send({ type: 'SUBMIT' });
+              }}
+            >
+              Potvrdi
+            </button>
+            <button
+              className="p-1 mx-1 bg-red-500 rounded-lg"
+              type="button"
+              onClick={() => {
+                send({ type: 'ABORT' });
+              }}
+            >
+              Odustani
+            </button>
+          </div>
+        </div>
+      )}
+      {['potvrda'].some(ma) && (
+        <div className="flex flex-col">
+          <div> Molim vas proverite tacnost unetih podataka </div>
+          <div> Ime i Prezime </div>
+          <div> JMBG </div>
+          <div> Telefon </div>
+          <div>
+            <button
+              className="p-1 mx-1 bg-green-500 rounded-lg"
+              type="button"
+              onClick={() => {
+                send({ type: 'SUBMIT' });
+              }}
+            >
+              Potvrdi
+            </button>
+            <button
+              className="p-1 mx-1 bg-red-500 rounded-lg"
+              type="button"
+              onClick={() => {
+                send({ type: 'BACK' });
+              }}
+            >
+              Vrati se nazad
+            </button>
+          </div>
+        </div>
+      )}
+      {['zahvalnica'].some(ma) && <div> Zahvaljujemo sto koristite portal banke </div>}
     </div>
   );
 }

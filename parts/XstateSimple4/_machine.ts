@@ -7,6 +7,10 @@ export interface Icontext {
   show: boolean;
   brracuna: string;
   brkartice: string;
+  brcekova: string;
+  imeprezime: string;
+  jmbg: string;
+  telefon: string;
 }
 
 // Ievents
@@ -30,6 +34,7 @@ export type Ievents =
   | { type: 'CEKOVI' }
   | { type: 'BLOKADA' }
   | { type: 'UPITNIK' }
+  | { type: 'BACK' }
   | eSHOW;
 const send = (sendEvent: Ievents, sendOptions?: any) => untypedSend(sendEvent, sendOptions);
 
@@ -61,6 +66,10 @@ export const XstateSimple4Machine = Machine<Icontext, Istates, Ievents>({
     show: false,
     brracuna: '',
     brkartice: '',
+    brcekova: '',
+    imeprezime: '',
+    jmbg: '',
+    telefon: '',
   },
   // BIKA FOKUS END <<<<<<
   states: {
@@ -93,7 +102,7 @@ export const XstateSimple4Machine = Machine<Icontext, Istates, Ievents>({
           target: 'otvoritiracun',
         },
         ABORT: {
-          target: 'pitanje',
+          target: 'idle',
         },
       },
     },
@@ -103,7 +112,7 @@ export const XstateSimple4Machine = Machine<Icontext, Istates, Ievents>({
           target: 'transakcija',
         },
         ABORT: {
-          target: 'pitanje',
+          target: 'idle',
         },
       },
     },
@@ -126,7 +135,7 @@ export const XstateSimple4Machine = Machine<Icontext, Istates, Ievents>({
           target: 'novausluga',
         },
         ABORT: {
-          target: 'pitanje',
+          target: 'idle',
         },
       },
     },
@@ -146,14 +155,14 @@ export const XstateSimple4Machine = Machine<Icontext, Istates, Ievents>({
           target: 'novausluga',
         },
         ABORT: {
-          target: 'pitanje',
+          target: 'zahvalnica',
         },
       },
     },
     novausluga: {
       on: {
         SUBMIT: {
-          target: 'racun',
+          target: 'transakcija',
         },
         ABORT: {
           target: 'zahvalnica',
@@ -166,7 +175,7 @@ export const XstateSimple4Machine = Machine<Icontext, Istates, Ievents>({
           target: 'imeprezime',
         },
         ABORT: {
-          target: 'pitanje',
+          target: 'idle',
         },
       },
     },
@@ -176,7 +185,7 @@ export const XstateSimple4Machine = Machine<Icontext, Istates, Ievents>({
           target: 'jmbg',
         },
         ABORT: {
-          target: 'pitanje',
+          target: 'idle',
         },
       },
     },
@@ -186,7 +195,7 @@ export const XstateSimple4Machine = Machine<Icontext, Istates, Ievents>({
           target: 'telefon',
         },
         ABORT: {
-          target: 'pitanje',
+          target: 'idle',
         },
       },
     },
@@ -196,7 +205,7 @@ export const XstateSimple4Machine = Machine<Icontext, Istates, Ievents>({
           target: 'potvrda',
         },
         ABORT: {
-          target: 'pitanje',
+          target: 'idle',
         },
       },
     },
@@ -205,10 +214,17 @@ export const XstateSimple4Machine = Machine<Icontext, Istates, Ievents>({
         SUBMIT: {
           target: 'zahvalnica',
         },
+        BACK: {
+          target: 'imeprezime',
+        },
       },
     },
     zahvalnica: {
-      type: 'final',
+      after: {
+        1000: {
+          target: 'idle',
+        },
+      },
     },
   },
 });
