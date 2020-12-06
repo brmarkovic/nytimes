@@ -108,10 +108,27 @@ export const XstateSimple4Machine = Machine<Icontext, Istates, Ievents>({
     },
     racun: {
       on: {
-        SUBMIT: {
-          target: 'transakcija',
+        INPUT: {
+          actions: (cx, ev: eInput) => {
+            cx.brracuna = ev?.data || '';
+          },
         },
+        SUBMIT: [
+          {
+            cond: (cx) => cx?.brracuna?.length === 0 || false,
+            target: 'racun',
+          },
+          {
+            actions: (cx) => {
+              cx.brracuna = '';
+            },
+            target: 'transakcija',
+          },
+        ],
         ABORT: {
+          actions: (cx) => {
+            cx.brracuna = '';
+          },
           target: 'idle',
         },
       },
@@ -127,14 +144,34 @@ export const XstateSimple4Machine = Machine<Icontext, Istates, Ievents>({
         BLOKADA: {
           target: 'brkartice',
         },
+        ABORT: {
+          target: 'idle',
+        },
       },
     },
     brkartice: {
       on: {
-        SUBMIT: {
-          target: 'novausluga',
+        INPUT: {
+          actions: (cx, ev: eInput) => {
+            cx.brkartice = ev?.data || '';
+          },
         },
+        SUBMIT: [
+          {
+            cond: (cx) => cx?.brkartice?.length === 0 || false,
+            target: 'brkartice',
+          },
+          {
+            actions: (cx) => {
+              cx.brkartice = '';
+            },
+            target: 'novausluga',
+          },
+        ],
         ABORT: {
+          actions: (cx) => {
+            cx.brkartice = '';
+          },
           target: 'idle',
         },
       },
@@ -151,10 +188,27 @@ export const XstateSimple4Machine = Machine<Icontext, Istates, Ievents>({
     },
     brcekova: {
       on: {
-        SUBMIT: {
-          target: 'novausluga',
+        INPUT: {
+          actions: (cx, ev: eInput) => {
+            cx.brcekova = ev?.data || '';
+          },
         },
+        SUBMIT: [
+          {
+            cond: (cx) => cx?.brcekova?.length === 0 || false,
+            target: 'brcekova',
+          },
+          {
+            actions: (cx) => {
+              cx.brcekova = '';
+            },
+            target: 'novausluga',
+          },
+        ],
         ABORT: {
+          actions: (cx) => {
+            cx.brcekova = '';
+          },
           target: 'zahvalnica',
         },
       },
@@ -181,30 +235,81 @@ export const XstateSimple4Machine = Machine<Icontext, Istates, Ievents>({
     },
     imeprezime: {
       on: {
-        SUBMIT: {
-          target: 'jmbg',
+        INPUT: {
+          actions: (cx, ev: eInput) => {
+            cx.imeprezime = ev?.data || '';
+          },
         },
+        SUBMIT: [
+          {
+            cond: (cx) => cx?.imeprezime?.length === 0 || false,
+            target: 'imeprezime',
+          },
+          {
+            actions: (cx) => {
+              cx.imeprezime = '';
+            },
+            target: 'jmbg',
+          },
+        ],
         ABORT: {
+          actions: (cx) => {
+            cx.imeprezime = '';
+          },
           target: 'idle',
         },
       },
     },
     jmbg: {
       on: {
-        SUBMIT: {
-          target: 'telefon',
+        INPUT: {
+          actions: (cx, ev: eInput) => {
+            cx.jmbg = ev?.data || '';
+          },
         },
+        SUBMIT: [
+          {
+            cond: (cx) => cx?.jmbg?.length === 0 || false,
+            target: 'jmbg',
+          },
+          {
+            actions: (cx) => {
+              cx.jmbg = '';
+            },
+            target: 'telefon',
+          },
+        ],
         ABORT: {
+          actions: (cx) => {
+            cx.jmbg = '';
+          },
           target: 'idle',
         },
       },
     },
     telefon: {
       on: {
-        SUBMIT: {
-          target: 'potvrda',
+        INPUT: {
+          actions: (cx, ev: eInput) => {
+            cx.telefon = ev?.data || '';
+          },
         },
+        SUBMIT: [
+          {
+            cond: (cx) => cx?.telefon?.length === 0 || false,
+            target: 'telefon',
+          },
+          {
+            actions: (cx) => {
+              cx.telefon = '';
+            },
+            target: 'potvrda',
+          },
+        ],
         ABORT: {
+          actions: (cx) => {
+            cx.telefon = '';
+          },
           target: 'idle',
         },
       },

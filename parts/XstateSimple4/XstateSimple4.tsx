@@ -41,12 +41,12 @@ export function XstateSimple4() {
         {cx?.show && <div>prikazujem...</div>}
       </div>
       <hr />
-      <div>UPITNIK</div>
-      <hr />
+      <div className="font-bold">UPITNIK</div>
+
       {['idle'].some(ma) && (
         <div>
           <button
-            className="p-1 mx-1 bg-red-500 rounded-lg"
+            className="p-1 mx-1 text-white bg-purple-800 rounded-lg"
             type="button"
             onClick={() => {
               send({ type: 'UPITNIK' });
@@ -61,7 +61,7 @@ export function XstateSimple4() {
           <div> Da li ste klijent Banke? </div>
           <div>
             <button
-              className="p-1 mx-1 bg-blue-500 rounded-lg"
+              className="p-1 mx-1 bg-gray-500 rounded-lg"
               type="button"
               onClick={() => {
                 send({ type: 'YES' });
@@ -70,7 +70,7 @@ export function XstateSimple4() {
               DA
             </button>
             <button
-              className="p-1 mx-1 bg-yellow-500 rounded-lg"
+              className="p-1 mx-1 bg-purple-500 rounded-lg"
               type="button"
               onClick={() => {
                 send({ type: 'NO' });
@@ -157,6 +157,15 @@ export function XstateSimple4() {
               }}
             >
               Blokiraj karticu
+            </button>{' '}
+            <button
+              className="p-1 mx-1 bg-yellow-700 rounded-lg"
+              type="button"
+              onClick={() => {
+                send({ type: 'ABORT' });
+              }}
+            >
+              Odustani
             </button>{' '}
           </div>
         </div>
