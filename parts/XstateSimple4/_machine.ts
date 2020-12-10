@@ -1,5 +1,5 @@
-import { Machine, spawn } from 'xstate';
-import { send as untypedSend, cancel, sendUpdate } from 'xstate/lib/actions';
+import { Machine } from 'xstate';
+import { send as untypedSend } from 'xstate/lib/actions';
 import { assign } from '@xstate/immer';
 
 // SNIMANJE NA SERVER POCETAK
@@ -486,7 +486,7 @@ export const XstateSimple4Machine = Machine<Icontext, Istates, Ievents>({
         onDone: {
           // kada server vrati odgovor
           actions: [
-            assign((cx, ev) => {
+            assign((cx) => {
               cx.imeprezime = null;
               cx.jmbg = null;
               cx.telefon = null;
