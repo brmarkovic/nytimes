@@ -66,10 +66,6 @@ export const XstateTodosMachine = Machine<Icontext, Istates, Ievents>({
         id: 1,
         todo: 'kupi mleko',
       },
-      {
-        id: 2,
-        todo: 'kupi hleb',
-      },
     ],
   },
   // BIKA FOKUS END <<<<<<

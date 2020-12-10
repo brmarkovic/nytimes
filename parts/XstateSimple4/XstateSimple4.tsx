@@ -428,9 +428,9 @@ export function XstateSimple4() {
       {['potvrda'].some(ma) && (
         <div className="flex flex-col">
           <div> Molim vas proverite tacnost unetih podataka </div>
-          <div> Ime i Prezime </div>
-          <div> JMBG </div>
-          <div> Telefon </div>
+          <div> Ime i Prezime: {cx.imeprezime} </div>
+          <div> JMBG: {cx.jmbg} </div>
+          <div> Telefon: {cx.telefon} </div>
           <div>
             <button
               className="p-1 mx-1 bg-green-500 rounded-lg"
@@ -454,6 +454,7 @@ export function XstateSimple4() {
         </div>
       )}
       {['zahvalnica'].some(ma) && <div> Zahvaljujemo sto koristite portal banke </div>}
+      <pre>{JSON.stringify({ cx }, null, 2)}</pre>
     </div>
   );
 }

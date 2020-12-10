@@ -2,6 +2,37 @@ import { Machine, spawn } from 'xstate';
 import { send as untypedSend, cancel, sendUpdate } from 'xstate/lib/actions';
 import { assign } from '@xstate/immer';
 
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { ApolloClient } from 'apollo-client';
+import { HttpLink } from 'apollo-link-http';
+import { ApolloLink } from 'apollo-link';
+import gql from 'graphql-tag';
+
+export const backendServer = new ApolloClient({
+  ssrMode: true,
+  link: ApolloLink.from([
+    new HttpLink({
+      uri: 'https://backend-graphql-1.herokuapp.com/v1/graphql',
+      fetch,
+    }),
+  ]),
+  cache: new InMemoryCache(),
+  // DO NOT DELETE, THE APP WILL BEHAVE RANDOMLY, CACHE IS HANDLED IN REDIS, APOLLO CACHE IS DISABLED THIS WAY
+  defaultOptions: {
+    watchQuery: {
+      fetchPolicy: 'no-cache',
+      errorPolicy: 'ignore',
+    },
+    query: {
+      fetchPolicy: 'no-cache',
+      errorPolicy: 'all',
+    },
+    mutate: {
+      errorPolicy: 'all',
+    },
+  },
+});
+
 // Icontext
 export interface Icontext {
   show: boolean;
@@ -9,7 +40,7 @@ export interface Icontext {
   brkartice: string;
   brcekova: string;
   imeprezime: string;
-  jmbg: string;
+  jmbg: number;
   telefon: string;
 }
 
@@ -55,6 +86,7 @@ interface Istates {
     telefon: {};
     potvrda: {};
     zahvalnica: {};
+    snimiubazu: {};
   };
 }
 
@@ -246,9 +278,6 @@ export const XstateSimple4Machine = Machine<Icontext, Istates, Ievents>({
             target: 'imeprezime',
           },
           {
-            actions: (cx) => {
-              cx.imeprezime = '';
-            },
             target: 'jmbg',
           },
         ],
@@ -273,9 +302,6 @@ export const XstateSimple4Machine = Machine<Icontext, Istates, Ievents>({
             target: 'jmbg',
           },
           {
-            actions: (cx) => {
-              cx.jmbg = '';
-            },
             target: 'telefon',
           },
         ],
@@ -300,9 +326,6 @@ export const XstateSimple4Machine = Machine<Icontext, Istates, Ievents>({
             target: 'telefon',
           },
           {
-            actions: (cx) => {
-              cx.telefon = '';
-            },
             target: 'potvrda',
           },
         ],
@@ -317,10 +340,53 @@ export const XstateSimple4Machine = Machine<Icontext, Istates, Ievents>({
     potvrda: {
       on: {
         SUBMIT: {
-          target: 'zahvalnica',
+          // actions: [
+          //   assign((cx, ev) => {
+          //     cx.imeprezime = '';
+          //     cx.jmbg = '';
+          //     cx.telefon = '';
+          //   }),
+          // ],
+          target: 'snimiubazu',
         },
         BACK: {
           target: 'imeprezime',
+        },
+      },
+    },
+    snimiubazu: {
+      invoke: {
+        src: async (cx) => {
+          const [ERRdata, data] = await backendServer
+            .mutate({
+              variables: {
+                imeprezime: cx.imeprezime,
+                jmbg: cx.jmbg,
+                telefon: cx.telefon,
+              },
+              mutation: gql`
+                mutation insert_upitnik($imeprezime: String, $jmbg: Int, $telefon: String) {
+                  insert_upitnik(objects: { imeprezime: $imeprezime, jmbg: $jmbg, telefon: $telefon }) {
+                    affected_rows
+                  }
+                }
+              `,
+            })
+            .then((r) => [null, r])
+            .catch((e) => [e]);
+          if ((data && data.errors) || ERRdata) {
+            throw new Error('error');
+          }
+          return data;
+        },
+        onDone: {
+          // kada server vrati odgovor
+          target: 'zahvalnica',
+        },
+        onError: {
+          // kada server napravi gresku
+          // internet ne radi, ne vidi server
+          target: 'potvrda',
         },
       },
     },

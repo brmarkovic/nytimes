@@ -58,12 +58,12 @@ export function XstateTodos() {
             return (
               <div>
                 <input
+                  value={r.todo}
                   onChange={(ev) => {
                     send({ type: 'TODO_MODIFY', data: { id: r.id, todo: ev.target.value } });
                   }}
                   className="px-2 border rounded"
                   type="text"
-                  value={r.todo}
                   placeholder="upisi todo..."
                 />
                 <button type="button" className="px-2 ml-1 text-white bg-orange-500 rounded">
