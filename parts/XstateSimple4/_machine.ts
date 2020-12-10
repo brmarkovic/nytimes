@@ -2,6 +2,12 @@ import { Machine, spawn } from 'xstate';
 import { send as untypedSend, cancel, sendUpdate } from 'xstate/lib/actions';
 import { assign } from '@xstate/immer';
 
+// SNIMANJE NA SERVER POCETAK
+// SNIMANJE NA SERVER POCETAK
+// SNIMANJE NA SERVER POCETAK
+// SNIMANJE NA SERVER POCETAK
+// SNIMANJE NA SERVER POCETAK
+
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { ApolloClient } from 'apollo-client';
 import { HttpLink } from 'apollo-link-http';
@@ -32,6 +38,12 @@ export const backendServer = new ApolloClient({
     },
   },
 });
+
+// SNIMANJE NA SERVER KRAJ
+// SNIMANJE NA SERVER KRAJ
+// SNIMANJE NA SERVER KRAJ
+// SNIMANJE NA SERVER KRAJ
+// SNIMANJE NA SERVER KRAJ
 
 // Icontext
 export interface Icontext {
@@ -66,6 +78,8 @@ export type Ievents =
   | { type: 'BLOKADA' }
   | { type: 'UPITNIK' }
   | { type: 'BACK' }
+  | { type: 'zahvalnica' }
+  | { type: 'potvrda' }
   | eSHOW;
 const send = (sendEvent: Ievents, sendOptions?: any) => untypedSend(sendEvent, sendOptions);
 
@@ -340,13 +354,6 @@ export const XstateSimple4Machine = Machine<Icontext, Istates, Ievents>({
     potvrda: {
       on: {
         SUBMIT: {
-          // actions: [
-          //   assign((cx, ev) => {
-          //     cx.imeprezime = '';
-          //     cx.jmbg = '';
-          //     cx.telefon = '';
-          //   }),
-          // ],
           target: 'snimiubazu',
         },
         BACK: {
@@ -381,11 +388,26 @@ export const XstateSimple4Machine = Machine<Icontext, Istates, Ievents>({
         },
         onDone: {
           // kada server vrati odgovor
-          target: 'zahvalnica',
+          actions: [
+            assign((cx, ev) => {
+              cx.imeprezime = null;
+              cx.jmbg = null;
+              cx.telefon = null;
+            }),
+            send({ type: 'zahvalnica' }),
+          ],
         },
         onError: {
           // kada server napravi gresku
           // internet ne radi, ne vidi server
+          actions: [send({ type: 'potvrda' })],
+        },
+      },
+      on: {
+        zahvalnica: {
+          target: 'zahvalnica',
+        },
+        potvrda: {
           target: 'potvrda',
         },
       },
