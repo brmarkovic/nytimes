@@ -64,7 +64,7 @@ type eSHOW = {
 
 type eInput = {
   type: 'INPUT';
-  data: string;
+  data: any;
 };
 export type Ievents =
   | eInput
@@ -114,7 +114,7 @@ export const XstateSimple4Machine = Machine<Icontext, Istates, Ievents>({
     brkartice: '',
     brcekova: '',
     imeprezime: '',
-    jmbg: '',
+    jmbg: null,
     telefon: '',
   },
   // BIKA FOKUS END <<<<<<
@@ -155,9 +155,11 @@ export const XstateSimple4Machine = Machine<Icontext, Istates, Ievents>({
     racun: {
       on: {
         INPUT: {
-          actions: (cx, ev: eInput) => {
-            cx.brracuna = ev?.data || '';
-          },
+          actions: [
+            assign((cx, ev: eInput) => {
+              cx.brracuna = ev?.data || '';
+            }),
+          ],
         },
         SUBMIT: [
           {
@@ -165,16 +167,20 @@ export const XstateSimple4Machine = Machine<Icontext, Istates, Ievents>({
             target: 'racun',
           },
           {
-            actions: (cx) => {
-              cx.brracuna = '';
-            },
+            actions: [
+              assign((cx) => {
+                cx.brracuna = '';
+              }),
+            ],
             target: 'transakcija',
           },
         ],
         ABORT: {
-          actions: (cx) => {
-            cx.brracuna = '';
-          },
+          actions: [
+            assign((cx) => {
+              cx.brracuna = '';
+            }),
+          ],
           target: 'idle',
         },
       },
@@ -198,9 +204,11 @@ export const XstateSimple4Machine = Machine<Icontext, Istates, Ievents>({
     brkartice: {
       on: {
         INPUT: {
-          actions: (cx, ev: eInput) => {
-            cx.brkartice = ev?.data || '';
-          },
+          actions: [
+            assign((cx, ev: eInput) => {
+              cx.brkartice = ev?.data || '';
+            }),
+          ],
         },
         SUBMIT: [
           {
@@ -208,16 +216,20 @@ export const XstateSimple4Machine = Machine<Icontext, Istates, Ievents>({
             target: 'brkartice',
           },
           {
-            actions: (cx) => {
-              cx.brkartice = '';
-            },
+            actions: [
+              assign((cx) => {
+                cx.brkartice = '';
+              }),
+            ],
             target: 'novausluga',
           },
         ],
         ABORT: {
-          actions: (cx) => {
-            cx.brkartice = '';
-          },
+          actions: [
+            assign((cx) => {
+              cx.brkartice = '';
+            }),
+          ],
           target: 'idle',
         },
       },
@@ -235,9 +247,11 @@ export const XstateSimple4Machine = Machine<Icontext, Istates, Ievents>({
     brcekova: {
       on: {
         INPUT: {
-          actions: (cx, ev: eInput) => {
-            cx.brcekova = ev?.data || '';
-          },
+          actions: [
+            assign((cx, ev: eInput) => {
+              cx.brcekova = ev?.data || '';
+            }),
+          ],
         },
         SUBMIT: [
           {
@@ -245,16 +259,20 @@ export const XstateSimple4Machine = Machine<Icontext, Istates, Ievents>({
             target: 'brcekova',
           },
           {
-            actions: (cx) => {
-              cx.brcekova = '';
-            },
+            actions: [
+              assign((cx) => {
+                cx.brcekova = '';
+              }),
+            ],
             target: 'novausluga',
           },
         ],
         ABORT: {
-          actions: (cx) => {
-            cx.brcekova = '';
-          },
+          actions: [
+            assign((cx) => {
+              cx.brcekova = '';
+            }),
+          ],
           target: 'zahvalnica',
         },
       },
@@ -282,9 +300,11 @@ export const XstateSimple4Machine = Machine<Icontext, Istates, Ievents>({
     imeprezime: {
       on: {
         INPUT: {
-          actions: (cx, ev: eInput) => {
-            cx.imeprezime = ev?.data || '';
-          },
+          actions: [
+            assign((cx, ev: eInput) => {
+              cx.imeprezime = ev?.data || '';
+            }),
+          ],
         },
         SUBMIT: [
           {
@@ -296,9 +316,11 @@ export const XstateSimple4Machine = Machine<Icontext, Istates, Ievents>({
           },
         ],
         ABORT: {
-          actions: (cx) => {
-            cx.imeprezime = '';
-          },
+          actions: [
+            assign((cx) => {
+              cx.imeprezime = '';
+            }),
+          ],
           target: 'idle',
         },
       },
@@ -306,13 +328,15 @@ export const XstateSimple4Machine = Machine<Icontext, Istates, Ievents>({
     jmbg: {
       on: {
         INPUT: {
-          actions: (cx, ev: eInput) => {
-            cx.jmbg = ev?.data || '';
-          },
+          actions: [
+            assign((cx, ev: eInput) => {
+              cx.jmbg = ev?.data || '';
+            }),
+          ],
         },
         SUBMIT: [
           {
-            cond: (cx) => cx?.jmbg?.length === 0 || false,
+            cond: (cx) => cx?.jmbg === null || false,
             target: 'jmbg',
           },
           {
@@ -320,9 +344,11 @@ export const XstateSimple4Machine = Machine<Icontext, Istates, Ievents>({
           },
         ],
         ABORT: {
-          actions: (cx) => {
-            cx.jmbg = '';
-          },
+          actions: [
+            assign((cx) => {
+              cx.jmbg = null;
+            }),
+          ],
           target: 'idle',
         },
       },
@@ -330,9 +356,11 @@ export const XstateSimple4Machine = Machine<Icontext, Istates, Ievents>({
     telefon: {
       on: {
         INPUT: {
-          actions: (cx, ev: eInput) => {
-            cx.telefon = ev?.data || '';
-          },
+          actions: [
+            assign((cx, ev: eInput) => {
+              cx.telefon = ev?.data || '';
+            }),
+          ],
         },
         SUBMIT: [
           {
@@ -344,9 +372,11 @@ export const XstateSimple4Machine = Machine<Icontext, Istates, Ievents>({
           },
         ],
         ABORT: {
-          actions: (cx) => {
-            cx.telefon = '';
-          },
+          actions: [
+            assign((cx) => {
+              cx.telefon = '';
+            }),
+          ],
           target: 'idle',
         },
       },
