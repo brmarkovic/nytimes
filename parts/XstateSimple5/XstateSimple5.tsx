@@ -217,7 +217,7 @@ export function XstateSimple5() {
           </div>
         </div>
       )}
-      {['zahvalnica'].some(ma) && <div> Zahvaljujemo sto koristite portal banke </div>}
+      {['zahvalnica'].some(ma) && <div> Zahvaljujemo se na prijavi za mailing listu! </div>}
       <pre>{JSON.stringify({ cx }, null, 2)}</pre>
     </div>
   );
