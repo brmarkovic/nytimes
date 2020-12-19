@@ -45,18 +45,20 @@ export const backendServer = new ApolloClient({
 // SNIMANJE NA SERVER KRAJ
 // SNIMANJE NA SERVER KRAJ
 
+type Ikorisnik = {
+  id: number;
+  imeprezime: string;
+  mail: string;
+  telefon: string;
+};
+
 // Icontext
 export interface Icontext {
   show: boolean;
   imeprezime: string;
   mail: string;
   telefon: string;
-  prijave: {
-    id: number;
-    imeprezime: string;
-    mail: string;
-    telefon: string;
-  }[];
+  prijave: Ikorisnik[];
 }
 
 // Ievents
@@ -109,7 +111,10 @@ type evIZMENITELEFON = {
     value: string;
   };
 };
-
+type evSNIMIKORISNIKA = {
+  type: 'SNIMIKORISNIKA';
+  data: Ikorisnik;
+};
 export type Ievents =
   | evINPUT
   | evSHOW
@@ -118,6 +123,7 @@ export type Ievents =
   | evIZMENIIME
   | evIZMENIMAIL
   | evIZMENITELEFON
+  | evSNIMIKORISNIKA
   | { type: 'idle' }
   | { type: 'YES' }
   | { type: 'NO' }
@@ -141,6 +147,7 @@ interface Istates {
     snimiubazu: {};
     maillistread: {};
     deletesinglbaza: {};
+    snimikorisnikaubazu: {};
   };
 }
 
@@ -280,6 +287,11 @@ export const XstateSimple5Machine = Machine<Icontext, Istates, Ievents>({
                 });
               }),
             ],
+          },
+        ],
+        SNIMIKORISNIKA: [
+          {
+            target: 'snimikorisnikaubazu',
           },
         ],
       },
@@ -454,6 +466,7 @@ export const XstateSimple5Machine = Machine<Icontext, Istates, Ievents>({
         },
       },
     },
+
     deletesinglbaza: {
       invoke: {
         src: async (cx, ev: evDELETE) => {
@@ -480,6 +493,53 @@ export const XstateSimple5Machine = Machine<Icontext, Istates, Ievents>({
         onDone: [
           {
             cond: (cx, ev: any) => ev?.data?.data?.delete_maillista?.affected_rows === 1 || false,
+            target: 'maillistread',
+          },
+          {
+            target: 'idle',
+          },
+        ],
+        onError: [
+          {
+            // kada server napravi gresku
+            // internet ne radi, ne vidi server
+            target: 'idle',
+          },
+        ],
+      },
+    },
+    snimikorisnikaubazu: {
+      invoke: {
+        src: async (cx, ev: evSNIMIKORISNIKA) => {
+          const [ERRdata, data] = await backendServer
+            .mutate({
+              variables: {
+                id: ev.data.id,
+                imeprezime: ev.data.imeprezime,
+                telefon: ev.data.telefon,
+                mail: ev.data.mail,
+              },
+              mutation: gql`
+                mutation updatemaillista($id: Int, $imeprezime: String, $mail: String, $telefon: String) {
+                  update_maillista(
+                    where: { id: { _eq: $id } }
+                    _set: { imeprezime: $imeprezime, mail: $mail, telefon: $telefon }
+                  ) {
+                    affected_rows
+                  }
+                }
+              `,
+            })
+            .then((r) => [null, r])
+            .catch((e) => [e]);
+          if (data?.errors || ERRdata) {
+            throw new Error('error');
+          }
+          return data;
+        },
+        onDone: [
+          {
+            cond: (cx, ev: any) => ev?.data?.data?.update_maillista?.affected_rows === 1 || false,
             target: 'maillistread',
           },
           {

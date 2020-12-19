@@ -89,6 +89,19 @@ export function XstateSimple5() {
                 className="p-1 mx-1 bg-gray-500 rounded-lg"
                 type="button"
                 onClick={() => {
+                  send({
+                    type: 'SNIMIKORISNIKA',
+                    data: r,
+                  });
+                }}
+              >
+                Snimi
+              </button>
+
+              <button
+                className="p-1 mx-1 bg-gray-500 rounded-lg"
+                type="button"
+                onClick={() => {
                   send({ type: 'DELETE', data: { id: r.id } });
                 }}
               >
