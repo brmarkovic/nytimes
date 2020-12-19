@@ -92,6 +92,7 @@ interface Istates {
     potvrda: {};
     zahvalnica: {};
     snimiubazu: {};
+    maillistread: {};
   };
 }
 
@@ -126,9 +127,50 @@ export const XstateSimple5Machine = Machine<Icontext, Istates, Ievents>({
       on: {
         idle: [
           {
-            target: 'idle',
+            target: 'maillistread',
           },
         ],
+      },
+    },
+    maillistread: {
+      invoke: {
+        src: async (cx) => {
+          const [ERRdata, data] = await backendServer
+            .query({
+              // u navodnicima je ono sto smo u Hasuri definisali i radi
+              query: gql`
+                query maillista {
+                  maillista {
+                    id
+                    imeprezime
+                    mail
+                    telefon
+                  }
+                }
+              `,
+            })
+            .then((r) => [null, r])
+            .catch((e) => [e]);
+          if ((data && data.errors) || ERRdata) {
+            throw new Error('error');
+          }
+          return data;
+        },
+        onDone: {
+          // kada server vrati odgovor
+          actions: [
+            assign((cx, ev) => {
+              // console.log({ ev });
+              cx.prijave = ev.data.data.maillista;
+            }),
+          ],
+          target: 'idle',
+        },
+        onError: {
+          // kada server napravi gresku
+          // internet ne radi, ne vidi server
+          target: 'idle',
+        },
       },
     },
     idle: {
