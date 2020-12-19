@@ -28,19 +28,6 @@ export function XstateSimple5() {
   // REACT (HTML+) KOMPONENTA
   return (
     <div className="p-2">
-      <div>Simple5 Machine</div>
-      <div>
-        <button
-          type="button"
-          onClick={() => {
-            send({ type: 'SHOW', data: !cx.show });
-          }}
-        >
-          toggle show
-        </button>
-        {cx?.show && <div>prikazujem...</div>}
-      </div>
-      <hr />
       <div className="font-bold">UPITNIK</div>
 
       {['idle'].some(ma) && (

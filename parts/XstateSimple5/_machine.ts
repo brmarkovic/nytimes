@@ -72,8 +72,6 @@ export type Ievents =
   | { type: 'SUBMIT' }
   | { type: 'UPITNIK' }
   | { type: 'BACK' }
-  | { type: 'zahvalnica' }
-  | { type: 'potvrda' }
   | eSHOW;
 const send = (sendEvent: Ievents, sendOptions?: any) => untypedSend(sendEvent, sendOptions);
 
@@ -293,26 +291,14 @@ export const XstateSimple5Machine = Machine<Icontext, Istates, Ievents>({
               cx.mail = null;
               cx.telefon = null;
             }),
-            send({ type: 'zahvalnica' }),
           ],
+          target: 'zahvalnica',
         },
         onError: {
           // kada server napravi gresku
           // internet ne radi, ne vidi server
-          actions: [send({ type: 'potvrda' })],
+          target: 'potvrda',
         },
-      },
-      on: {
-        zahvalnica: [
-          {
-            target: 'zahvalnica',
-          },
-        ],
-        potvrda: [
-          {
-            target: 'potvrda',
-          },
-        ],
       },
     },
     zahvalnica: {

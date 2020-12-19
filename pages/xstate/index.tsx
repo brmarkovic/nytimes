@@ -12,7 +12,7 @@ export function PageXstate() {
     <div className="p-2">
       {/* <XstateSimple2 />
       <XstateSimple3 /> */}
-      <XstateSimple4 />
+      {/* <XstateSimple4 /> */}
       <XstateSimple5 />
       {/* <XstateTodos /> */}
     </div>
