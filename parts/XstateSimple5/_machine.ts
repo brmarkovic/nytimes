@@ -86,11 +86,38 @@ type evSUBMIT = {
   };
 };
 
+type evIZMENIIME = {
+  type: 'IZMENIIME';
+  data: {
+    id: number;
+    value: string;
+  };
+};
+
+type evIZMENIMAIL = {
+  type: 'IZMENIMAIL';
+  data: {
+    id: number;
+    value: string;
+  };
+};
+
+type evIZMENITELEFON = {
+  type: 'IZMENITELEFON';
+  data: {
+    id: number;
+    value: string;
+  };
+};
+
 export type Ievents =
   | evINPUT
   | evSHOW
   | evDELETE
   | evSUBMIT
+  | evIZMENIIME
+  | evIZMENIMAIL
+  | evIZMENITELEFON
   | { type: 'idle' }
   | { type: 'YES' }
   | { type: 'NO' }
@@ -98,6 +125,7 @@ export type Ievents =
   | { type: 'UPITNIK' }
   | { type: 'POTVRDI' }
   | { type: 'BACK' };
+
 const send = (sendEvent: Ievents, sendOptions?: any) => untypedSend(sendEvent, sendOptions);
 
 interface Istates {
@@ -201,6 +229,57 @@ export const XstateSimple5Machine = Machine<Icontext, Istates, Ievents>({
         DELETE: [
           {
             target: 'deletesinglbaza',
+          },
+        ],
+        IZMENIIME: [
+          {
+            actions: [
+              assign((cx, ev: evIZMENIIME) => {
+                cx.prijave = cx.prijave.map((r) => {
+                  if (r.id === ev.data.id) {
+                    return {
+                      ...r,
+                      imeprezime: ev.data.value,
+                    };
+                  }
+                  return r;
+                });
+              }),
+            ],
+          },
+        ],
+        IZMENIMAIL: [
+          {
+            actions: [
+              assign((cx, ev: evIZMENIMAIL) => {
+                cx.prijave = cx.prijave.map((r) => {
+                  if (r.id === ev.data.id) {
+                    return {
+                      ...r,
+                      mail: ev.data.value,
+                    };
+                  }
+                  return r;
+                });
+              }),
+            ],
+          },
+        ],
+        IZMENITELEFON: [
+          {
+            actions: [
+              assign((cx, ev: evIZMENITELEFON) => {
+                cx.prijave = cx.prijave.map((r) => {
+                  if (r.id === ev.data.id) {
+                    return {
+                      ...r,
+                      telefon: ev.data.value,
+                    };
+                  }
+                  return r;
+                });
+              }),
+            ],
           },
         ],
       },

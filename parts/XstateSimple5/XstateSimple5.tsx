@@ -34,7 +34,57 @@ export function XstateSimple5() {
         {cx.prijave.map((r) => {
           return (
             <div>
-              {r.id} {r.imeprezime} {r.mail} {r.telefon}
+              <div>
+                {' '}
+                Ime i Prezime:{' '}
+                <input
+                  value={r.imeprezime}
+                  onChange={(ev) => {
+                    send({
+                      type: 'IZMENIIME',
+                      data: {
+                        id: r.id,
+                        value: ev.target.value,
+                      },
+                    });
+                  }}
+                  className="border border-gray-500"
+                />{' '}
+              </div>
+              <div>
+                {' '}
+                mail:{' '}
+                <input
+                  value={r.mail}
+                  onChange={(ev) => {
+                    send({
+                      type: 'IZMENIMAIL',
+                      data: {
+                        id: r.id,
+                        value: ev.target.value,
+                      },
+                    });
+                  }}
+                  className="border border-gray-500"
+                />{' '}
+              </div>
+              <div>
+                {' '}
+                Telefon:
+                <input
+                  value={r.telefon}
+                  onChange={(ev) => {
+                    send({
+                      type: 'IZMENITELEFON',
+                      data: {
+                        id: r.id,
+                        value: ev.target.value,
+                      },
+                    });
+                  }}
+                  className="border border-gray-500"
+                />{' '}
+              </div>
               <button
                 className="p-1 mx-1 bg-gray-500 rounded-lg"
                 type="button"
@@ -198,9 +248,6 @@ export function XstateSimple5() {
       {['potvrda'].some(ma) && (
         <div className="flex flex-col">
           <div> Molim vas proverite tacnost unetih podataka </div>
-          <div> Ime i Prezime: {cx.imeprezime} </div>
-          <div> mail: {cx.mail} </div>
-          <div> Telefon: {cx.telefon} </div>
           <div>
             <button
               className="p-1 mx-1 bg-green-500 rounded-lg"
