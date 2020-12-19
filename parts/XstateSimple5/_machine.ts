@@ -102,6 +102,7 @@ interface Istates {
     zahvalnica: {};
     snimiubazu: {};
     maillistread: {};
+    deletesinglbaza: {};
   };
 }
 
@@ -202,16 +203,7 @@ export const XstateSimple5Machine = Machine<Icontext, Istates, Ievents>({
         ],
         DELETE: [
           {
-            actions: [
-              assign((cx, ev: evDELETE) => {
-                cx.prijave = cx.prijave.filter((r) => {
-                  if (ev.data.id === r.id) {
-                    return false;
-                  }
-                  return true;
-                });
-              }),
-            ],
+            target: 'deletesinglbaza',
           },
         ],
       },
@@ -386,11 +378,52 @@ export const XstateSimple5Machine = Machine<Icontext, Istates, Ievents>({
         },
       },
     },
+    deletesinglbaza: {
+      invoke: {
+        src: async (cx, ev: evDELETE) => {
+          const [ERRdata, data] = await backendServer
+            .mutate({
+              variables: {
+                id: ev.data.id,
+              },
+              mutation: gql`
+                mutation deletemaillista($id: Int) {
+                  delete_maillista(where: { id: { _eq: $id } }) {
+                    affected_rows
+                  }
+                }
+              `,
+            })
+            .then((r) => [null, r])
+            .catch((e) => [e]);
+          if ((data && data.errors) || ERRdata) {
+            throw new Error('error');
+          }
+          return data;
+        },
+        onDone: [
+          {
+            cond: (cx, ev: any) => ev.data.data.delete_maillista.affected_rows === 1 || false,
+            target: 'maillistread',
+          },
+          {
+            target: 'idle',
+          },
+        ],
+        onError: [
+          {
+            // kada server napravi gresku
+            // internet ne radi, ne vidi server
+            target: 'idle',
+          },
+        ],
+      },
+    },
     zahvalnica: {
       after: {
         1000: [
           {
-            target: 'idle',
+            target: 'maillistread',
           },
         ],
       },
