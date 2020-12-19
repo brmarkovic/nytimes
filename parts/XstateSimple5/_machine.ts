@@ -405,14 +405,14 @@ export const XstateSimple5Machine = Machine<Icontext, Istates, Ievents>({
             })
             .then((r) => [null, r])
             .catch((e) => [e]);
-          if ((data && data.errors) || ERRdata) {
+          if (data?.errors || ERRdata) {
             throw new Error('error');
           }
           return data;
         },
         onDone: [
           {
-            cond: (cx, ev: any) => ev.data.data.delete_maillista.affected_rows === 1 || false,
+            cond: (cx, ev: any) => ev?.data?.data?.delete_maillista?.affected_rows === 1 || false,
             target: 'maillistread',
           },
           {
