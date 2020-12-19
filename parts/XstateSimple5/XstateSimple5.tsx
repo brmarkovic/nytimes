@@ -261,6 +261,9 @@ export function XstateSimple5() {
       {['potvrda'].some(ma) && (
         <div className="flex flex-col">
           <div> Molim vas proverite tacnost unetih podataka </div>
+          <div> Ime i Prezime: {cx.imeprezime} </div>
+          <div> mail: {cx.mail} </div>
+          <div> Telefon: {cx.telefon} </div>
           <div>
             <button
               className="p-1 mx-1 bg-green-500 rounded-lg"
