@@ -60,12 +60,12 @@ export interface Icontext {
 }
 
 // Ievents
-type eSHOW = {
+type evSHOW = {
   type: 'SHOW';
   data: boolean;
 };
 
-type eInput = {
+type evINPUT = {
   type: 'INPUT';
   data: string;
 };
@@ -87,8 +87,8 @@ type evSUBMIT = {
 };
 
 export type Ievents =
-  | eInput
-  | eSHOW
+  | evINPUT
+  | evSHOW
   | evDELETE
   | evSUBMIT
   | { type: 'idle' }
@@ -153,7 +153,7 @@ export const XstateSimple5Machine = Machine<Icontext, Istates, Ievents>({
     },
     maillistread: {
       invoke: {
-        src: async (cx) => {
+        src: async () => {
           const [ERRdata, data] = await backendServer
             .query({
               // u navodnicima je ono sto smo u Hasuri definisali i radi
@@ -197,7 +197,7 @@ export const XstateSimple5Machine = Machine<Icontext, Istates, Ievents>({
         SHOW: [
           {
             actions: [
-              assign((cx, ev: eSHOW) => {
+              assign((cx, ev: evSHOW) => {
                 cx.show = ev.data;
               }),
               // send ne moze ovde jer je unutar "on"
@@ -236,7 +236,7 @@ export const XstateSimple5Machine = Machine<Icontext, Istates, Ievents>({
         INPUT: [
           {
             actions: [
-              assign((cx, ev: eInput) => {
+              assign((cx, ev: evINPUT) => {
                 cx.imeprezime = ev?.data || '';
               }),
             ],
@@ -268,7 +268,7 @@ export const XstateSimple5Machine = Machine<Icontext, Istates, Ievents>({
         INPUT: [
           {
             actions: [
-              assign((cx, ev: eInput) => {
+              assign((cx, ev: evINPUT) => {
                 cx.mail = ev?.data || '';
               }),
             ],
@@ -301,7 +301,7 @@ export const XstateSimple5Machine = Machine<Icontext, Istates, Ievents>({
           // default
           {
             actions: [
-              assign((cx, ev: eInput) => {
+              assign((cx, ev: evINPUT) => {
                 cx.telefon = ev?.data || '';
               }),
             ],
