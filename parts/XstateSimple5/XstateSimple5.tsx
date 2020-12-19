@@ -30,6 +30,16 @@ export function XstateSimple5() {
     <div className="p-2">
       <div className="font-bold">UPITNIK</div>
 
+      <div className="flex flex-col">
+        {cx.prijave.map((r) => {
+          return (
+            <div>
+              {r.id} {r.imeprezime} {r.mail} {r.telefon}
+            </div>
+          );
+        })}
+      </div>
+
       {['idle'].some(ma) && (
         <div>
           <button

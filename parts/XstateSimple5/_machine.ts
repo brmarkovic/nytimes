@@ -51,6 +51,12 @@ export interface Icontext {
   imeprezime: string;
   mail: string;
   telefon: string;
+  prijave: {
+    id: number;
+    imeprezime: string;
+    mail: string;
+    telefon: string;
+  }[];
 }
 
 // Ievents
@@ -98,6 +104,20 @@ export const XstateSimple5Machine = Machine<Icontext, Istates, Ievents>({
     imeprezime: '',
     mail: '',
     telefon: '',
+    prijave: [
+      {
+        id: 999,
+        imeprezime: 'xxx',
+        mail: 'yyy',
+        telefon: 'zzz',
+      },
+      {
+        id: 9991,
+        imeprezime: 'xxx1',
+        mail: 'yyy1',
+        telefon: 'zzz1',
+      },
+    ],
   },
   // BIKA FOKUS END <<<<<<
   states: {
