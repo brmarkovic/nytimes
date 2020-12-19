@@ -69,16 +69,25 @@ type eInput = {
   type: 'INPUT';
   data: string;
 };
+
+type evDELETE = {
+  type: 'DELETE';
+  data: {
+    id: number;
+  };
+};
+
 export type Ievents =
   | eInput
+  | eSHOW
+  | evDELETE
   | { type: 'idle' }
   | { type: 'YES' }
   | { type: 'NO' }
   | { type: 'ABORT' }
   | { type: 'SUBMIT' }
   | { type: 'UPITNIK' }
-  | { type: 'BACK' }
-  | eSHOW;
+  | { type: 'BACK' };
 const send = (sendEvent: Ievents, sendOptions?: any) => untypedSend(sendEvent, sendOptions);
 
 interface Istates {
@@ -189,6 +198,20 @@ export const XstateSimple5Machine = Machine<Icontext, Istates, Ievents>({
         UPITNIK: [
           {
             target: 'pitanje',
+          },
+        ],
+        DELETE: [
+          {
+            actions: [
+              assign((cx, ev: evDELETE) => {
+                cx.prijave = cx.prijave.filter((r) => {
+                  if (ev.data.id === r.id) {
+                    return false;
+                  }
+                  return true;
+                });
+              }),
+            ],
           },
         ],
       },

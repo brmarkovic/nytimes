@@ -35,6 +35,15 @@ export function XstateSimple5() {
           return (
             <div>
               {r.id} {r.imeprezime} {r.mail} {r.telefon}
+              <button
+                className="p-1 mx-1 bg-gray-500 rounded-lg"
+                type="button"
+                onClick={() => {
+                  send({ type: 'DELETE', data: { id: r.id } });
+                }}
+              >
+                Obrisi
+              </button>
             </div>
           );
         })}
