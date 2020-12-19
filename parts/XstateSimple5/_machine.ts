@@ -96,6 +96,7 @@ export type Ievents =
   | { type: 'NO' }
   | { type: 'ABORT' }
   | { type: 'UPITNIK' }
+  | { type: 'POTVRDI' }
   | { type: 'BACK' };
 const send = (sendEvent: Ievents, sendOptions?: any) => untypedSend(sendEvent, sendOptions);
 
@@ -124,20 +125,7 @@ export const XstateSimple5Machine = Machine<Icontext, Istates, Ievents>({
     imeprezime: '',
     mail: '',
     telefon: '',
-    prijave: [
-      {
-        id: 999,
-        imeprezime: 'xxx',
-        mail: 'yyy',
-        telefon: 'zzz',
-      },
-      {
-        id: 9991,
-        imeprezime: 'xxx1',
-        mail: 'yyy1',
-        telefon: 'zzz1',
-      },
-    ],
+    prijave: [],
   },
   // BIKA FOKUS END <<<<<<
   states: {
@@ -242,7 +230,7 @@ export const XstateSimple5Machine = Machine<Icontext, Istates, Ievents>({
             ],
           },
         ],
-        SUBMIT: [
+        POTVRDI: [
           {
             cond: (cx) => cx?.imeprezime?.length === 0 || false,
             target: 'imeprezime',
@@ -274,7 +262,7 @@ export const XstateSimple5Machine = Machine<Icontext, Istates, Ievents>({
             ],
           },
         ],
-        SUBMIT: [
+        POTVRDI: [
           {
             cond: (cx) => cx?.mail === null || false,
             target: 'mail',
@@ -307,7 +295,7 @@ export const XstateSimple5Machine = Machine<Icontext, Istates, Ievents>({
             ],
           },
         ],
-        SUBMIT: [
+        POTVRDI: [
           // cond1
           {
             cond: (cx) => cx?.telefon?.length === 0 || false,
