@@ -77,15 +77,24 @@ type evDELETE = {
   };
 };
 
+type evSUBMIT = {
+  type: 'SUBMIT';
+  data: {
+    imeprezime: string;
+    telefon: string;
+    mail: string;
+  };
+};
+
 export type Ievents =
   | eInput
   | eSHOW
   | evDELETE
+  | evSUBMIT
   | { type: 'idle' }
   | { type: 'YES' }
   | { type: 'NO' }
   | { type: 'ABORT' }
-  | { type: 'SUBMIT' }
   | { type: 'UPITNIK' }
   | { type: 'BACK' };
 const send = (sendEvent: Ievents, sendOptions?: any) => untypedSend(sendEvent, sendOptions);
@@ -337,13 +346,13 @@ export const XstateSimple5Machine = Machine<Icontext, Istates, Ievents>({
     },
     snimiubazu: {
       invoke: {
-        src: async (cx) => {
+        src: async (cx, ev: evSUBMIT) => {
           const [ERRdata, data] = await backendServer
             .mutate({
               variables: {
-                imeprezime: cx.imeprezime,
-                mail: cx.mail,
-                telefon: cx.telefon,
+                imeprezime: ev.data.imeprezime,
+                mail: ev.data.mail,
+                telefon: ev.data.telefon,
               },
               mutation: gql`
                 mutation insertmaillista($imeprezime: String, $mail: String, $telefon: String) {

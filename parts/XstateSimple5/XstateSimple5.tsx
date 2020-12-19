@@ -206,7 +206,14 @@ export function XstateSimple5() {
               className="p-1 mx-1 bg-green-500 rounded-lg"
               type="button"
               onClick={() => {
-                send({ type: 'SUBMIT' });
+                send({
+                  type: 'SUBMIT',
+                  data: {
+                    imeprezime: cx.imeprezime,
+                    mail: cx.mail,
+                    telefon: cx.telefon,
+                  },
+                });
               }}
             >
               Potvrdi
