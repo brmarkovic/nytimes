@@ -28,9 +28,19 @@ export function XstateSimple6() {
   // REACT (HTML+) KOMPONENTA
   return (
     <div className="p-2">
-      <div className="font-bold">UPITNIK</div>
-
-      <pre>{JSON.stringify({ cx }, null, 2)}</pre>
+      <div>Simple Machine6</div>
+      <div>
+        <button
+          type="button"
+          onClick={() => {
+            send({ type: 'SHOW', data: !cx.show });
+          }}
+        >
+          toggle show
+        </button>
+        {cx?.show && <div>prikazujem...</div>}
+        <pre>{JSON.stringify({ cx }, null, 2)}</pre>
+      </div>
     </div>
   );
 }

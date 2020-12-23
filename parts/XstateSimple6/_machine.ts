@@ -91,14 +91,15 @@ export const XstateSimple6Machine = Machine<Icontext, Istates, Ievents>({
         ],
       },
     },
-
     idle: {
-      after: {
-        1000: [
-          {
-            target: 'idle',
-          },
-        ],
+      on: {
+        SHOW: {
+          actions: [
+            assign((cx, ev: evSHOW) => {
+              cx.show = ev.data;
+            }),
+          ],
+        },
       },
     },
   },
