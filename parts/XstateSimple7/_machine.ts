@@ -45,11 +45,24 @@ export const backendServer = new ApolloClient({
 // SNIMANJE NA SERVER KRAJ
 // SNIMANJE NA SERVER KRAJ
 
+type Ikorisnik = {
+  id: number;
+  tipklijenta: string;
+  jmbg: number;
+  maticnibroj: number;
+  razlozi: string;
+  olaksice: string;
+};
+
 // Icontext
 export interface Icontext {
   jmbg: number | string;
   show: boolean;
   maticnibroj: number | string;
+  tipklijenta: string;
+  razlozi: string;
+  olaksice: string;
+  prijave: Ikorisnik[];
 }
 
 // Ievents
@@ -107,8 +120,12 @@ export const XstateSimple7Machine = Machine<Icontext, Istates, Ievents>({
   // BIKA FOKUS >>>>>>>>>>
   context: {
     show: false,
-    jmbg: null,
-    maticnibroj: null,
+    jmbg: '',
+    maticnibroj: '',
+    tipklijenta: '',
+    razlozi: '',
+    olaksice: '',
+    prijave: [],
   },
   // BIKA FOKUS END <<<<<<
   states: {
@@ -145,13 +162,30 @@ export const XstateSimple7Machine = Machine<Icontext, Istates, Ievents>({
     },
     tipklijenta: {
       on: {
-        FL: 'jmbg',
-
-        POLJOPRIVREDNIK: 'jmbg',
-
-        PREDUZETNIK: 'maticnibroj',
-
-        PRAVNOLICE: 'maticnibroj',
+        FL: [
+          {
+            cond: (cx, ev) => cx?.tipklijenta === 'fizicko lice',
+            target: 'jmbg',
+          },
+        ],
+        POLJOPRIVREDNIK: [
+          {
+            cond: (cx, ev) => cx?.tipklijenta === 'poljoprivrednik',
+            target: 'jmbg',
+          },
+        ],
+        PREDUZETNIK: [
+          {
+            cond: (cx, ev) => cx?.tipklijenta === 'preduzetnik',
+            target: 'maticnibroj',
+          },
+        ],
+        PRAVNOLICE: [
+          {
+            cond: (cx, ev) => cx?.tipklijenta === 'pravnolice',
+            target: 'maticnibroj',
+          },
+        ],
       },
     },
 
