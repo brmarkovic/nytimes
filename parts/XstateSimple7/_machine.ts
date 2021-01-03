@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { Machine } from 'xstate';
 import { send as untypedSend } from 'xstate/lib/actions';
 import { assign } from '@xstate/immer';
@@ -62,7 +63,6 @@ export interface Icontext {
   tipklijenta: string;
   razlozi: string;
   olaksice: string;
-  fizickolice: string;
   prijave: Ikorisnik[];
 }
 
@@ -115,6 +115,7 @@ interface Istates {
     olaksice: {};
     provera: {};
     potvrda: {};
+    zahtevread: {};
   };
 }
 
@@ -127,7 +128,6 @@ export const XstateSimple7Machine = Machine<Icontext, Istates, Ievents>({
     jmbg: '',
     maticnibroj: '',
     tipklijenta: '',
-    fizickolice: '',
     razlozi: '',
     olaksice: '',
     prijave: [],
@@ -139,9 +139,52 @@ export const XstateSimple7Machine = Machine<Icontext, Istates, Ievents>({
       on: {
         idle: [
           {
-            target: 'idle',
+            target: 'zahtevread',
           },
         ],
+      },
+    },
+    zahtevread: {
+      invoke: {
+        src: async () => {
+          const [ERRdata, data] = await backendServer
+            .query({
+              // u navodnicima je ono sto smo u Hasuri definisali i radi
+              query: gql`
+                query zahtevread {
+                  zahtev {
+                    id
+                    jmbg
+                    maticnibroj
+                    olaksice
+                    razlozi
+                    tipklijenta
+                  }
+                }
+              `,
+            })
+            .then((r) => [null, r])
+            .catch((e) => [e]);
+          if ((data && data.errors) || ERRdata) {
+            throw new Error('error');
+          }
+          return data;
+        },
+        onDone: {
+          // kada server vrati odgovor
+          actions: [
+            assign((cx, ev) => {
+              // console.log({ ev });
+              cx.prijave = ev.data.data.zahtev;
+            }),
+          ],
+          target: 'idle',
+        },
+        onError: {
+          // kada server napravi gresku
+          // internet ne radi, ne vidi server
+          target: 'idle',
+        },
       },
     },
     idle: {
@@ -324,7 +367,7 @@ export const XstateSimple7Machine = Machine<Icontext, Istates, Ievents>({
       after: {
         1000: [
           {
-            target: 'idle',
+            target: 'zahtevread',
           },
         ],
       },
