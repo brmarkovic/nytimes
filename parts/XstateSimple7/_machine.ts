@@ -47,9 +47,9 @@ export const backendServer = new ApolloClient({
 
 // Icontext
 export interface Icontext {
-  jmbg: number;
+  jmbg: number | string;
   show: boolean;
-  maticnibroj: number;
+  maticnibroj: number | string;
 }
 
 // Ievents
