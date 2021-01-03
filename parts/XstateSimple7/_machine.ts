@@ -47,9 +47,9 @@ export const backendServer = new ApolloClient({
 
 // Icontext
 export interface Icontext {
-  jmbg: string | number | readonly string[];
+  jmbg: number;
   show: boolean;
-  maticnibroj: string | number;
+  maticnibroj: number;
 }
 
 // Ievents
@@ -107,8 +107,8 @@ export const XstateSimple7Machine = Machine<Icontext, Istates, Ievents>({
   // BIKA FOKUS >>>>>>>>>>
   context: {
     show: false,
-    jmbg:null,
-    maticnibroj:null,
+    jmbg: null,
+    maticnibroj: null,
   },
   // BIKA FOKUS END <<<<<<
   states: {
@@ -166,7 +166,7 @@ export const XstateSimple7Machine = Machine<Icontext, Istates, Ievents>({
             ],
           },
         ],
-        SUBMIT:[
+        SUBMIT: [
           {
             cond: (cx) => cx?.jmbg === null || false,
             target: 'jmbg',
@@ -174,9 +174,9 @@ export const XstateSimple7Machine = Machine<Icontext, Istates, Ievents>({
           {
             target: 'razlozi',
           },
-        ], 
+        ],
 
-        ABORT:[
+        ABORT: [
           {
             actions: [
               assign((cx) => {
@@ -200,7 +200,7 @@ export const XstateSimple7Machine = Machine<Icontext, Istates, Ievents>({
             ],
           },
         ],
-        SUBMIT:[
+        SUBMIT: [
           {
             cond: (cx) => cx?.maticnibroj === null || false,
             target: 'maticnibroj',
@@ -208,9 +208,9 @@ export const XstateSimple7Machine = Machine<Icontext, Istates, Ievents>({
           {
             target: 'razlozi',
           },
-        ], 
+        ],
 
-        ABORT:[
+        ABORT: [
           {
             actions: [
               assign((cx) => {

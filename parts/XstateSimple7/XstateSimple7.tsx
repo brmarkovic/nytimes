@@ -228,6 +228,82 @@ export function XstateSimple7() {
             </div>
           </div>
         )}
+        {['olaksice'].some(ma) && (
+          <div className="flex flex-col">
+            <div> Izaberite olaksicu za koju podnosite zahtev </div>
+            <div className="flex flex-col">
+              <button
+                className="p-1 mx-1 bg-purple-500 rounded-lg"
+                type="button"
+                onClick={() => {
+                  send({ type: 'TRPOZAJMICA' });
+                }}
+              >
+                Pozajmica po TR
+              </button>
+              <button
+                className="p-1 mx-1 bg-yellow-500 rounded-lg"
+                type="button"
+                onClick={() => {
+                  send({ type: 'KREDITNEKARTICE' });
+                }}
+              >
+                Kreditne kartice
+              </button>
+              <button
+                className="p-1 mx-1 bg-red-500 rounded-lg"
+                type="button"
+                onClick={() => {
+                  send({ type: 'KARTICESAODLPLACANJEM' });
+                }}
+              >
+                Kartice sa odlozenim placanjem
+              </button>{' '}
+              <button
+                className="p-1 mx-1 bg-yellow-700 rounded-lg"
+                type="button"
+                onClick={() => {
+                  send({ type: 'ABORT' });
+                }}
+              >
+                Odustani
+              </button>{' '}
+            </div>
+          </div>
+        )}
+        {['provera'].some(ma) && (
+          <div className="flex flex-col">
+            <div> Molim vas proverite tacnost unetih podataka </div>
+            <div> Tip klijenta: {} </div>
+            <div> jmbg: {cx.jmbg} </div>
+            <div> maticnibroj: {cx.maticnibroj} </div>
+            <div> Razlog: {} </div>
+            <div> Ti olaksice: {} </div>
+            <div>
+              <button
+                className="p-1 mx-1 bg-green-500 rounded-lg"
+                type="button"
+                onClick={() => {
+                  send({
+                    type: 'SUBMIT',
+                  });
+                }}
+              >
+                Potvrdi
+              </button>
+              <button
+                className="p-1 mx-1 bg-red-500 rounded-lg"
+                type="button"
+                onClick={() => {
+                  send({ type: 'BACK' });
+                }}
+              >
+                Vrati se nazad
+              </button>
+            </div>
+          </div>
+        )}
+        {['potvrda'].some(ma) && <div> Vas zahtev je uspesko kreiran! </div>}
         <pre>{JSON.stringify({ cx }, null, 2)}</pre>
       </div>
     </div>
