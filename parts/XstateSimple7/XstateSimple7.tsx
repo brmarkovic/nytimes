@@ -76,7 +76,7 @@ export function XstateSimple7() {
                 className="p-1 mx-1 bg-purple-500 rounded-lg"
                 type="button"
                 onClick={() => {
-                  send({ type: 'FL' });
+                  send({ type: 'SET_CLIENT', data: 'fizickolice' });
                 }}
               >
                 Fizicko lice!
@@ -85,7 +85,7 @@ export function XstateSimple7() {
                 className="p-1 mx-1 bg-yellow-500 rounded-lg"
                 type="button"
                 onClick={() => {
-                  send({ type: 'POLJOPRIVREDNIK' });
+                  send({ type: 'SET_CLIENT', data: 'poljoprivrednik' });
                 }}
               >
                 Poljoprivrednik!
@@ -94,7 +94,7 @@ export function XstateSimple7() {
                 className="p-1 mx-1 bg-red-500 rounded-lg"
                 type="button"
                 onClick={() => {
-                  send({ type: 'PREDUZETNIK' });
+                  send({ type: 'SET_CLIENT', data: 'preduzetnik' });
                 }}
               >
                 Preduzetnik
@@ -103,7 +103,7 @@ export function XstateSimple7() {
                 className="p-1 mx-1 bg-yellow-700 rounded-lg"
                 type="button"
                 onClick={() => {
-                  send({ type: 'PRAVNOLICE' });
+                  send({ type: 'SET_CLIENT', data: 'pravnolice' });
                 }}
               >
                 Pravno lice!

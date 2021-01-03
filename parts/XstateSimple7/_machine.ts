@@ -93,6 +93,7 @@ export type Ievents =
   | { type: 'TRPOZAJMICA' }
   | { type: 'KREDITNEKARTICE' }
   | { type: 'KARTICESAODLPLACANJEM' }
+  | { type: 'SET_CLIENT' }
   | { type: 'KREDITI' }
   | { type: 'BACK' }
   | { type: 'idle' };
