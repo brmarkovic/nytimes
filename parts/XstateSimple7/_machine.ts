@@ -62,6 +62,7 @@ export interface Icontext {
   tipklijenta: string;
   razlozi: string;
   olaksice: string;
+  fizickolice: string;
   prijave: Ikorisnik[];
 }
 
@@ -94,6 +95,8 @@ export type Ievents =
   | { type: 'KREDITNEKARTICE' }
   | { type: 'KARTICESAODLPLACANJEM' }
   | { type: 'SET_CLIENT' }
+  | { type: 'SET_RAZLOG' }
+  | { type: 'SET_OLAKSICE' }
   | { type: 'KREDITI' }
   | { type: 'BACK' }
   | { type: 'idle' };
@@ -124,6 +127,7 @@ export const XstateSimple7Machine = Machine<Icontext, Istates, Ievents>({
     jmbg: '',
     maticnibroj: '',
     tipklijenta: '',
+    fizickolice: '',
     razlozi: '',
     olaksice: '',
     prijave: [],
@@ -163,27 +167,24 @@ export const XstateSimple7Machine = Machine<Icontext, Istates, Ievents>({
     },
     tipklijenta: {
       on: {
-        FL: [
+        SET_CLIENT: [
           {
-            cond: (cx, ev) => cx?.tipklijenta === 'fizicko lice',
+            cond: (cx, ev) => cx.tipklijenta === 'fizickolice' || true,
             target: 'jmbg',
           },
-        ],
-        POLJOPRIVREDNIK: [
+
           {
-            cond: (cx, ev) => cx?.tipklijenta === 'poljoprivrednik',
+            cond: (cx, ev) => cx.tipklijenta === 'poljoprivrednik' || true,
             target: 'jmbg',
           },
-        ],
-        PREDUZETNIK: [
+
           {
-            cond: (cx, ev) => cx?.tipklijenta === 'preduzetnik',
+            cond: (cx, ev) => cx.tipklijenta === 'preduzetnik' || true,
             target: 'maticnibroj',
           },
-        ],
-        PRAVNOLICE: [
+
           {
-            cond: (cx, ev) => cx?.tipklijenta === 'pravnolice',
+            cond: (cx, ev) => cx.tipklijenta === 'pravnolice' || true,
             target: 'maticnibroj',
           },
         ],
@@ -260,11 +261,22 @@ export const XstateSimple7Machine = Machine<Icontext, Istates, Ievents>({
 
     razlozi: {
       on: {
-        RAZLOG1: 'olaksice',
+        SET_RAZLOG: [
+          {
+            cond: (cx, ev) => cx.razlozi === 'razlog1' || true,
+            target: 'olaksice',
+          },
 
-        RAZLOG2: 'olaksice',
+          {
+            cond: (cx, ev) => cx.razlozi === 'razlog2' || true,
+            target: 'olaksice',
+          },
 
-        RAZLOG3: 'olaksice',
+          {
+            cond: (cx, ev) => cx.razlozi === 'razlog3' || true,
+            target: 'olaksice',
+          },
+        ],
 
         ABORT: 'idle',
       },
@@ -272,13 +284,27 @@ export const XstateSimple7Machine = Machine<Icontext, Istates, Ievents>({
 
     olaksice: {
       on: {
-        TRPOZAJMICA: 'provera',
+        SET_OLAKSICE: [
+          {
+            cond: (cx, ev) => cx.olaksice === 'trpozajmica' || true,
+            target: 'provera',
+          },
 
-        KREDITNEKARTICE: 'provera',
+          {
+            cond: (cx, ev) => cx.olaksice === 'kreditnekartice' || true,
+            target: 'provera',
+          },
 
-        KARTICESAODLPLACANJEM: 'provera',
+          {
+            cond: (cx, ev) => cx.olaksice === 'karticenaodlplacanje' || true,
+            target: 'provera',
+          },
 
-        KREDITI: 'provera',
+          {
+            cond: (cx, ev) => cx.olaksice === 'krediti' || true,
+            target: 'provera',
+          },
+        ],
 
         ABORT: 'idle',
       },

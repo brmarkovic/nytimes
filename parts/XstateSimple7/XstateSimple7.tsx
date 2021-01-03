@@ -193,7 +193,7 @@ export function XstateSimple7() {
                 className="p-1 mx-1 bg-purple-500 rounded-lg"
                 type="button"
                 onClick={() => {
-                  send({ type: 'RAZLOG1' });
+                  send({ type: 'SET_RAZLOG', data: 'razlog1' });
                 }}
               >
                 Razlog1
@@ -202,7 +202,7 @@ export function XstateSimple7() {
                 className="p-1 mx-1 bg-yellow-500 rounded-lg"
                 type="button"
                 onClick={() => {
-                  send({ type: 'RAZLOG2' });
+                  send({ type: 'SET_RAZLOG', data: 'razlog2' });
                 }}
               >
                 Razlog2
@@ -211,7 +211,7 @@ export function XstateSimple7() {
                 className="p-1 mx-1 bg-red-500 rounded-lg"
                 type="button"
                 onClick={() => {
-                  send({ type: 'RAZLOG3' });
+                  send({ type: 'SET_RAZLOG', data: 'razlog3' });
                 }}
               >
                 Razlog3
@@ -236,7 +236,7 @@ export function XstateSimple7() {
                 className="p-1 mx-1 bg-purple-500 rounded-lg"
                 type="button"
                 onClick={() => {
-                  send({ type: 'TRPOZAJMICA' });
+                  send({ type: 'SET_OLAKSICE', data: 'trpozajmica' });
                 }}
               >
                 Pozajmica po TR
@@ -245,7 +245,7 @@ export function XstateSimple7() {
                 className="p-1 mx-1 bg-yellow-500 rounded-lg"
                 type="button"
                 onClick={() => {
-                  send({ type: 'KREDITNEKARTICE' });
+                  send({ type: 'SET_OLAKSICE', data: 'kreditnekartice' });
                 }}
               >
                 Kreditne kartice
@@ -254,7 +254,7 @@ export function XstateSimple7() {
                 className="p-1 mx-1 bg-red-500 rounded-lg"
                 type="button"
                 onClick={() => {
-                  send({ type: 'KARTICESAODLPLACANJEM' });
+                  send({ type: 'SET_OLAKSICE', data: 'karticesaodlplacanjem' });
                 }}
               >
                 Kartice sa odlozenim placanjem
@@ -263,7 +263,7 @@ export function XstateSimple7() {
                 className="p-1 mx-1 bg-red-500 rounded-lg"
                 type="button"
                 onClick={() => {
-                  send({ type: 'KREDITI' });
+                  send({ type: 'SET_OLAKSICE', data: 'krediti' });
                 }}
               >
                 Kredit
