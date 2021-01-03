@@ -47,7 +47,9 @@ export const backendServer = new ApolloClient({
 
 // Icontext
 export interface Icontext {
+  jmbg: string | number | readonly string[];
   show: boolean;
+  maticnibroj: string | number;
 }
 
 // Ievents
@@ -105,6 +107,8 @@ export const XstateSimple7Machine = Machine<Icontext, Istates, Ievents>({
   // BIKA FOKUS >>>>>>>>>>
   context: {
     show: false,
+    jmbg:null,
+    maticnibroj:null,
   },
   // BIKA FOKUS END <<<<<<
   states: {
@@ -153,17 +157,69 @@ export const XstateSimple7Machine = Machine<Icontext, Istates, Ievents>({
 
     jmbg: {
       on: {
-        SUBMIT: 'razlozi',
+        INPUT: [
+          {
+            actions: [
+              assign((cx, ev: evINPUT) => {
+                cx.jmbg = ev?.data || '';
+              }),
+            ],
+          },
+        ],
+        SUBMIT:[
+          {
+            cond: (cx) => cx?.jmbg === null || false,
+            target: 'jmbg',
+          },
+          {
+            target: 'razlozi',
+          },
+        ], 
 
-        ABORT: 'idle',
+        ABORT:[
+          {
+            actions: [
+              assign((cx) => {
+                cx.jmbg = null;
+              }),
+            ],
+            target: 'idle',
+          },
+        ],
       },
     },
 
     maticnibroj: {
       on: {
-        SUBMIT: 'razlozi',
+        INPUT: [
+          {
+            actions: [
+              assign((cx, ev: evINPUT) => {
+                cx.maticnibroj = ev?.data || '';
+              }),
+            ],
+          },
+        ],
+        SUBMIT:[
+          {
+            cond: (cx) => cx?.maticnibroj === null || false,
+            target: 'maticnibroj',
+          },
+          {
+            target: 'razlozi',
+          },
+        ], 
 
-        ABORT: 'idle',
+        ABORT:[
+          {
+            actions: [
+              assign((cx) => {
+                cx.maticnibroj = null;
+              }),
+            ],
+            target: 'idle',
+          },
+        ],
       },
     },
 
