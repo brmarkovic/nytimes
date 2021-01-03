@@ -263,7 +263,7 @@ export function XstateSimple7() {
                 className="p-1 mx-1 bg-red-500 rounded-lg"
                 type="button"
                 onClick={() => {
-                  send({ type: 'KREDIT' });
+                  send({ type: 'KREDITI' });
                 }}
               >
                 Kredit
