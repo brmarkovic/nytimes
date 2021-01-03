@@ -260,6 +260,15 @@ export function XstateSimple7() {
                 Kartice sa odlozenim placanjem
               </button>{' '}
               <button
+                className="p-1 mx-1 bg-red-500 rounded-lg"
+                type="button"
+                onClick={() => {
+                  send({ type: 'KREDIT' });
+                }}
+              >
+                Kredit
+              </button>{' '}
+              <button
                 className="p-1 mx-1 bg-yellow-700 rounded-lg"
                 type="button"
                 onClick={() => {
