@@ -58,9 +58,10 @@ type Ikorisnik = {
 
 // Icontext
 export interface Icontext {
-  jmbg: number | string;
+  prijava: any;
+  jmbg: string;
   show: boolean;
-  maticnibroj: number | string;
+  maticnibroj: string;
   tipklijenta: string;
   razlozi: string;
   olaksice: string;
@@ -93,19 +94,30 @@ type evSETOLAKSICE = {
   data: string;
 };
 
+type evSUBMIT = {
+  type: 'SUBMIT';
+  data: {
+    tipklijenta: string;
+    jmbg: string;
+    maticnibroj: string;
+    razlozi: string;
+    olaksice: string;
+  };
+};
+
 export type Ievents =
   | evINPUT
   | evSHOW
   | evSETCLIENT
   | evSETRAZLOG
   | evSETOLAKSICE
+  | evSUBMIT
   | { type: 'FORMULAR' }
   | { type: 'PODNESIZAHTEV' }
   | { type: 'FL' }
   | { type: 'POLJOPRIVREDNIK' }
   | { type: 'PRAVNOLICE' }
   | { type: 'PREDUZETNIK' }
-  | { type: 'SUBMIT' }
   | { type: 'ABORT' }
   | { type: 'RAZLOG1' }
   | { type: 'RAZLOG2' }
@@ -132,6 +144,7 @@ interface Istates {
     provera: {};
     potvrda: {};
     zahtevread: {};
+    snimiubazu: {};
   };
 }
 
@@ -442,11 +455,72 @@ export const XstateSimple7Machine = Machine<Icontext, Istates, Ievents>({
 
     provera: {
       on: {
-        SUBMIT: 'potvrda',
+        SUBMIT: 'snimiubazu',
 
         BACK: 'tipklijenta',
 
         ABORT: 'idle',
+      },
+    },
+    snimiubazu: {
+      invoke: {
+        src: async (cx, ev: evSUBMIT) => {
+          const [ERRdata, data] = await backendServer
+            .mutate({
+              variables: {
+                tipklijenta: ev.data.tipklijenta,
+                jmbg: ev.data.jmbg,
+                maticnibroj: ev.data.maticnibroj,
+                razlozi: ev.data.razlozi,
+                olaksice: ev.data.olaksice,
+              },
+              mutation: gql`
+                mutation insertzahtev(
+                  $tipklijenta: String
+                  $jmbg: String
+                  $maticnibroj: String
+                  $olaksice: String
+                  $razlozi: String
+                ) {
+                  insert_zahtev(
+                    objects: {
+                      tipklijenta: $tipklijenta
+                      jmbg: $jmbg
+                      maticnibroj: $maticnibroj
+                      razlozi: $razlozi
+                      olaksice: $olaksice
+                    }
+                  ) {
+                    affected_rows
+                  }
+                }
+              `,
+            })
+            .then((r) => [null, r])
+            .catch((e) => [e]);
+          if ((data && data.errors) || ERRdata) {
+            throw new Error('error');
+          }
+          return data;
+        },
+        onDone: {
+          // kada server vrati odgovor
+          actions: [
+            assign((cx) => {
+              cx.tipklijenta = null;
+              cx.jmbg = null;
+              cx.maticnibroj = null;
+              cx.razlozi = null;
+              cx.olaksice = null;
+            }),
+          ],
+          target: 'potvrda',
+        },
+        onError: {
+          // kada server napravi gresku
+          // internet ne radi, ne vidi server
+          target: 'provera',
+        },
       },
     },
 

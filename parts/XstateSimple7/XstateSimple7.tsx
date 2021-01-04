@@ -302,6 +302,13 @@ export function XstateSimple7() {
                 onClick={() => {
                   send({
                     type: 'SUBMIT',
+                    data: {
+                      tipklijenta: cx.tipklijenta,
+                      jmbg: cx.jmbg,
+                      maticnibroj: cx.maticnibroj,
+                      razlozi: cx.razlozi,
+                      olaksice: cx.olaksice,
+                    },
                   });
                 }}
               >
