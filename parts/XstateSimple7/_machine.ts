@@ -78,9 +78,27 @@ type evINPUT = {
   data: string;
 };
 
+type evSETCLIENT = {
+  type: 'SET_CLIENT';
+  data: string;
+};
+
+type evSETRAZLOG = {
+  type: 'SET_RAZLOG';
+  data: string;
+};
+
+type evSETOLAKSICE = {
+  type: 'SET_OLAKSICE';
+  data: string;
+};
+
 export type Ievents =
   | evINPUT
   | evSHOW
+  | evSETCLIENT
+  | evSETRAZLOG
+  | evSETOLAKSICE
   | { type: 'FORMULAR' }
   | { type: 'PODNESIZAHTEV' }
   | { type: 'FL' }
@@ -95,9 +113,6 @@ export type Ievents =
   | { type: 'TRPOZAJMICA' }
   | { type: 'KREDITNEKARTICE' }
   | { type: 'KARTICESAODLPLACANJEM' }
-  | { type: 'SET_CLIENT' }
-  | { type: 'SET_RAZLOG' }
-  | { type: 'SET_OLAKSICE' }
   | { type: 'KREDITI' }
   | { type: 'BACK' }
   | { type: 'idle' };
@@ -218,7 +233,8 @@ export const XstateSimple7Machine = Machine<Icontext, Istates, Ievents>({
           },
           {
             actions: [
-              assign((cx, ev: evINPUT) => {
+              assign((cx, ev: evSETCLIENT) => {
+                console.log({ ev });
                 cx.tipklijenta = ev?.data || '';
               }),
             ],
@@ -229,7 +245,7 @@ export const XstateSimple7Machine = Machine<Icontext, Istates, Ievents>({
           },
           {
             actions: [
-              assign((cx, ev: evINPUT) => {
+              assign((cx, ev: evSETCLIENT) => {
                 cx.tipklijenta = ev?.data || '';
               }),
             ],
@@ -240,7 +256,8 @@ export const XstateSimple7Machine = Machine<Icontext, Istates, Ievents>({
           },
           {
             actions: [
-              assign((cx, ev: evINPUT) => {
+              assign((cx, ev: evSETCLIENT) => {
+                console.log({ ev });
                 cx.tipklijenta = ev?.data || '';
               }),
             ],
@@ -251,7 +268,7 @@ export const XstateSimple7Machine = Machine<Icontext, Istates, Ievents>({
           },
           {
             actions: [
-              assign((cx, ev: evINPUT) => {
+              assign((cx, ev: evSETCLIENT) => {
                 cx.tipklijenta = ev?.data || '';
               }),
             ],
@@ -332,18 +349,37 @@ export const XstateSimple7Machine = Machine<Icontext, Istates, Ievents>({
       on: {
         SET_RAZLOG: [
           {
-            cond: (cx, ev) => cx.razlozi === 'razlog1' || true,
+            cond: (cx, ev) => cx.razlozi === 'razlog1',
             target: 'olaksice',
           },
-
           {
-            cond: (cx, ev) => cx.razlozi === 'razlog2' || true,
+            actions: [
+              assign((cx, ev: evSETRAZLOG) => {
+                cx.razlozi = ev?.data || '';
+              }),
+            ],
+          },
+          {
+            cond: (cx, ev) => cx.razlozi === 'razlog2',
             target: 'olaksice',
           },
-
           {
-            cond: (cx, ev) => cx.razlozi === 'razlog3' || true,
+            actions: [
+              assign((cx, ev: evSETRAZLOG) => {
+                cx.razlozi = ev?.data || '';
+              }),
+            ],
+          },
+          {
+            cond: (cx, ev) => cx.razlozi === 'razlog3',
             target: 'olaksice',
+          },
+          {
+            actions: [
+              assign((cx, ev: evSETRAZLOG) => {
+                cx.razlozi = ev?.data || '';
+              }),
+            ],
           },
         ],
 
@@ -355,23 +391,48 @@ export const XstateSimple7Machine = Machine<Icontext, Istates, Ievents>({
       on: {
         SET_OLAKSICE: [
           {
-            cond: (cx, ev) => cx.olaksice === 'trpozajmica' || true,
+            cond: (cx, ev) => cx.olaksice === 'trpozajmica',
             target: 'provera',
           },
-
           {
-            cond: (cx, ev) => cx.olaksice === 'kreditnekartice' || true,
+            actions: [
+              assign((cx, ev: evSETOLAKSICE) => {
+                cx.olaksice = ev?.data || '';
+              }),
+            ],
+          },
+          {
+            cond: (cx, ev) => cx.olaksice === 'kreditnekartice',
             target: 'provera',
           },
-
           {
-            cond: (cx, ev) => cx.olaksice === 'karticenaodlplacanje' || true,
+            actions: [
+              assign((cx, ev: evSETOLAKSICE) => {
+                cx.olaksice = ev?.data || '';
+              }),
+            ],
+          },
+          {
+            cond: (cx, ev) => cx.olaksice === 'karticenaodlplacanje',
             target: 'provera',
           },
-
           {
-            cond: (cx, ev) => cx.olaksice === 'krediti' || true,
+            actions: [
+              assign((cx, ev: evSETOLAKSICE) => {
+                cx.olaksice = ev?.data || '';
+              }),
+            ],
+          },
+          {
+            cond: (cx, ev) => cx.olaksice === 'krediti',
             target: 'provera',
+          },
+          {
+            actions: [
+              assign((cx, ev: evSETOLAKSICE) => {
+                cx.olaksice = ev?.data || '';
+              }),
+            ],
           },
         ],
 
