@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable no-console */
 import { Machine } from 'xstate';
 import { send as untypedSend } from 'xstate/lib/actions';
@@ -174,7 +175,7 @@ export const XstateSimple7Machine = Machine<Icontext, Istates, Ievents>({
           // kada server vrati odgovor
           actions: [
             assign((cx, ev) => {
-              // console.log({ ev });
+              console.log({ ev });
               cx.prijave = ev.data.data.zahtev;
             }),
           ],
@@ -212,23 +213,48 @@ export const XstateSimple7Machine = Machine<Icontext, Istates, Ievents>({
       on: {
         SET_CLIENT: [
           {
-            cond: (cx, ev) => cx.tipklijenta === 'fizickolice' || true,
+            cond: (cx, ev) => cx.tipklijenta === 'fizickolice',
             target: 'jmbg',
           },
-
           {
-            cond: (cx, ev) => cx.tipklijenta === 'poljoprivrednik' || true,
+            actions: [
+              assign((cx, ev: evINPUT) => {
+                cx.tipklijenta = ev?.data || '';
+              }),
+            ],
+          },
+          {
+            cond: (cx, ev) => cx.tipklijenta === 'poljoprivrednik',
             target: 'jmbg',
           },
-
           {
-            cond: (cx, ev) => cx.tipklijenta === 'preduzetnik' || true,
+            actions: [
+              assign((cx, ev: evINPUT) => {
+                cx.tipklijenta = ev?.data || '';
+              }),
+            ],
+          },
+          {
+            cond: (cx, ev) => cx.tipklijenta === 'preduzetnik',
             target: 'maticnibroj',
           },
-
           {
-            cond: (cx, ev) => cx.tipklijenta === 'pravnolice' || true,
+            actions: [
+              assign((cx, ev: evINPUT) => {
+                cx.tipklijenta = ev?.data || '';
+              }),
+            ],
+          },
+          {
+            cond: (cx, ev) => cx.tipklijenta === 'pravnolice',
             target: 'maticnibroj',
+          },
+          {
+            actions: [
+              assign((cx, ev: evINPUT) => {
+                cx.tipklijenta = ev?.data || '';
+              }),
+            ],
           },
         ],
       },

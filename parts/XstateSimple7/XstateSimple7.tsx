@@ -39,7 +39,14 @@ export function XstateSimple7() {
           toggle show
         </button>
         {cx?.show && <div>prikazujem...</div>}
-
+        {cx.prijave.map((r) => {
+          return (
+            <div className="flex flex-col">
+              Tip klijenta ({r.tipklijenta}) JMBG ({r.jmbg}) Maticni broj firme ({r.maticnibroj}) Razlozi za olaksicu (
+              {r.razlozi}) Vrsta olaksice ({r.olaksice})
+            </div>
+          );
+        })}
         {['idle'].some(ma) && (
           <div>
             <button
@@ -283,11 +290,11 @@ export function XstateSimple7() {
         {['provera'].some(ma) && (
           <div className="flex flex-col">
             <div> Molim vas proverite tacnost unetih podataka </div>
-            <div> Tip klijenta: {} </div>
+            <div> Tip klijenta: {cx.tipklijenta} </div>
             <div> jmbg: {cx.jmbg} </div>
             <div> maticnibroj: {cx.maticnibroj} </div>
-            <div> Razlog: {} </div>
-            <div> Ti olaksice: {} </div>
+            <div> Razlog: {cx.razlozi} </div>
+            <div> Tip olaksice: {cx.olaksice} </div>
             <div>
               <button
                 className="p-1 mx-1 bg-green-500 rounded-lg"
