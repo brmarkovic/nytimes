@@ -114,6 +114,7 @@ export type Ievents =
   | { type: 'FORMULAR' }
   | { type: 'PODNESIZAHTEV' }
   | { type: 'ABORT' }
+  | { type: 'SUBMIT' }
   | { type: 'BACK' }
   | { type: 'idle' };
 
@@ -144,7 +145,6 @@ export const XstateSimple7Machine = Machine<Icontext, Istates, Ievents>({
     show: false,
     jmbg: '',
     maticnibroj: '',
-
     tipklijenta: '',
     razlozi: '',
     olaksice: '',
