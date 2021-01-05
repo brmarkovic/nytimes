@@ -276,7 +276,7 @@ export const XstateSimple7Machine = Machine<Icontext, Istates, Ievents>({
           {
             actions: [
               assign((cx) => {
-                cx.jmbg = null;
+                cx.jmbg = '';
               }),
             ],
             target: 'idle',
@@ -310,7 +310,7 @@ export const XstateSimple7Machine = Machine<Icontext, Istates, Ievents>({
           {
             actions: [
               assign((cx) => {
-                cx.maticnibroj = null;
+                cx.maticnibroj = '';
               }),
             ],
             target: 'idle',
