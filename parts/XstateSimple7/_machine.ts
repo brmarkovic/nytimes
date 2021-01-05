@@ -58,7 +58,6 @@ type Ikorisnik = {
 
 // Icontext
 export interface Icontext {
-  prijava: any;
   jmbg: string;
   show: boolean;
   maticnibroj: string;
@@ -145,6 +144,7 @@ export const XstateSimple7Machine = Machine<Icontext, Istates, Ievents>({
     show: false,
     jmbg: '',
     maticnibroj: '',
+
     tipklijenta: '',
     razlozi: '',
     olaksice: '',

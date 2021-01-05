@@ -83,7 +83,7 @@ export function XstateSimple7() {
                 className="p-1 mx-1 bg-purple-500 rounded-lg"
                 type="button"
                 onClick={() => {
-                  send({ type: 'SET_CLIENT', data: 'fizickolice' });
+                  send({ type: 'SET_CLIENT', data: 'tipklijenta' });
                 }}
               >
                 Fizicko lice!
