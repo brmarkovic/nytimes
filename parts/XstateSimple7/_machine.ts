@@ -326,7 +326,7 @@ export const XstateSimple7Machine = Machine<Icontext, Istates, Ievents>({
             cond: (cx, ev: evSETRAZLOG) => ev.data === 'razlog1' || ev.data === 'razlog2' || ev.data === 'razlog3',
             actions: [
               assign((cx, ev: evSETRAZLOG) => {
-                cx.razlozi = ev.data;
+                cx.razlozi = ev?.data || '';
               }),
             ],
             target: 'olaksice',
@@ -348,7 +348,7 @@ export const XstateSimple7Machine = Machine<Icontext, Istates, Ievents>({
               ev.data === 'krediti',
             actions: [
               assign((cx, ev: evSETOLAKSICE) => {
-                cx.olaksice = ev.data;
+                cx.olaksice = ev?.data || '';
               }),
             ],
             target: 'provera',
@@ -412,11 +412,11 @@ export const XstateSimple7Machine = Machine<Icontext, Istates, Ievents>({
           // kada server vrati odgovor
           actions: [
             assign((cx) => {
-              cx.tipklijenta = null;
-              cx.jmbg = null;
-              cx.maticnibroj = null;
-              cx.razlozi = null;
-              cx.olaksice = null;
+              cx.tipklijenta = '';
+              cx.jmbg = '';
+              cx.maticnibroj = '';
+              cx.razlozi = '';
+              cx.olaksice = '';
             }),
           ],
           target: 'potvrda',
