@@ -233,7 +233,7 @@ export const XstateSimple7Machine = Machine<Icontext, Istates, Ievents>({
             cond: (cx, ev: evSET_CLIENT) => ev.data === 'fizickolice' || ev.data === 'poljoprivrednik',
             actions: [
               assign((cx, ev: evSET_CLIENT) => {
-                cx.tipklijenta = ev.data;
+                cx.tipklijenta = ev?.data || '';
               }),
             ],
             target: 'jmbg',
@@ -242,7 +242,7 @@ export const XstateSimple7Machine = Machine<Icontext, Istates, Ievents>({
             cond: (cx, ev: evSET_CLIENT) => ev.data === 'preduzetnik' || ev.data === 'pravnolice',
             actions: [
               assign((cx, ev: evSET_CLIENT) => {
-                cx.tipklijenta = ev.data;
+                cx.tipklijenta = ev?.data || '';
               }),
             ],
             target: 'maticnibroj',
