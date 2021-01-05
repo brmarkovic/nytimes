@@ -114,18 +114,7 @@ export type Ievents =
   | evSUBMIT
   | { type: 'FORMULAR' }
   | { type: 'PODNESIZAHTEV' }
-  | { type: 'FL' }
-  | { type: 'POLJOPRIVREDNIK' }
-  | { type: 'PRAVNOLICE' }
-  | { type: 'PREDUZETNIK' }
   | { type: 'ABORT' }
-  | { type: 'RAZLOG1' }
-  | { type: 'RAZLOG2' }
-  | { type: 'RAZLOG3' }
-  | { type: 'TRPOZAJMICA' }
-  | { type: 'KREDITNEKARTICE' }
-  | { type: 'KARTICESAODLPLACANJEM' }
-  | { type: 'KREDITI' }
   | { type: 'BACK' }
   | { type: 'idle' };
 
@@ -362,7 +351,7 @@ export const XstateSimple7Machine = Machine<Icontext, Istates, Ievents>({
                 cx.olaksice = ev.data;
               }),
             ],
-            target: 'olaksice',
+            target: 'provera',
           },
         ],
         ABORT: 'idle',
