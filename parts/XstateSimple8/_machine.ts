@@ -74,7 +74,8 @@ export type Ievents =
   | { type: 'idle' }
   | { type: 'KLIJENTZAHTEV' }
   | { type: 'SUBMIT' }
-  | { type: 'ABORT' };
+  | { type: 'ABORT' }
+  | { type: 'KLIJENTLOG' };
 
 const send = (sendEvent: Ievents, sendOptions?: any) => untypedSend(sendEvent, sendOptions);
 

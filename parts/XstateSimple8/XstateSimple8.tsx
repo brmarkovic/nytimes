@@ -40,20 +40,31 @@ export function XstateSimple8() {
           toggle show
         </button>
         {cx?.show && <div>prikazujem...</div>}
-        {cx.prijave.map((r) => {
-          return <div className="flex flex-col"> KLIJENT ({r.klijent})</div>;
-          <button
-            className="p-1 mx-1 bg-gray-500 rounded-lg"
-            type="button"
-            onClick={() => {
-              send({ type: '', data: { id: r.id } });
-            }}
-          >
-            Obrisi
-          </button>;
-        })}
-        <pre>{JSON.stringify({ cx }, null, 2)}</pre>
+        <div />
+
+        <div className="flex flex-col">
+          {cx.prijave.map((r) => {
+            return (
+              <div>
+                <div className="flex flex-col"> KLIJENT ({r.klijent})</div>;
+                <button
+                  className="p-1 mx-1 bg-gray-500 rounded-lg"
+                  type="button"
+                  onClick={() => {
+                    send({
+                      type: 'KLIJENTLOG',
+                      data: r,
+                    });
+                  }}
+                >
+                  Pogledaj detalje korisnika
+                </button>
+              </div>
+            );
+          })}
+        </div>
       </div>
+      <pre>{JSON.stringify({ cx }, null, 2)}</pre>
     </div>
   );
 }
