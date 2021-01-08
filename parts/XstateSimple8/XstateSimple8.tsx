@@ -41,7 +41,10 @@ export function XstateSimple8() {
         {cx?.show && <div>prikazujem...</div>}
         <div className="flex flex-col">
           {cx.sviklijenti.map((r) => {
-            return <div>SVI KLIJENTI {r.sviklijenti}</div>;
+            return <div>SVI KLIJENTI {r.klijent}</div>;
+          })}
+          {cx.svikomentari.map((r) => {
+            return <div> SVI KOMENTARI {r.komentar} </div>;
           })}
         </div>
         <pre>{JSON.stringify({ cx }, null, 2)}</pre>

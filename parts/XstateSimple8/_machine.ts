@@ -93,8 +93,17 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
     show: false,
     klijent: '',
     komentar: '',
-    sviklijenti: [],
-    svikomentari: [],
+    sviklijenti: [
+      { id: 1, klijent: 'Biljana' },
+      { id: 2, klijent: 'Ivana' },
+      { id: 3, klijent: 'Peca' },
+    ],
+    svikomentari: [
+      { id: 1, id_klijent: 1, komentar: 'zaposlen' },
+      { id: 2, id_klijent: 2, komentar: 'bolovanje' },
+      { id: 3, id_klijent: 1, komentar: 'kratka kosa' },
+      { id: 4, id_klijent: 3, komentar: 'auto' },
+    ],
   },
   // BIKA FOKUS END <<<<<<
   states: {
