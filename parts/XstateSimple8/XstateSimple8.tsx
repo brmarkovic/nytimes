@@ -39,10 +39,25 @@ export function XstateSimple8() {
           toggle show
         </button>
         {cx?.show && <div>prikazujem...</div>}
+
         <div className="flex flex-col">
           {cx.sviklijenti.map((r) => {
             return <div>SVI KLIJENTI {r.klijent}</div>;
           })}
+
+          {['idle'].some(ma) && (
+            <div>
+              <button
+                className="p-1 mx-1 text-white bg-purple-800 rounded-lg"
+                type="button"
+                onClick={() => {
+                  send({ type: 'UPITNIK' });
+                }}
+              >
+                Unesi novog korisnika
+              </button>
+            </div>
+          )}
           {cx.svikomentari.map((r) => {
             return <div> SVI KOMENTARI {r.komentar} </div>;
           })}

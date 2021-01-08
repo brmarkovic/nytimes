@@ -74,7 +74,7 @@ type evINPUT = {
   data: string;
 };
 
-export type Ievents = evINPUT | evSHOW | { type: 'idle' };
+export type Ievents = evINPUT | evSHOW | { type: 'idle' } | { type: 'KLIJENTLOG' };
 
 const send = (sendEvent: Ievents, sendOptions?: any) => untypedSend(sendEvent, sendOptions);
 
@@ -82,6 +82,9 @@ interface Istates {
   states: {
     ssr: {};
     idle: {};
+    ucitajklijente: [];
+    vidiklijenta: [];
+    novikomentar: {};
   };
 }
 
@@ -112,7 +115,7 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
       on: {
         idle: [
           {
-            target: 'idle',
+            target: 'ucitajklijente',
           },
         ],
       },
@@ -125,6 +128,46 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
               cx.show = ev.data;
             }),
           ],
+        },
+      },
+    },
+    ucitajklijente: {
+      on: {
+        LOGKLIJENTA: {
+          target: 'vidiklijenta',
+        },
+        DODAJKLIJENTA: {
+          target: 'noviklijent',
+        },
+      },
+      noviklijent: {
+        on: {
+          SUBMIT: {
+            target: 'snimiubazu',
+          },
+          ABORT: {
+            target: 'idle',
+          },
+        },
+      },
+      vidiklijenta: {
+        on: {
+          DODAJKOMENTAR: {
+            tareget: 'novikomentar',
+          },
+          ABORT: {
+            target: 'idle',
+          },
+        },
+      },
+      novikomentar: {
+        on: {
+          SUBMIT: {
+            target: 'snimiubazu',
+          },
+          ABORT: {
+            target: 'idle',
+          },
         },
       },
     },
