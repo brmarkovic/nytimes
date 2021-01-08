@@ -58,6 +58,8 @@ type Ikomentar = {
 export interface Icontext {
   show: boolean;
   klijent: string;
+  noviklijent: string;
+  novikomentar: string;
   komentar: string;
   sviklijenti: Ikorisnik[];
   svikomentari: Ikomentar[];
@@ -74,7 +76,15 @@ type evINPUT = {
   data: string;
 };
 
-export type Ievents = evINPUT | evSHOW | { type: 'idle' } | { type: 'KLIJENTLOG' };
+export type Ievents =
+  | evINPUT
+  | evSHOW
+  | { type: 'idle' }
+  | { type: 'LOGKLIJENTA' }
+  | { type: 'DODAJKLIJENTA' }
+  | { type: 'DODAJKOMENTAR' }
+  | { type: 'SUBMIT' }
+  | { type: 'ABORT' };
 
 const send = (sendEvent: Ievents, sendOptions?: any) => untypedSend(sendEvent, sendOptions);
 
@@ -82,9 +92,11 @@ interface Istates {
   states: {
     ssr: {};
     idle: {};
-    ucitajklijente: [];
-    vidiklijenta: [];
+    ucitajklijente: {};
+    vidiklijenta: {};
+    noviklijent: {};
     novikomentar: {};
+    snimiubazu: {};
   };
 }
 
@@ -95,7 +107,9 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
   context: {
     show: false,
     klijent: '',
+    noviklijent: '',
     komentar: '',
+    novikomentar: '',
     sviklijenti: [
       { id: 1, klijent: 'Biljana' },
       { id: 2, klijent: 'Ivana' },
@@ -140,36 +154,37 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
           target: 'noviklijent',
         },
       },
-      noviklijent: {
-        on: {
-          SUBMIT: {
-            target: 'snimiubazu',
-          },
-          ABORT: {
-            target: 'idle',
-          },
+    },
+    noviklijent: {
+      on: {
+        SUBMIT: {
+          target: 'snimiubazu',
         },
-      },
-      vidiklijenta: {
-        on: {
-          DODAJKOMENTAR: {
-            tareget: 'novikomentar',
-          },
-          ABORT: {
-            target: 'idle',
-          },
-        },
-      },
-      novikomentar: {
-        on: {
-          SUBMIT: {
-            target: 'snimiubazu',
-          },
-          ABORT: {
-            target: 'idle',
-          },
+        ABORT: {
+          target: 'idle',
         },
       },
     },
+    vidiklijenta: {
+      on: {
+        DODAJKOMENTAR: {
+          target: 'novikomentar',
+        },
+        ABORT: {
+          target: 'idle',
+        },
+      },
+    },
+    novikomentar: {
+      on: {
+        SUBMIT: {
+          target: 'snimiubazu',
+        },
+        ABORT: {
+          target: 'idle',
+        },
+      },
+    },
+    snimiubazu: {},
   },
 });
