@@ -1,4 +1,3 @@
-/* eslint-disable no-unreachable */
 import React, { useEffect } from 'react';
 import { useMachine } from '@xstate/react';
 // import { inspect } from '@xstate/inspect';
@@ -40,31 +39,13 @@ export function XstateSimple8() {
           toggle show
         </button>
         {cx?.show && <div>prikazujem...</div>}
-        <div />
-
         <div className="flex flex-col">
-          {cx.prijave.map((r) => {
-            return (
-              <div>
-                <div className="flex flex-col"> KLIJENT ({r.klijent})</div>;
-                <button
-                  className="p-1 mx-1 bg-gray-500 rounded-lg"
-                  type="button"
-                  onClick={() => {
-                    send({
-                      type: 'KLIJENTLOG',
-                      data: r,
-                    });
-                  }}
-                >
-                  Pogledaj detalje korisnika
-                </button>
-              </div>
-            );
+          {cx.sviklijenti.map((r) => {
+            return <div>SVI KLIJENTI {r.sviklijenti}</div>;
           })}
         </div>
+        <pre>{JSON.stringify({ cx }, null, 2)}</pre>
       </div>
-      <pre>{JSON.stringify({ cx }, null, 2)}</pre>
     </div>
   );
 }

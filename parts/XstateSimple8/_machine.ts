@@ -44,17 +44,23 @@ export const backendServer = new ApolloClient({
 // SNIMANJE NA SERVER KRAJ
 // SNIMANJE NA SERVER KRAJ
 // SNIMANJE NA SERVER KRAJ
-
 type Ikorisnik = {
   id: number;
   klijent: string;
 };
 
+type Ikomentar = {
+  id: number;
+  id_klijent: number;
+  komentar: string;
+};
 // Icontext
 export interface Icontext {
   show: boolean;
   klijent: string;
-  prijave: Ikorisnik[];
+  komentar: string;
+  sviklijenti: Ikorisnik[];
+  svikomentari: Ikomentar[];
 }
 
 // Ievents
@@ -68,14 +74,7 @@ type evINPUT = {
   data: string;
 };
 
-export type Ievents =
-  | evINPUT
-  | evSHOW
-  | { type: 'idle' }
-  | { type: 'KLIJENTZAHTEV' }
-  | { type: 'SUBMIT' }
-  | { type: 'ABORT' }
-  | { type: 'KLIJENTLOG' };
+export type Ievents = evINPUT | evSHOW | { type: 'idle' };
 
 const send = (sendEvent: Ievents, sendOptions?: any) => untypedSend(sendEvent, sendOptions);
 
@@ -83,10 +82,6 @@ interface Istates {
   states: {
     ssr: {};
     idle: {};
-    klijentread: {};
-    unesizahtev: {};
-    snimiubazu: {};
-    zahvalnica: {};
   };
 }
 
@@ -97,7 +92,9 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
   context: {
     show: false,
     klijent: '',
-    prijave: [],
+    komentar: '',
+    sviklijenti: [],
+    svikomentari: [],
   },
   // BIKA FOKUS END <<<<<<
   states: {
@@ -106,47 +103,9 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
       on: {
         idle: [
           {
-            target: 'klijentread',
+            target: 'idle',
           },
         ],
-      },
-    },
-    klijentread: {
-      invoke: {
-        src: async () => {
-          const [ERRdata, data] = await backendServer
-            .query({
-              // u navodnicima je ono sto smo u Hasuri definisali i radi
-              query: gql`
-                query klijentread {
-                  klijent {
-                    klijent
-                    id
-                  }
-                }
-              `,
-            })
-            .then((r) => [null, r])
-            .catch((e) => [e]);
-          if ((data && data.errors) || ERRdata) {
-            throw new Error('error');
-          }
-          return data;
-        },
-        onDone: {
-          // kada server vrati odgovor
-          actions: [
-            assign((cx, ev) => {
-              cx.prijave = ev.data.data.klijent;
-            }),
-          ],
-          target: 'idle',
-        },
-        onError: {
-          // kada server napravi gresku
-          // internet ne radi, ne vidi server
-          target: 'idle',
-        },
       },
     },
     idle: {
@@ -158,77 +117,6 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
             }),
           ],
         },
-        KLIJENTZAHTEV: {
-          target: 'unesizahtev',
-        },
-      },
-    },
-    unesizahtev: {
-      on: {
-        SUBMIT: 'snimiubazu',
-        ABORT: 'idle',
-      },
-    },
-    snimiubazu: {
-      invoke: {
-        src: async (cx, ev: evSUBMIT) => {
-          const [ERRdata, data] = await backendServer
-            .mutate({
-              variables: {
-                klijent: ev.data.klijent,
-              },
-              mutation: gql`
-                mutation insertzahtev(
-                  $tipklijenta: String
-                  $jmbg: String
-                  $maticnibroj: String
-                  $olaksice: String
-                  $razlozi: String
-                ) {
-                  insert_zahtev(
-                    objects: {
-                      tipklijenta: $tipklijenta
-                      jmbg: $jmbg
-                      maticnibroj: $maticnibroj
-                      razlozi: $razlozi
-                      olaksice: $olaksice
-                    }
-                  ) {
-                    affected_rows
-                  }
-                }
-              `,
-            })
-            .then((r) => [null, r])
-            .catch((e) => [e]);
-          if ((data && data.errors) || ERRdata) {
-            throw new Error('error');
-          }
-          return data;
-        },
-        onDone: {
-          // kada server vrati odgovor
-          actions: [
-            assign((cx) => {
-              cx.klijent = '';
-            }),
-          ],
-          target: 'zahvalnica',
-        },
-        onError: {
-          // kada server napravi gresku
-          // internet ne radi, ne vidi server
-          target: 'idle',
-        },
-      },
-    },
-    zahvalnica: {
-      after: {
-        1000: [
-          {
-            target: 'klijentread',
-          },
-        ],
       },
     },
   },
