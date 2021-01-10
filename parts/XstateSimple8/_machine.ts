@@ -44,64 +44,70 @@ export const backendServer = new ApolloClient({
 // SNIMANJE NA SERVER KRAJ
 // SNIMANJE NA SERVER KRAJ
 // SNIMANJE NA SERVER KRAJ
-type Ikorisnik = {
+
+type Iklijent = {
   id: number;
-  klijent: string;
+  imeklijenta: string;
 };
 
-type Ikomentar = {
+type Ilogklijenta = {
   id: number;
-  id_klijent: number;
-  komentar: string;
+  logtekst: string;
+  id_klijent: number; // ovo ide na dno
 };
-// Icontext
+
+// Icontext - nema glagola kao prve reci = da je kljuc iz konteksta
 export interface Icontext {
-  show: boolean;
-  klijent: Ikorisnik[];
-  noviklijent: string;
-  novikomentar: string;
-  komentar: Ikomentar[];
-  sviklijenti: Ikorisnik[];
-  svikomentari: Ikomentar[];
+  listaklijenata: Iklijent[];
+  noviklijent: string; // ovo korisnik kuca u inputu kada dodaje
+  listalogovaklijenta: Ilogklijenta[];
+  novilogklijenta: string; // ovo isto
 }
 
 // Ievents
-type evSHOW = {
-  type: 'SHOW';
-  data: boolean;
+type evNOVIKLIJENT = {
+  type: 'NOVIKLIJENT';
+  data: {
+    // id: number; // ovo je automatski u hasuri
+    imeklijenta: string;
+  };
 };
-
-type evINPUT = {
-  type: 'INPUT';
-  data: string;
+type evNOVILOGKLIJENTA = {
+  type: 'NOVILOGKLIJENTA';
+  data: {
+    logtekst: string;
+    id_klijenta: number;
+  };
 };
-
+type evLOGKLIJENTA = {
+  type: 'LOGKLIJENTA';
+  data: {
+    id: number;
+  };
+};
 export type Ievents =
-  | evINPUT
-  | evSHOW
-  | { type: 'idle' }
-  | { type: 'LOGKLIJENTA' }
-  | { type: 'LOGKOMENTARA' }
-  | { type: 'DODAJKLIJENTA' }
-  | { type: 'DODAJKOMENTAR' }
-  | { type: 'POTVRDIKLIJENTA' }
-  | { type: 'POTVRDIKOMENTAR' }
-  | { type: 'SUBMIT' }
+  // eventovi sa data kljucem
+  | evNOVIKLIJENT
+  | evNOVILOGKLIJENTA
+  | evLOGKLIJENTA
+  // eventovi bez data kljuca, samo type
+  | { type: 'BROWSER' }
   | { type: 'ABORT' }
-  | { type: 'VRATISENAKLIJENTE' };
-
+  | { type: 'IDLE' };
 const send = (sendEvent: Ievents, sendOptions?: any) => untypedSend(sendEvent, sendOptions);
 
+// state UVEK mora da ima GLAGOL kao prvu rec "vidi,ucitaj,dodaj..."
 interface Istates {
   states: {
     ssr: {};
-    idle: {};
-    ucitajklijente: {};
-    vidiklijenta: {};
-    vidikomentare: {};
-    noviklijent: {};
-    novikomentar: {};
-    snimiubazu: {};
+    // KLIJENT
+    ucitajklijente: {}; // sa servera da povuce listu klijenata (invoke)
+    vidilistuklijenata: {}; // lista klijanta
+    dodajnovogklijenta: {}; // snima novog klijenta u bazu (invoke)
+    // LOGOVI KLIJENTA
+    ucitajlogoveklijenta: {}; // sa servera vuce listu lgoova (invoke)
+    vidilistulogovaklijenta: {};
+    dodajlogklijenta: {}; // snima novi log u bazu (invoke)
   };
 }
 
@@ -110,19 +116,14 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
   initial: 'ssr',
   // BIKA FOKUS >>>>>>>>>>
   context: {
-    show: false,
-    id: '',
-    id_klijent: '',
-    klijent: [],
     noviklijent: '',
-    komentar: [],
     novikomentar: '',
-    sviklijenti: [
+    listaklijenata: [
       { id: 1, klijent: 'Biljana' },
       { id: 2, klijent: 'Ivana' },
       { id: 3, klijent: 'Peca' },
     ],
-    svikomentari: [
+    listalogovaklijenta: [
       { id: 1, id_klijent: 1, komentar: 'zaposlen' },
       { id: 2, id_klijent: 2, komentar: 'bolovanje' },
       { id: 3, id_klijent: 1, komentar: 'kratka kosa' },
@@ -134,86 +135,28 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
     // DEFAULT MILAN STATE
     ssr: {
       on: {
-        idle: [
+        BROWSER: [
           {
-            target: 'ucitajklijente',
+            target: 'listaklijenata',
           },
         ],
       },
     },
-    idle: {
+    listaklijenata: {
       on: {
-        SHOW: {
-          actions: [
-            assign((cx, ev: evSHOW) => {
-              cx.show = ev.data;
-            }),
-          ],
-        },
+        LOGKLIJENTA: {},
+        NOVIKLIJENT: {},
       },
     },
-    ucitajklijente: {
+    listalogovaklijenta: {
       on: {
-        LOGKLIJENTA: {
-          target: 'vidiklijenta',
-        },
-        DODAJKLIJENTA: {
-          target: 'noviklijent',
-        },
-      },
-    },
-    noviklijent: {
-      on: {
-        INPUT: [
+        NOVIKOMENTAR: {},
+        VIDILISTUKLIJENATA: [
           {
-            actions: [
-              assign((cx, ev: evINPUT) => {
-                cx.noviklijent = ev?.data || '';
-              }),
-            ],
+            target: 'listaklijenata',
           },
         ],
-        POTVRDIKLIJENTA: [
-          {
-            cond: (cx) => cx?.noviklijent?.length === 0 || false,
-            target: 'noviklijent',
-          },
-          {
-            target: 'snimiubazu',
-          },
-        ],
-        ABORT: {
-          target: 'idle',
-        },
       },
     },
-    vidiklijenta: {
-      on: {
-        LOGKOMENTARA: {
-          target: 'vidikomentare',
-        },
-      },
-    },
-    vidikomentare: {
-      on: {
-        DODAJKOMENTAR: {
-          target: 'novikomentar',
-        },
-        VRATISENAKLIJENTE: {
-          target: 'idle',
-        },
-      },
-    },
-    novikomentar: {
-      on: {
-        POTVRDIKOMENTAR: {
-          target: 'snimiubazu',
-        },
-        ABORT: {
-          target: 'idle',
-        },
-      },
-    },
-    snimiubazu: {},
   },
 });

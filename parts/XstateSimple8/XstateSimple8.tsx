@@ -23,7 +23,7 @@ export function XstateSimple8() {
 
   useEffect(() => {
     // boot machine
-    send({ type: 'idle' });
+    send({ type: 'BROWSER' });
   }, []);
 
   // REACT (HTML+) KOMPONENTA
