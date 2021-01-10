@@ -63,7 +63,6 @@ export function XstateSimple8() {
               </div>
             )}
           </div>
-
           <div>
             {cx.svikomentari.map((r) => {
               return <div> SVI KOMENTARI {r.komentar} </div>;
@@ -93,9 +92,9 @@ export function XstateSimple8() {
                 <div> Unesite klijenta </div>
                 <div>
                   <textarea
-                    value={cx?.klijent}
+                    value={cx?.noviklijent}
                     onChange={(ev) => {
-                      send({ type: 'INPUT', data: ev.target.value });
+                      send({ type: 'INPUT', data: '' });
                     }}
                     className="border border-gray-500"
                   />
@@ -123,6 +122,35 @@ export function XstateSimple8() {
               </div>
             </div>
           )}
+          //
+          {cx.komentar.map((r) => {
+            return (
+              <div>
+                {' '}
+                Detalji klijenta -Komentari klijenta
+                <button
+                  className="p-1 mx-1 text-white bg-purple-800 rounded-lg"
+                  type="button"
+                  onClick={() => {
+                    send({ type: 'DODAJKOMENTAR' });
+                  }}
+                >
+                  Unesi komentar
+                </button>
+                {r.komentar}
+                <button
+                  className="p-1 mx-1 bg-red-500 rounded-lg"
+                  type="button"
+                  onClick={() => {
+                    send({ type: 'ABORT' });
+                  }}
+                >
+                  Odustani
+                </button>
+              </div>
+            );
+          })}
+          //
         </div>
         <pre>{JSON.stringify({ cx }, null, 2)}</pre>
       </div>

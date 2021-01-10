@@ -57,10 +57,10 @@ type Ikomentar = {
 // Icontext
 export interface Icontext {
   show: boolean;
-  klijent: string;
+  klijent: Ikorisnik[];
   noviklijent: string;
   novikomentar: string;
-  komentar: string;
+  komentar: Ikomentar[];
   sviklijenti: Ikorisnik[];
   svikomentari: Ikomentar[];
 }
@@ -81,8 +81,11 @@ export type Ievents =
   | evSHOW
   | { type: 'idle' }
   | { type: 'LOGKLIJENTA' }
+  | { type: 'LOGKOMENTARA' }
   | { type: 'DODAJKLIJENTA' }
   | { type: 'DODAJKOMENTAR' }
+  | { type: 'POTVRDIKLIJENTA' }
+  | { type: 'POTVRDIKOMENTAR' }
   | { type: 'SUBMIT' }
   | { type: 'ABORT' }
   | { type: 'VRATISENAKLIJENTE' };
@@ -95,6 +98,7 @@ interface Istates {
     idle: {};
     ucitajklijente: {};
     vidiklijenta: {};
+    vidikomentare: {};
     noviklijent: {};
     novikomentar: {};
     snimiubazu: {};
@@ -107,9 +111,9 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
   // BIKA FOKUS >>>>>>>>>>
   context: {
     show: false,
-    klijent: '',
+    klijent: [],
     noviklijent: '',
-    komentar: '',
+    komentar: [],
     novikomentar: '',
     sviklijenti: [
       { id: 1, klijent: 'Biljana' },
@@ -167,7 +171,7 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
             ],
           },
         ],
-        DODAJKLIJENTA: [
+        POTVRDIKLIJENTA: [
           {
             cond: (cx) => cx?.noviklijent?.length === 0 || false,
             target: 'noviklijent',
@@ -183,6 +187,13 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
     },
     vidiklijenta: {
       on: {
+        LOGKOMENTARA: {
+          target: 'vidikomentare',
+        },
+      },
+    },
+    vidikomentare: {
+      on: {
         DODAJKOMENTAR: {
           target: 'novikomentar',
         },
@@ -193,7 +204,7 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
     },
     novikomentar: {
       on: {
-        DODAJKLIJENTA: {
+        POTVRDIKOMENTAR: {
           target: 'snimiubazu',
         },
         ABORT: {
