@@ -65,6 +65,7 @@ export interface Icontext {
 }
 
 // Ievents
+// input
 type evNOVIKLIJENT = {
   type: 'NOVIKLIJENT';
   data: {
@@ -72,6 +73,7 @@ type evNOVIKLIJENT = {
     imeklijenta: string;
   };
 };
+// input
 type evNOVILOGKLIJENTA = {
   type: 'NOVILOGKLIJENTA';
   data: {
@@ -79,21 +81,23 @@ type evNOVILOGKLIJENTA = {
     id_klijenta: number;
   };
 };
+// button
 type evLOGKLIJENTA = {
   type: 'LOGKLIJENTA';
   data: {
     id: number;
   };
 };
+
 export type Ievents =
-  // eventovi sa data kljucem
-  | evNOVIKLIJENT
-  | evNOVILOGKLIJENTA
-  | evLOGKLIJENTA
-  // eventovi bez data kljuca, samo type
-  | { type: 'BROWSER' }
-  | { type: 'ABORT' }
-  | { type: 'IDLE' };
+  | evNOVIKLIJENT // input
+  | { type: 'DODAJNOVIKLIJENT' } // button
+  | evNOVILOGKLIJENTA // input
+  | { type: 'DODAJNOVILOGKLIJENTA' } // button
+  | evLOGKLIJENTA // button
+  | { type: 'ABORT' } // button
+  | { type: 'LISTAKLIJENATA' } // button
+  | { type: 'BROWSER' }; // ssr OK
 const send = (sendEvent: Ievents, sendOptions?: any) => untypedSend(sendEvent, sendOptions);
 
 // state UVEK mora da ima GLAGOL kao prvu rec "vidi,ucitaj,dodaj..."
@@ -101,13 +105,13 @@ interface Istates {
   states: {
     ssr: {};
     // KLIJENT
-    ucitajklijente: {}; // sa servera da povuce listu klijenata (invoke)
-    vidilistuklijenata: {}; // lista klijanta
-    dodajnovogklijenta: {}; // snima novog klijenta u bazu (invoke)
+    ucitajklijente: {}; // invoke
+    vidilistuklijenata: {}; //
+    dodajnovogklijenta: {}; // invoke
     // LOGOVI KLIJENTA
-    ucitajlogoveklijenta: {}; // sa servera vuce listu lgoova (invoke)
+    ucitajlogoveklijenta: {}; //  invoke
     vidilistulogovaklijenta: {};
-    dodajlogklijenta: {}; // snima novi log u bazu (invoke)
+    dodajlogklijenta: {}; //  invoke
   };
 }
 
@@ -117,17 +121,17 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
   // BIKA FOKUS >>>>>>>>>>
   context: {
     noviklijent: '',
-    novikomentar: '',
+    novilogklijenta: '',
     listaklijenata: [
-      { id: 1, klijent: 'Biljana' },
-      { id: 2, klijent: 'Ivana' },
-      { id: 3, klijent: 'Peca' },
+      { id: 1, imeklijenta: 'Biljana' },
+      { id: 2, imeklijenta: 'Ivana' },
+      { id: 3, imeklijenta: 'Peca' },
     ],
     listalogovaklijenta: [
-      { id: 1, id_klijent: 1, komentar: 'zaposlen' },
-      { id: 2, id_klijent: 2, komentar: 'bolovanje' },
-      { id: 3, id_klijent: 1, komentar: 'kratka kosa' },
-      { id: 4, id_klijent: 3, komentar: 'auto' },
+      { id: 1, id_klijent: 1, logtekst: 'zaposlen' },
+      { id: 2, id_klijent: 2, logtekst: 'bolovanje' },
+      { id: 3, id_klijent: 1, logtekst: 'kratka kosa' },
+      { id: 4, id_klijent: 3, logtekst: 'auto' },
     ],
   },
   // BIKA FOKUS END <<<<<<
@@ -137,26 +141,30 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
       on: {
         BROWSER: [
           {
-            target: 'listaklijenata',
+            target: 'vidilistuklijenata',
           },
         ],
       },
     },
-    listaklijenata: {
+    ucitajklijente: {},
+    vidilistuklijenata: {
       on: {
         LOGKLIJENTA: {},
         NOVIKLIJENT: {},
       },
     },
-    listalogovaklijenta: {
+    dodajnovogklijenta: {},
+    ucitajlogoveklijenta: {},
+    vidilistulogovaklijenta: {
       on: {
-        NOVIKOMENTAR: {},
-        VIDILISTUKLIJENATA: [
+        NOVILOGKLIJENTA: {},
+        LISTAKLIJENATA: [
           {
-            target: 'listaklijenata',
+            target: 'vidilistuklijenata',
           },
         ],
       },
     },
+    dodajlogklijenta: {},
   },
 });
