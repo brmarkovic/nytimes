@@ -30,16 +30,6 @@ export function XstateSimple8() {
     <div className="p-2">
       <div>Simple Machine8</div>
       <div>
-        <button
-          type="button"
-          onClick={() => {
-            send({ type: 'SHOW', data: !cx.show });
-          }}
-        >
-          toggle show
-        </button>
-        {cx?.show && <div>prikazujem...</div>}
-
         <div className="flex flex-col">
           <div>
             {cx.sviklijenti.map((r) => {
@@ -59,16 +49,19 @@ export function XstateSimple8() {
                 </div>
               );
             })}
-
-            <button
-              className="p-1 mx-1 text-white bg-purple-800 rounded-lg"
-              type="button"
-              onClick={() => {
-                send({ type: 'DODAJKLIJENTA' });
-              }}
-            >
-              Unesi klijenta
-            </button>
+            {['ucitajklijente'].some(ma) && (
+              <div>
+                <button
+                  className="p-1 mx-1 text-white bg-purple-800 rounded-lg"
+                  type="button"
+                  onClick={() => {
+                    send({ type: 'DODAJKLIJENTA' });
+                  }}
+                >
+                  Unesi klijenta
+                </button>
+              </div>
+            )}
           </div>
 
           <div>
@@ -84,7 +77,52 @@ export function XstateSimple8() {
             >
               Unesi komentar
             </button>
+            <button
+              className="p-1 mx-1 text-white bg-purple-800 rounded-lg"
+              type="button"
+              onClick={() => {
+                send({ type: 'VRATISENAKLIJENTE' });
+              }}
+            >
+              Vrati se na listu klijenata
+            </button>
           </div>
+          {['noviklijent'].some(ma) && (
+            <div className="flex flex-col">
+              <div className="flex flex-col">
+                <div> Unesite klijenta </div>
+                <div>
+                  <textarea
+                    value={cx?.klijent}
+                    onChange={(ev) => {
+                      send({ type: 'INPUT', data: ev.target.value });
+                    }}
+                    className="border border-gray-500"
+                  />
+                </div>
+              </div>
+              <div>
+                <button
+                  className="p-1 mx-1 bg-green-500 rounded-lg"
+                  type="button"
+                  onClick={() => {
+                    send({ type: 'DODAJKLIJENTA' });
+                  }}
+                >
+                  Potvrdi unos klijenta
+                </button>
+                <button
+                  className="p-1 mx-1 bg-red-500 rounded-lg"
+                  type="button"
+                  onClick={() => {
+                    send({ type: 'ABORT' });
+                  }}
+                >
+                  Odustani
+                </button>
+              </div>
+            </div>
+          )}
         </div>
         <pre>{JSON.stringify({ cx }, null, 2)}</pre>
       </div>

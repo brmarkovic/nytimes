@@ -84,7 +84,8 @@ export type Ievents =
   | { type: 'DODAJKLIJENTA' }
   | { type: 'DODAJKOMENTAR' }
   | { type: 'SUBMIT' }
-  | { type: 'ABORT' };
+  | { type: 'ABORT' }
+  | { type: 'VRATISENAKLIJENTE' };
 
 const send = (sendEvent: Ievents, sendOptions?: any) => untypedSend(sendEvent, sendOptions);
 
@@ -157,9 +158,24 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
     },
     noviklijent: {
       on: {
-        SUBMIT: {
-          target: 'snimiubazu',
-        },
+        INPUT: [
+          {
+            actions: [
+              assign((cx, ev: evINPUT) => {
+                cx.noviklijent = ev?.data || '';
+              }),
+            ],
+          },
+        ],
+        DODAJKLIJENTA: [
+          {
+            cond: (cx) => cx?.noviklijent?.length === 0 || false,
+            target: 'noviklijent',
+          },
+          {
+            target: 'snimiubazu',
+          },
+        ],
         ABORT: {
           target: 'idle',
         },
@@ -170,14 +186,14 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
         DODAJKOMENTAR: {
           target: 'novikomentar',
         },
-        ABORT: {
+        VRATISENAKLIJENTE: {
           target: 'idle',
         },
       },
     },
     novikomentar: {
       on: {
-        SUBMIT: {
+        DODAJKLIJENTA: {
           target: 'snimiubazu',
         },
         ABORT: {
