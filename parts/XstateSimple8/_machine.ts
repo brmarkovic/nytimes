@@ -111,6 +111,8 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
   // BIKA FOKUS >>>>>>>>>>
   context: {
     show: false,
+    id: '',
+    id_klijent: '',
     klijent: [],
     noviklijent: '',
     komentar: [],
