@@ -63,6 +63,7 @@ export function XstateSimple8() {
               </div>
             )}
           </div>
+
           <div>
             {cx.svikomentari.map((r) => {
               return <div> SVI KOMENTARI {r.komentar} </div>;
@@ -122,7 +123,6 @@ export function XstateSimple8() {
               </div>
             </div>
           )}
-          //
           {cx.komentar.map((r) => {
             return (
               <div>
@@ -150,7 +150,6 @@ export function XstateSimple8() {
               </div>
             );
           })}
-          //
         </div>
         <pre>{JSON.stringify({ cx }, null, 2)}</pre>
       </div>
