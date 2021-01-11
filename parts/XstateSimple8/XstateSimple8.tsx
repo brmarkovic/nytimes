@@ -32,6 +32,12 @@ export function XstateSimple8() {
       <div>Simple Machine8</div>
       <div>
         <div className="flex flex-col">
+          {cx.listaklijenata.map((r) => {
+            return <div> Lista klijenata {r.imeklijenta} </div>;
+          })}
+          {cx.listalogovaklijenta.map((r) => {
+            return <div className="flex flex-col">Logovi klijenta {r.logtekst} </div>;
+          })}
           <pre>{JSON.stringify({ cx }, null, 2)}</pre>
         </div>
       </div>
