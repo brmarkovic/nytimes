@@ -41,7 +41,12 @@ export function XstateSimple8() {
                   className="p-1 mx-1 text-white bg-purple-800 rounded-lg"
                   type="button"
                   onClick={() => {
-                    send({ type: 'LOGKLIJENTA' });
+                    send({
+                      type: 'LOGKLIJENTA',
+                      data: {
+                        id: r.id,
+                      },
+                    });
                   }}
                 >
                   Vidi klijenta
