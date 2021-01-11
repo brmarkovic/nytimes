@@ -41,7 +41,7 @@ export function XstateSimple8() {
                   className="p-1 mx-1 text-white bg-purple-800 rounded-lg"
                   type="button"
                   onClick={() => {
-                    send({ type: 'evLOGKLIJENTA' });
+                    send({ type: 'LOGKLIJENTA' });
                   }}
                 >
                   Vidi klijenta
