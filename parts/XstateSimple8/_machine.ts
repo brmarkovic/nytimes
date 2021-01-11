@@ -78,7 +78,7 @@ type evNOVILOGKLIJENTA = {
   type: 'NOVILOGKLIJENTA';
   data: {
     logtekst: string;
-    id_klijenta: number;
+    id_klijent: number;
   };
 };
 // button

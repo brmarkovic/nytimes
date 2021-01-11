@@ -55,6 +55,23 @@ export function XstateSimple8() {
               </div>
             );
           })}
+          <div className="flex flex-col ">
+            <div>Unesite novog klijenta</div>
+            <div>
+              <textarea
+                value={cx?.noviklijent}
+                onChange={(ev) => {
+                  send({
+                    type: 'NOVIKLIJENT',
+                    data: {
+                      imeklijenta: 'noviklijent',
+                    },
+                  });
+                }}
+                className="border border-gray-500"
+              />
+            </div>
+          </div>
           <button
             className="p-1 mx-1 text-white bg-purple-800 rounded-lg"
             type="button"
@@ -66,8 +83,30 @@ export function XstateSimple8() {
           </button>
 
           {cx.listalogovaklijenta.map((r) => {
-            return <div className="flex flex-col">Logovi klijenta {r.logtekst} </div>;
+            return (
+              <div className="flex flex-col">
+                Logovi klijenta {r.logtekst} {r.id_klijent}{' '}
+              </div>
+            );
           })}
+          <div className="flex flex-col">
+            <div>Unesite novi log klijenta </div>
+            <div>
+              <textarea
+                value={cx?.novilogklijenta}
+                onChange={(ev) => {
+                  send({
+                    type: 'NOVILOGKLIJENTA',
+                    data: {
+                      logtekst: 'novilogklijenta',
+                      id_klijent: 1,
+                    },
+                  });
+                }}
+                className="border border-gray-500"
+              />
+            </div>
+          </div>
           <button
             className="p-1 mx-1 text-white bg-purple-800 rounded-lg"
             type="button"
