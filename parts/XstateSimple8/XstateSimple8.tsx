@@ -29,15 +29,59 @@ export function XstateSimple8() {
   // REACT (HTML+) KOMPONENTA
   return (
     <div className="p-2">
-      <div>Simple Machine8</div>
+      <div className="font-extrabold">Pregled liste klijenata i logova klijenata</div>
       <div>
         <div className="flex flex-col">
           {cx.listaklijenata.map((r) => {
-            return <div> Lista klijenata {r.imeklijenta} </div>;
+            return (
+              <div>
+                {' '}
+                Lista klijenata
+                <button
+                  className="p-1 mx-1 text-white bg-purple-800 rounded-lg"
+                  type="button"
+                  onClick={() => {
+                    send({ type: 'evLOGKLIJENTA' });
+                  }}
+                >
+                  Vidi klijenta
+                </button>
+                {r.imeklijenta}{' '}
+              </div>
+            );
           })}
+          <button
+            className="p-1 mx-1 text-white bg-purple-800 rounded-lg"
+            type="button"
+            onClick={() => {
+              send({ type: 'evLOGKLIJENTA' });
+            }}
+          >
+            Dodaj klijenta
+          </button>
+
           {cx.listalogovaklijenta.map((r) => {
             return <div className="flex flex-col">Logovi klijenta {r.logtekst} </div>;
           })}
+          <button
+            className="p-1 mx-1 text-white bg-purple-800 rounded-lg"
+            type="button"
+            onClick={() => {
+              send({ type: 'evNOVILOGKLIJENTA' });
+            }}
+          >
+            Dodaj komentar
+          </button>
+          <button
+            className="p-1 mx-1 text-white bg-purple-800 rounded-lg"
+            type="button"
+            onClick={() => {
+              send({ type: 'LISTAKLIJENATA' });
+            }}
+          >
+            Vrati se na listu klijenata
+          </button>
+
           <pre>{JSON.stringify({ cx }, null, 2)}</pre>
         </div>
       </div>
