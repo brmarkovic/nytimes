@@ -141,12 +141,18 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
       on: {
         BROWSER: [
           {
-            target: 'vidilistuklijenata',
+            target: 'ucitajklijente',
           },
         ],
       },
     },
-    ucitajklijente: {},
+    ucitajklijente: {
+      on: {
+        LISTAKLIJENATA: {
+          target: 'vidilistuklijenata',
+        },
+      },
+    },
     vidilistuklijenata: {
       on: {
         LOGKLIJENTA: {},
