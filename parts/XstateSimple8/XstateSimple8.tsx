@@ -83,11 +83,7 @@ export function XstateSimple8() {
           </button>
 
           {cx.listalogovaklijenta.map((r) => {
-            return (
-              <div className="flex flex-col">
-                Logovi klijenta {r.logtekst} {' '}
-              </div>
-            );
+            return <div className="flex flex-col">Logovi klijenta {r.logtekst} </div>;
           })}
           <div className="flex flex-col">
             <div>Unesite novi log klijenta </div>
@@ -99,7 +95,7 @@ export function XstateSimple8() {
                     type: 'NOVILOGKLIJENTA',
                     data: {
                       logtekst: ev.target.value,
-                      id_klijent:  ,
+                      id_klijent: 1,
                     },
                   });
                 }}
@@ -125,7 +121,19 @@ export function XstateSimple8() {
           >
             Vrati se na listu klijenata
           </button>
-
+          {['ucitajklijente'].some(ma) && (
+            <div>
+              <button
+                className="p-1 mx-1 text-white bg-purple-800 rounded-lg"
+                type="button"
+                onClick={() => {
+                  send({ type: 'LISTAKLIJENATA' });
+                }}
+              >
+                Pogledaj klijente
+              </button>
+            </div>
+          )}
           <pre>{JSON.stringify({ cx }, null, 2)}</pre>
         </div>
       </div>
