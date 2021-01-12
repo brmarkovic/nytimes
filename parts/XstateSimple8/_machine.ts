@@ -97,6 +97,7 @@ export type Ievents =
   | evLOGKLIJENTA // button
   | { type: 'ABORT' } // button
   | { type: 'LISTAKLIJENATA' } // button
+  | { type: 'LISTALOGOVAKLIJENTA' }
   | { type: 'BROWSER' }; // ssr OK
 const send = (sendEvent: Ievents, sendOptions?: any) => untypedSend(sendEvent, sendOptions);
 
@@ -112,6 +113,8 @@ interface Istates {
     ucitajlogoveklijenta: {}; //  invoke
     vidilistulogovaklijenta: {};
     dodajlogklijenta: {}; //  invoke
+
+    snimiubazu: {};
   };
 }
 
@@ -155,22 +158,54 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
     },
     vidilistuklijenata: {
       on: {
-        LOGKLIJENTA: {},
-        NOVIKLIJENT: {},
+        LOGKLIJENTA: {
+          target: 'ucitajlogoveklijenta',
+        },
+        NOVIKLIJENT: {
+          target: 'dodajnovogklijenta',
+        },
       },
     },
-    dodajnovogklijenta: {},
-    ucitajlogoveklijenta: {},
+    dodajnovogklijenta: {
+      on: {
+        DODAJNOVIKLIJENT: {
+          target: 'snimubazu',
+        },
+        ABORT: {
+          target: 'vidilistuklijenata',
+        },
+      },
+    },
+    ucitajlogoveklijenta: {
+      on: {
+        LISTALOGOVAKLIJENTA: {
+          target: 'vidilistulogovaklijenta',
+        },
+      },
+    },
     vidilistulogovaklijenta: {
       on: {
-        NOVILOGKLIJENTA: {},
-        LISTAKLIJENATA: [
-          {
-            target: 'vidilistuklijenata',
-          },
-        ],
+        NOVILOGKLIJENTA: {
+          target: 'dodajlogklijenta',
+        },
+        LISTAKLIJENATA: {
+          target: 'vidilistuklijenata',
+        },
       },
     },
-    dodajlogklijenta: {},
+    dodajlogklijenta: {
+      on: {
+        DODAJNOVILOGKLIJENTA: {
+          target: 'snimiubazu',
+        },
+      },
+    },
+    snimiubazu: {
+      on: {
+        LISTAKLIJENATA: {
+          target: 'vidilistuklijenata',
+        },
+      },
+    },
   },
 });

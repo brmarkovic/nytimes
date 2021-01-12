@@ -64,7 +64,7 @@ export function XstateSimple8() {
                   send({
                     type: 'NOVIKLIJENT',
                     data: {
-                      imeklijenta: 'noviklijent',
+                      imeklijenta: ev.target.value,
                     },
                   });
                 }}
@@ -85,7 +85,7 @@ export function XstateSimple8() {
           {cx.listalogovaklijenta.map((r) => {
             return (
               <div className="flex flex-col">
-                Logovi klijenta {r.logtekst} {r.id_klijent}{' '}
+                Logovi klijenta {r.logtekst} {' '}
               </div>
             );
           })}
@@ -98,8 +98,8 @@ export function XstateSimple8() {
                   send({
                     type: 'NOVILOGKLIJENTA',
                     data: {
-                      logtekst: 'novilogklijenta',
-                      id_klijent: 1,
+                      logtekst: ev.target.value,
+                      id_klijent:  ,
                     },
                   });
                 }}
