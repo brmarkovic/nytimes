@@ -32,46 +32,6 @@ export function XstateSimple8() {
       <div className="font-extrabold">Pregled liste klijenata i logova klijenata</div>
       <div>
         <div className="flex flex-col">
-          {cx.listaklijenata.map((r) => {
-            return (
-              <div>
-                {' '}
-                Lista klijenata
-                <button
-                  className="p-1 mx-1 text-white bg-purple-800 rounded-lg"
-                  type="button"
-                  onClick={() => {
-                    send({
-                      type: 'LOGKLIJENTA',
-                      data: {
-                        id: r.id,
-                      },
-                    });
-                  }}
-                >
-                  Vidi klijenta
-                </button>
-                {r.imeklijenta}{' '}
-              </div>
-            );
-          })}
-          <div className="flex flex-col ">
-            <div>Unesite novog klijenta</div>
-            <div>
-              <textarea
-                value={cx?.noviklijent}
-                onChange={(ev) => {
-                  send({
-                    type: 'NOVIKLIJENT',
-                    data: {
-                      imeklijenta: ev.target.value,
-                    },
-                  });
-                }}
-                className="border border-gray-500"
-              />
-            </div>
-          </div>
           <button
             className="p-1 mx-1 text-white bg-purple-800 rounded-lg"
             type="button"
@@ -132,6 +92,50 @@ export function XstateSimple8() {
               >
                 Pogledaj klijente
               </button>
+            </div>
+          )}
+          {['vidilistuklijenata'].some(ma) && (
+            <div className="flex flex-col">
+              {cx.listaklijenata.map((r) => {
+                return (
+                  <div>
+                    {' '}
+                    Lista klijenata
+                    <button
+                      className="p-1 mx-1 text-white bg-purple-800 rounded-lg"
+                      type="button"
+                      onClick={() => {
+                        send({
+                          type: 'LOGKLIJENTA',
+                          data: {
+                            id: r.id,
+                          },
+                        });
+                      }}
+                    >
+                      Vidi klijenta
+                    </button>
+                    {r.imeklijenta}{' '}
+                  </div>
+                );
+              })}
+              <div className="flex flex-col ">
+                <div>Unesite novog klijenta</div>
+                <div>
+                  <textarea
+                    value={cx?.noviklijent}
+                    onChange={(ev) => {
+                      send({
+                        type: 'NOVIKLIJENT',
+                        data: {
+                          imeklijenta: ev.target.value,
+                        },
+                      });
+                    }}
+                    className="border border-gray-500"
+                  />
+                </div>
+              </div>
             </div>
           )}
           <pre>{JSON.stringify({ cx }, null, 2)}</pre>
