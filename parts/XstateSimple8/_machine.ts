@@ -156,7 +156,7 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
     vidilistuklijenata: {
       on: {
         LOGKLIJENTA: {},
-        NOVIKLIJENT: {},
+        NOVIKLIJENT: {}, // DODAJNOVIKLIJENT
       },
     },
     dodajnovogklijenta: {},

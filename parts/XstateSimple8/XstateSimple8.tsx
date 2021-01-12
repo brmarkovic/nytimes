@@ -81,6 +81,7 @@ export function XstateSimple8() {
           >
             Vrati se na listu klijenata
           </button>
+
           {['ucitajklijente'].some(ma) && (
             <div>
               <button
@@ -100,7 +101,6 @@ export function XstateSimple8() {
                 return (
                   <div>
                     {' '}
-                    Lista klijenata
                     <button
                       className="p-1 mx-1 text-white bg-purple-800 rounded-lg"
                       type="button"
@@ -138,6 +138,7 @@ export function XstateSimple8() {
               </div>
             </div>
           )}
+
           <pre>{JSON.stringify({ cx }, null, 2)}</pre>
         </div>
       </div>
