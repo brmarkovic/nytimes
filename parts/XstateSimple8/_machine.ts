@@ -113,6 +113,7 @@ interface Istates {
     ucitajlogoveklijenta: {}; //  invoke
     vidilistulogovaklijenta: {};
     dodajlogklijenta: {}; //  invoke
+    snimiubazu: {};
   };
 }
 
@@ -169,7 +170,7 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
         },
       },
     },
-    ucitajlistulogovaklijenta: {},
+    ucitajlogoveklijenta: {},
 
     vidilistulogovaklijenta: {
       on: {
