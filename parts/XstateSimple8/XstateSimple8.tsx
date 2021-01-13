@@ -82,19 +82,6 @@ export function XstateSimple8() {
             Vrati se na listu klijenata
           </button>
 
-          {['ucitajklijente'].some(ma) && (
-            <div>
-              <button
-                className="p-1 mx-1 text-white bg-purple-800 rounded-lg"
-                type="button"
-                onClick={() => {
-                  send({ type: 'LISTAKLIJENATA' });
-                }}
-              >
-                Pogledaj klijente
-              </button>
-            </div>
-          )}
           {['vidilistuklijenata'].some(ma) && (
             <div className="flex flex-col">
               {cx.listaklijenata.map((r) => {

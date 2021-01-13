@@ -96,6 +96,7 @@ export type Ievents =
   | { type: 'DODAJNOVILOGKLIJENTA' } // button
   | evLOGKLIJENTA // button
   | { type: 'ABORT' } // button
+  | { type: 'POTVRDI' }
   | { type: 'LISTAKLIJENATA' } // button
   | { type: 'BROWSER' }; // ssr OK
 const send = (sendEvent: Ievents, sendOptions?: any) => untypedSend(sendEvent, sendOptions);
@@ -146,27 +147,51 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
         ],
       },
     },
-    ucitajklijente: {
+    ucitajklijente: {},
+    vidilistuklijenata: {
       on: {
+        LOGKLIJENTA: {
+          target: 'ucitajlistulogovaklijenta',
+        },
+        DODAJNOVIKLIJENT: {
+          target: 'dodajnovogklijenta',
+        }, // DODAJNOVIKLIJENT
+      },
+    },
+    dodajnovogklijenta: {
+      on: {
+        NOVIKLIJENT: [],
+        POTVRDI: {
+          target: 'snimiubazu',
+        },
         LISTAKLIJENATA: {
           target: 'vidilistuklijenata',
         },
       },
     },
-    vidilistuklijenata: {
-      on: {
-        LOGKLIJENTA: {},
-        NOVIKLIJENT: {}, // DODAJNOVIKLIJENT
-      },
-    },
-    dodajnovogklijenta: {},
-    ucitajlogoveklijenta: {},
+    ucitajlistulogovaklijenta: {},
+
     vidilistulogovaklijenta: {
       on: {
-        NOVILOGKLIJENTA: {},
-        LISTAKLIJENATA: {},
+        DODAJNOVILOGKLIJENTA: {
+          target: 'dodajlogklijenta',
+        },
+        LISTAKLIJENATA: {
+          target: 'vidilistuklijenata',
+        },
       },
     },
-    dodajlogklijenta: {},
+    dodajlogklijenta: {
+      on: {
+        NOVILOGKLIJENTA: [],
+        POTVRDI: {
+          target: 'snimiubazu',
+        },
+        LISTAKLIJENATA: {
+          target: 'vidilistuklijenata',
+        },
+      },
+    },
+    snimiubazu: {},
   },
 });
