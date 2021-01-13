@@ -152,7 +152,7 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
     vidilistuklijenata: {
       on: {
         LOGKLIJENTA: {
-          target: 'ucitajlistulogovaklijenta',
+          target: 'ucitajlogoveklijenta',
         },
         DODAJNOVIKLIJENT: {
           target: 'dodajnovogklijenta',
@@ -166,7 +166,7 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
           target: 'snimiubazu',
         },
         LISTAKLIJENATA: {
-          target: 'vidilistuklijenata',
+          target: 'vidilistulogovaklijenta',
         },
       },
     },
