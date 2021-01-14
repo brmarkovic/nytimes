@@ -189,7 +189,7 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
           {
             actions: [
               assign((cx, ev: evNOVIKLIJENT) => {
-                cx.noviklijent = ev?.data || '';
+                cx.noviklijent = ev?.data.klijent || '';
               }),
             ],
           },
