@@ -59,7 +59,6 @@ type Ilogklijenta = {
 // Icontext - nema glagola kao prve reci = da je kljuc iz konteksta
 export interface Icontext {
   listaklijenata: Iklijent[];
-  klijent: string;
   noviklijent: string; // ovo korisnik kuca u inputu kada dodaje
   listalogovaklijenta: Ilogklijenta[];
   novilogklijenta: string; // ovo isto
