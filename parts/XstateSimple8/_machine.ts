@@ -73,6 +73,12 @@ type evNOVIKLIJENT = {
     klijent: string;
   };
 };
+type evDODAJNOVIKLIJENT = {
+  type: 'DODAJNOVIKLIJENT';
+  data: {
+    klijent: string;
+  };
+};
 // input
 type evNOVILOGKLIJENTA = {
   type: 'NOVILOGKLIJENTA';
@@ -91,12 +97,11 @@ type evLOGKLIJENTA = {
 
 export type Ievents =
   | evNOVIKLIJENT // input
-  | { type: 'DODAJNOVIKLIJENT' } // button
+  | evDODAJNOVIKLIJENT // button
   | evNOVILOGKLIJENTA // input
   | { type: 'DODAJNOVILOGKLIJENTA' } // button
   | evLOGKLIJENTA // button
   | { type: 'ABORT' } // button
-  | { type: 'POTVRDI' }
   | { type: 'LISTAKLIJENATA' } // button
   | { type: 'BROWSER' }; // ssr OK
 const send = (sendEvent: Ievents, sendOptions?: any) => untypedSend(sendEvent, sendOptions);
@@ -207,7 +212,7 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
     },
     dodajnovogklijenta: {
       invoke: {
-        src: async (cx, ev: evNOVIKLIJENT) => {
+        src: async (cx, ev: evDODAJNOVIKLIJENT) => {
           const [ERRdata, data] = await backendServer
             .mutate({
               variables: {
@@ -235,12 +240,12 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
               cx.noviklijent = null;
             }),
           ],
-          target: 'vidilistuklijenta',
+          target: 'ucitajklijente',
         },
         onError: {
           // kada server napravi gresku
           // internet ne radi, ne vidi server
-          target: 'vidilistuklijenta',
+          target: 'ucitajklijente',
         },
       },
     },

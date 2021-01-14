@@ -58,7 +58,12 @@ export function XstateSimple8() {
                       className="p-1 mx-1 text-white bg-purple-800 rounded-lg"
                       type="button"
                       onClick={() => {
-                        send({ type: 'DODAJNOVIKLIJENT' });
+                        send({
+                          type: 'DODAJNOVIKLIJENT',
+                          data: {
+                            klijent: cx.noviklijent,
+                          },
+                        });
                       }}
                     >
                       Dodaj klijenta
