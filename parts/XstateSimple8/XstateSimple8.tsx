@@ -29,82 +29,14 @@ export function XstateSimple8() {
   // REACT (HTML+) KOMPONENTA
   return (
     <div className="p-2">
-      <div className="font-extrabold">Pregled liste klijenata i logova klijenata</div>
+      <div className="font-extrabold">Pogledaj listu klijenata i logove klijenata</div>
+
       <div>
         <div className="flex flex-col">
-          <button
-            className="p-1 mx-1 text-white bg-purple-800 rounded-lg"
-            type="button"
-            onClick={() => {
-              send({ type: 'DODAJNOVIKLIJENT' });
-            }}
-          >
-            Dodaj klijenta
-          </button>
-
-          {cx.listalogovaklijenta.map((r) => {
-            return <div className="flex flex-col">Logovi klijenta {r.logtekst} </div>;
-          })}
-          <div className="flex flex-col">
-            <div>Unesite novi log klijenta </div>
-            <div>
-              <textarea
-                value={cx?.novilogklijenta}
-                onChange={(ev) => {
-                  send({
-                    type: 'NOVILOGKLIJENTA',
-                    data: {
-                      logtekst: ev.target.value,
-                      id_klijent: 1,
-                    },
-                  });
-                }}
-                className="border border-gray-500"
-              />
-            </div>
-          </div>
-          <button
-            className="p-1 mx-1 text-white bg-purple-800 rounded-lg"
-            type="button"
-            onClick={() => {
-              send({ type: 'DODAJNOVILOGKLIJENTA' });
-            }}
-          >
-            Dodaj komentar
-          </button>
-          <button
-            className="p-1 mx-1 text-white bg-purple-800 rounded-lg"
-            type="button"
-            onClick={() => {
-              send({ type: 'LISTAKLIJENATA' });
-            }}
-          >
-            Vrati se na listu klijenata
-          </button>
-
           {['vidilistuklijenata'].some(ma) && (
             <div className="flex flex-col">
               {cx.listaklijenata.map((r) => {
-                return (
-                  <div>
-                    {' '}
-                    <button
-                      className="p-1 mx-1 text-white bg-purple-800 rounded-lg"
-                      type="button"
-                      onClick={() => {
-                        send({
-                          type: 'LOGKLIJENTA',
-                          data: {
-                            id: r.id,
-                          },
-                        });
-                      }}
-                    >
-                      Vidi klijenta
-                    </button>
-                    {r.imeklijenta}{' '}
-                  </div>
-                );
+                return <div>Lista klijenata {r.klijent} </div>;
               })}
               <div className="flex flex-col ">
                 <div>Unesite novog klijenta</div>
@@ -115,12 +47,23 @@ export function XstateSimple8() {
                       send({
                         type: 'NOVIKLIJENT',
                         data: {
-                          imeklijenta: ev.target.value,
+                          klijent: ev.target.value,
                         },
                       });
                     }}
                     className="border border-gray-500"
                   />
+                  <div className="flex flex-col">
+                    <button
+                      className="p-1 mx-1 text-white bg-purple-800 rounded-lg"
+                      type="button"
+                      onClick={() => {
+                        send({ type: 'DODAJNOVIKLIJENT' });
+                      }}
+                    >
+                      Dodaj klijenta
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>

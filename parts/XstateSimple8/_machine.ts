@@ -47,7 +47,7 @@ export const backendServer = new ApolloClient({
 
 type Iklijent = {
   id: number;
-  imeklijenta: string;
+  klijent: string;
 };
 
 type Ilogklijenta = {
@@ -70,7 +70,7 @@ type evNOVIKLIJENT = {
   type: 'NOVIKLIJENT';
   data: {
     // id: number; // ovo je automatski u hasuri
-    imeklijenta: string;
+    klijent: string;
   };
 };
 // input
@@ -110,10 +110,10 @@ interface Istates {
     vidilistuklijenata: {}; //
     dodajnovogklijenta: {}; // invoke
     // LOGOVI KLIJENTA
-    ucitajlogoveklijenta: {}; //  invoke
-    vidilistulogovaklijenta: {};
-    dodajlogklijenta: {}; //  invoke
-    snimiubazu: {};
+    // ucitajlogoveklijenta: {}; //  invoke
+    // vidilistulogovaklijenta: {};
+    // dodajlogklijenta: {}; //  invoke
+    // snimiubazu: {};
   };
 }
 
@@ -124,11 +124,7 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
   context: {
     noviklijent: '',
     novilogklijenta: '',
-    listaklijenata: [
-      { id: 1, imeklijenta: 'Biljana' },
-      { id: 2, imeklijenta: 'Ivana' },
-      { id: 3, imeklijenta: 'Peca' },
-    ],
+    listaklijenata: [],
     listalogovaklijenta: [
       { id: 1, id_klijent: 1, logtekst: 'zaposlen' },
       { id: 2, id_klijent: 2, logtekst: 'bolovanje' },
@@ -148,51 +144,59 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
         ],
       },
     },
-    ucitajklijente: {},
+    ucitajklijente: {
+      invoke: {
+        src: async () => {
+          const [ERRdata, data] = await backendServer
+            .query({
+              // u navodnicima je ono sto smo u Hasuri definisali i radi
+              query: gql`
+                query klijent {
+                  klijent {
+                    id
+                    klijent
+                  }
+                }
+              `,
+            })
+            .then((r) => [null, r])
+            .catch((e) => [e]);
+          if ((data && data.errors) || ERRdata) {
+            throw new Error('error');
+          }
+          return data;
+        },
+        onDone: {
+          // kada server vrati odgovor
+          actions: [
+            assign((cx, ev) => {
+              // console.log({ ev });
+              cx.listaklijenata = ev.data.data.klijent;
+            }),
+          ],
+          target: 'vidilistuklijenata',
+        },
+        onError: {
+          // kada server napravi gresku
+          // internet ne radi, ne vidi server
+          target: 'vidilistuklijenata',
+        },
+      },
+    },
     vidilistuklijenata: {
       on: {
-        LOGKLIJENTA: {
-          target: 'ucitajlogoveklijenta',
-        },
-        DODAJNOVIKLIJENT: {
+        NOVIKLIJENT: {}, // input
+        POTVRDI: {
           target: 'dodajnovogklijenta',
-        }, // DODAJNOVIKLIJENT
+        },
       },
     },
     dodajnovogklijenta: {
       on: {
-        NOVIKLIJENT: [],
-        POTVRDI: {
-          target: 'snimiubazu',
-        },
-        LISTAKLIJENATA: {
-          target: 'vidilistulogovaklijenta',
-        },
-      },
-    },
-    ucitajlogoveklijenta: {},
-
-    vidilistulogovaklijenta: {
-      on: {
-        DODAJNOVILOGKLIJENTA: {
-          target: 'dodajlogklijenta',
-        },
-        LISTAKLIJENATA: {
+        DODAJNOVIKLIJENT: {
           target: 'vidilistuklijenata',
         },
       },
     },
-    dodajlogklijenta: {
-      on: {
-        NOVILOGKLIJENTA: [],
-        POTVRDI: {
-          target: 'snimiubazu',
-        },
-        LISTAKLIJENATA: {
-          target: 'vidilistuklijenata',
-        },
-      },
-    },
-    snimiubazu: {},
   },
 });
