@@ -59,6 +59,7 @@ type Ilogklijenta = {
 // Icontext - nema glagola kao prve reci = da je kljuc iz konteksta
 export interface Icontext {
   listaklijenata: Iklijent[];
+  klijent: string;
   noviklijent: string; // ovo korisnik kuca u inputu kada dodaje
   listalogovaklijenta: Ilogklijenta[];
   novilogklijenta: string; // ovo isto
@@ -113,7 +114,7 @@ interface Istates {
     // ucitajlogoveklijenta: {}; //  invoke
     // vidilistulogovaklijenta: {};
     // dodajlogklijenta: {}; //  invoke
-    snimiubazu: {};
+    // snimiubazu: {};
   };
 }
 
@@ -185,12 +186,26 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
     },
     vidilistuklijenata: {
       on: {
-        NOVIKLIJENT: {}, // input
-        DODAJNOVIKLIJENT: {
-          target: 'snimiubazu',
-        },
+        NOVIKLIJENT: [
+          {
+            actions: [
+              assign((cx, ev: evNOVIKLIJENT) => {
+                cx.noviklijent = ev?.data || '';
+              }),
+            ],
+          },
+        ],
+        DODAJNOVIKLIJENT: [
+          {
+            cond: (cx) => cx?.noviklijent === null || false,
+            target: 'vidilistuklijenta',
+          },
+          {
+            target: 'dodajnovogklijenta',
+          },
+        ],
       },
     },
-    snimiubazu: {},
+    dodajnovogklijenta: {},
   },
 });
