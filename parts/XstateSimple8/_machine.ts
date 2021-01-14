@@ -113,7 +113,7 @@ interface Istates {
     // ucitajlogoveklijenta: {}; //  invoke
     // vidilistulogovaklijenta: {};
     // dodajlogklijenta: {}; //  invoke
-    // snimiubazu: {};
+    snimiubazu: {};
   };
 }
 
@@ -186,17 +186,11 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
     vidilistuklijenata: {
       on: {
         NOVIKLIJENT: {}, // input
-        POTVRDI: {
-          target: 'dodajnovogklijenta',
-        },
-      },
-    },
-    dodajnovogklijenta: {
-      on: {
         DODAJNOVIKLIJENT: {
-          target: 'vidilistuklijenata',
+          target: 'snimiubazu',
         },
       },
     },
+    snimiubazu: {},
   },
 });
