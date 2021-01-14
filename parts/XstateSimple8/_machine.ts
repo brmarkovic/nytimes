@@ -197,7 +197,7 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
         DODAJNOVIKLIJENT: [
           {
             cond: (cx) => cx?.noviklijent === null || false,
-            target: 'vidilistuklijenta',
+            target: 'vidilistuklijenata',
           },
           {
             target: 'dodajnovogklijenta',
@@ -205,6 +205,44 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
         ],
       },
     },
-    dodajnovogklijenta: {},
+    dodajnovogklijenta: {
+      invoke: {
+        src: async (cx, ev: evNOVIKLIJENT) => {
+          const [ERRdata, data] = await backendServer
+            .mutate({
+              variables: {
+                klijent: ev.data.klijent,
+              },
+              mutation: gql`
+                mutation insertklijent($klijent: String) {
+                  insert_klijent(objects: { klijent: $klijent }) {
+                    affected_rows
+                  }
+                }
+              `,
+            })
+            .then((r) => [null, r])
+            .catch((e) => [e]);
+          if ((data && data.errors) || ERRdata) {
+            throw new Error('error');
+          }
+          return data;
+        },
+        onDone: {
+          // kada server vrati odgovor
+          actions: [
+            assign((cx) => {
+              cx.noviklijent = null;
+            }),
+          ],
+          target: 'vidilistuklijenta',
+        },
+        onError: {
+          // kada server napravi gresku
+          // internet ne radi, ne vidi server
+          target: 'vidilistuklijenta',
+        },
+      },
+    },
   },
 });
