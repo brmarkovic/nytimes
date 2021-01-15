@@ -36,7 +36,26 @@ export function XstateSimple8() {
           {['vidilistuklijenata'].some(ma) && (
             <div className="flex flex-col">
               {cx.listaklijenata.map((r) => {
-                return <div>Lista klijenata {r.klijent} </div>;
+                return (
+                  <div>
+                    Lista klijenata
+                    <button
+                      className="p-1 mx-1 text-white bg-purple-800 rounded-lg"
+                      type="button"
+                      onClick={() => {
+                        send({
+                          type: 'LOGKLIJENTA',
+                          data: {
+                            id: r.id,
+                          },
+                        });
+                      }}
+                    >
+                      Vidi klijenta
+                    </button>
+                    {r.klijent}{' '}
+                  </div>
+                );
               })}
               <div className="flex flex-col ">
                 <div>Unesite novog klijenta</div>
