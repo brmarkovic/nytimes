@@ -116,7 +116,7 @@ interface Istates {
     dodajnovogklijenta: {}; // invoke
     // LOGOVI KLIJENTA
     // ucitajlogoveklijenta: {}; //  invoke
-    // vidilistulogovaklijenta: {};
+    vidilistulogovaklijenta: {};
     // dodajlogklijenta: {}; //  invoke
     // snimiubazu: {};
   };
@@ -208,6 +208,11 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
             target: 'dodajnovogklijenta',
           },
         ],
+        LOGKLIJENTA: [
+          {
+            target: 'vidilistulogovaklijenta',
+          },
+        ],
       },
     },
     dodajnovogklijenta: {
@@ -247,6 +252,12 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
           // internet ne radi, ne vidi server
           target: 'ucitajklijente',
         },
+      },
+    },
+    vidilistulogovaklijenta: {
+      on: {
+        NOVILOGKLIJENTA: {},
+        DODAJNOVILOGKLIJENTA: {},
       },
     },
   },

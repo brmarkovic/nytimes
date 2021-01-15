@@ -92,6 +92,11 @@ export function XstateSimple8() {
               </div>
             </div>
           )}
+          <div className="flex flex-col">
+            {cx.listalogovaklijenta.map((r) => {
+              return <div>Lista logova klijenta {r.logtekst}</div>;
+            })}
+          </div>
 
           <pre>{JSON.stringify({ cx }, null, 2)}</pre>
         </div>
