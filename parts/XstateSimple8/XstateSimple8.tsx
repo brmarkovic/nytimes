@@ -108,7 +108,7 @@ export function XstateSimple8() {
                           type: 'NOVILOGKLIJENTA',
                           data: {
                             logtekst: ev.target.value,
-                            id_klijent: cx.trenutniklijent,
+                            id_klijent: 1,
                           },
                         });
                       }}
@@ -123,7 +123,7 @@ export function XstateSimple8() {
                             type: 'DODAJNOVILOGKLIJENTA',
                             data: {
                               logtekst: cx.novilogklijenta,
-                              id_klijent: cx.trenutniklijent,
+                              id_klijent: 1,
                             },
                           });
                         }}

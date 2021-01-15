@@ -297,11 +297,11 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
             .mutate({
               variables: {
                 logtekst: ev.data.logtekst,
-                id_klijent: ev.data.id_klijent,
+                id_klijent: 1,
               },
               mutation: gql`
-                mutation insertklijentlog($id: Int, $id_klijent: Int, $logtekst: String) {
-                  insert_klijentlog(objects: { id: $id, id_klijent: $id_klijent, logtekst: $logtekst }) {
+                mutation insertklijentlog($id_klijent: Int, $logtekst: String) {
+                  insert_klijentlog(objects: { id_klijent: $id_klijent, logtekst: $logtekst }) {
                     affected_rows
                   }
                 }
