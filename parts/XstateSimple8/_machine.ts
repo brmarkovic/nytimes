@@ -62,6 +62,7 @@ export interface Icontext {
   noviklijent: string; // ovo korisnik kuca u inputu kada dodaje
   listalogovaklijenta: Ilogklijenta[];
   novilogklijenta: string; // ovo isto
+  trenutniklijent: number;
 }
 
 // Ievents
@@ -77,6 +78,13 @@ type evDODAJNOVIKLIJENT = {
   type: 'DODAJNOVIKLIJENT';
   data: {
     klijent: string;
+  };
+};
+type evDODAJNOVILOGKLIJENTA = {
+  type: 'DODAJNOVILOGKLIJENTA';
+  data: {
+    logtekst: string;
+    id_klijent: number;
   };
 };
 // input
@@ -99,7 +107,7 @@ export type Ievents =
   | evNOVIKLIJENT // input
   | evDODAJNOVIKLIJENT // button
   | evNOVILOGKLIJENTA // input
-  | { type: 'DODAJNOVILOGKLIJENTA' } // button
+  | evDODAJNOVILOGKLIJENTA // button
   | evLOGKLIJENTA // button
   | { type: 'ABORT' } // button
   | { type: 'LISTAKLIJENATA' } // button
@@ -117,7 +125,7 @@ interface Istates {
     // LOGOVI KLIJENTA
     // ucitajlogoveklijenta: {}; //  invoke
     vidilistulogovaklijenta: {};
-    // dodajlogklijenta: {}; //  invoke
+    dodajlogklijenta: {}; //  invoke
     // snimiubazu: {};
   };
 }
@@ -129,15 +137,15 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
   context: {
     noviklijent: '',
     novilogklijenta: '',
+    trenutniklijent: 1,
     listaklijenata: [],
     listalogovaklijenta: [
       { id: 1, id_klijent: 1, logtekst: 'zaposlen' },
-      { id: 2, id_klijent: 2, logtekst: 'bolovanje' },
-      { id: 3, id_klijent: 1, logtekst: 'kratka kosa' },
-      { id: 4, id_klijent: 3, logtekst: 'auto' },
+      { id: 2, id_klijent: 1, logtekst: 'auto' },
+      { id: 3, id_klijent: 1, logtekst: 'nabavka' },
     ],
   },
-  // BIKA FOKUS END <<<<<<
+  // BIKA FOKUS END <<<<<
   states: {
     // DEFAULT MILAN STATE
     ssr: {
@@ -210,6 +218,11 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
         ],
         LOGKLIJENTA: [
           {
+            actions: [
+              assign((cx, ev: evLOGKLIJENTA) => {
+                cx.trenutniklijent = ev.data.id;
+              }),
+            ],
             target: 'vidilistulogovaklijenta',
           },
         ],
@@ -254,10 +267,67 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
         },
       },
     },
+
     vidilistulogovaklijenta: {
       on: {
-        NOVILOGKLIJENTA: {},
-        DODAJNOVILOGKLIJENTA: {},
+        NOVILOGKLIJENTA: [
+          {
+            actions: [
+              assign((cx, ev: evNOVILOGKLIJENTA) => {
+                cx.novilogklijenta = ev?.data.logtekst || '';
+              }),
+            ],
+          },
+        ],
+        DODAJNOVILOGKLIJENTA: [
+          {
+            cond: (cx) => cx?.novilogklijenta === null || false,
+            target: 'vidilistulogovaklijenta',
+          },
+          {
+            target: 'dodajlogklijenta',
+          },
+        ],
+      },
+    },
+    dodajlogklijenta: {
+      invoke: {
+        src: async (cx, ev: evDODAJNOVILOGKLIJENTA) => {
+          const [ERRdata, data] = await backendServer
+            .mutate({
+              variables: {
+                logtekst: ev.data.logtekst,
+                id_klijent: ev.data.id_klijent,
+              },
+              mutation: gql`
+                mutation insertklijentlog($id: Int, $id_klijent: Int, $logtekst: String) {
+                  insert_klijentlog(objects: { id: $id, id_klijent: $id_klijent, logtekst: $logtekst }) {
+                    affected_rows
+                  }
+                }
+              `,
+            })
+            .then((r) => [null, r])
+            .catch((e) => [e]);
+          if ((data && data.errors) || ERRdata) {
+            throw new Error('error');
+          }
+          return data;
+        },
+        onDone: {
+          // kada server vrati odgovor
+          actions: [
+            assign((cx) => {
+              cx.novilogklijenta = null;
+            }),
+          ],
+          target: 'vidilistulogovaklijenta',
+        },
+        onError: {
+          // kada server napravi gresku
+          // internet ne radi, ne vidi server
+          target: 'ucitajklijente',
+        },
       },
     },
   },

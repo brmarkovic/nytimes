@@ -46,7 +46,7 @@ export function XstateSimple8() {
                         send({
                           type: 'LOGKLIJENTA',
                           data: {
-                            id: r.id,
+                            id: 1,
                           },
                         });
                       }}
@@ -93,9 +93,48 @@ export function XstateSimple8() {
             </div>
           )}
           <div className="flex flex-col">
-            {cx.listalogovaklijenta.map((r) => {
-              return <div>Lista logova klijenta {r.logtekst}</div>;
-            })}
+            {['vidilistulogovaklijenta'].some(ma) && (
+              <div className="flex flex-col">
+                {cx.listalogovaklijenta.map((r) => {
+                  return <div> Lista logova klijenta {r.logtekst} </div>;
+                })}
+                <div className="flex flex-col ">
+                  <div>Unesite novog log za klijenta</div>
+                  <div>
+                    <textarea
+                      value={cx?.novilogklijenta}
+                      onChange={(ev) => {
+                        send({
+                          type: 'NOVILOGKLIJENTA',
+                          data: {
+                            logtekst: ev.target.value,
+                            id_klijent: cx.trenutniklijent,
+                          },
+                        });
+                      }}
+                      className="border border-gray-500"
+                    />
+                    <div className="flex flex-col">
+                      <button
+                        className="p-1 mx-1 text-white bg-purple-800 rounded-lg"
+                        type="button"
+                        onClick={() => {
+                          send({
+                            type: 'DODAJNOVILOGKLIJENTA',
+                            data: {
+                              logtekst: cx.novilogklijenta,
+                              id_klijent: cx.trenutniklijent,
+                            },
+                          });
+                        }}
+                      >
+                        Dodaj novi log klijenta
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
 
           <pre>{JSON.stringify({ cx }, null, 2)}</pre>
