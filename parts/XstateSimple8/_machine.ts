@@ -92,7 +92,6 @@ type evNOVILOGKLIJENTA = {
   type: 'NOVILOGKLIJENTA';
   data: {
     logtekst: string;
-    id_klijent: number;
   };
 };
 // button
@@ -229,7 +228,7 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
                 cx.trenutniklijent = ev.data.id;
               }),
             ],
-            target: 'vidilistulogovaklijenta',
+            target: 'ucitajlogoveklijenta',
           },
         ],
       },
@@ -278,10 +277,9 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
         src: async () => {
           const [ERRdata, data] = await backendServer
             .query({
-              // u navodnicima je ono sto smo u Hasuri definisali i radi
               query: gql`
                 query klijentlog {
-                  klijentlog {
+                  klijentlog(order_by: { id: desc }) {
                     id
                     id_klijent
                     logtekst
@@ -301,7 +299,7 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
           actions: [
             assign((cx, ev) => {
               // console.log({ ev });
-              cx.listalogovaklijenta = ev.data.data.logtekst;
+              cx.listalogovaklijenta = ev.data.data.klijentlog;
             }),
           ],
           target: 'vidilistulogovaklijenta',
@@ -352,7 +350,7 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
             .mutate({
               variables: {
                 logtekst: ev.data.logtekst,
-                id_klijent: 1,
+                id_klijent: ev.data.id_klijent,
               },
               mutation: gql`
                 mutation insertklijentlog($id_klijent: Int, $logtekst: String) {
@@ -376,12 +374,12 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
               cx.novilogklijenta = null;
             }),
           ],
-          target: 'vidilistulogovaklijenta',
+          target: 'ucitajlogoveklijenta',
         },
         onError: {
           // kada server napravi gresku
           // internet ne radi, ne vidi server
-          target: 'ucitajklijente',
+          target: 'vidilistuklijenata',
         },
       },
     },

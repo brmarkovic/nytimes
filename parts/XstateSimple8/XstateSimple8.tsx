@@ -46,7 +46,7 @@ export function XstateSimple8() {
                         send({
                           type: 'LOGKLIJENTA',
                           data: {
-                            id: 1,
+                            id: r.id,
                           },
                         });
                       }}
@@ -95,9 +95,11 @@ export function XstateSimple8() {
           <div className="flex flex-col">
             {['vidilistulogovaklijenta'].some(ma) && (
               <div className="flex flex-col">
-                {cx.listalogovaklijenta.map((r) => {
-                  return <div> Lista logova klijenta {r.logtekst} </div>;
-                })}
+                {cx?.listalogovaklijenta
+                  ?.filter((r) => cx.trenutniklijent === r.id_klijent)
+                  .map((r) => {
+                    return <div> Lista logova klijenta {r.logtekst} </div>;
+                  })}
                 <div className="flex flex-col ">
                   <div>Unesite novog log za klijenta</div>
                   <div>
@@ -108,7 +110,6 @@ export function XstateSimple8() {
                           type: 'NOVILOGKLIJENTA',
                           data: {
                             logtekst: ev.target.value,
-                            id_klijent: 1,
                           },
                         });
                       }}
@@ -123,7 +124,7 @@ export function XstateSimple8() {
                             type: 'DODAJNOVILOGKLIJENTA',
                             data: {
                               logtekst: cx.novilogklijenta,
-                              id_klijent: 1,
+                              id_klijent: cx.trenutniklijent,
                             },
                           });
                         }}
