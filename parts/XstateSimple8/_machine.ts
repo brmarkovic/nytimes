@@ -102,6 +102,12 @@ type evLOGKLIJENTA = {
     id: number;
   };
 };
+type evLISTAKLIJENATA = {
+  type: 'LISTAKLIJENATA';
+  data: {
+    id_klijent: number;
+  };
+};
 
 export type Ievents =
   | evNOVIKLIJENT // input
@@ -110,7 +116,7 @@ export type Ievents =
   | evDODAJNOVILOGKLIJENTA // button
   | evLOGKLIJENTA // button
   | { type: 'ABORT' } // button
-  | { type: 'LISTAKLIJENATA' } // button
+  | evLISTAKLIJENATA // button
   | { type: 'BROWSER' }; // ssr OK
 const send = (sendEvent: Ievents, sendOptions?: any) => untypedSend(sendEvent, sendOptions);
 
@@ -123,7 +129,7 @@ interface Istates {
     vidilistuklijenata: {}; //
     dodajnovogklijenta: {}; // invoke
     // LOGOVI KLIJENTA
-    // ucitajlogoveklijenta: {}; //  invoke
+    ucitajlogoveklijenta: {}; //  invoke
     vidilistulogovaklijenta: {};
     dodajlogklijenta: {}; //  invoke
     // snimiubazu: {};
@@ -267,7 +273,46 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
         },
       },
     },
-
+    ucitajlogoveklijenta: {
+      invoke: {
+        src: async () => {
+          const [ERRdata, data] = await backendServer
+            .query({
+              // u navodnicima je ono sto smo u Hasuri definisali i radi
+              query: gql`
+                query klijentlog {
+                  klijentlog {
+                    id
+                    id_klijent
+                    logtekst
+                  }
+                }
+              `,
+            })
+            .then((r) => [null, r])
+            .catch((e) => [e]);
+          if ((data && data.errors) || ERRdata) {
+            throw new Error('error');
+          }
+          return data;
+        },
+        onDone: {
+          // kada server vrati odgovor
+          actions: [
+            assign((cx, ev) => {
+              // console.log({ ev });
+              cx.listalogovaklijenta = ev.data.data.logtekst;
+            }),
+          ],
+          target: 'vidilistulogovaklijenta',
+        },
+        onError: {
+          // kada server napravi gresku
+          // internet ne radi, ne vidi server
+          target: 'vidilistulogovaklijenta',
+        },
+      },
+    },
     vidilistulogovaklijenta: {
       on: {
         NOVILOGKLIJENTA: [
@@ -286,6 +331,16 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
           },
           {
             target: 'dodajlogklijenta',
+          },
+        ],
+        LISTAKLIJENATA: [
+          {
+            actions: [
+              assign((cx, ev: evLISTAKLIJENATA) => {
+                cx.trenutniklijent = ev.data.id_klijent;
+              }),
+            ],
+            target: 'vidilistuklijenata',
           },
         ],
       },

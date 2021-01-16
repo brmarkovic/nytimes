@@ -130,6 +130,20 @@ export function XstateSimple8() {
                       >
                         Dodaj novi log klijenta
                       </button>
+                      <button
+                        className="p-1 mx-1 text-white bg-purple-800 rounded-lg"
+                        type="button"
+                        onClick={() => {
+                          send({
+                            type: 'LISTAKLIJENATA',
+                            data: {
+                              id_klijent: 0,
+                            },
+                          });
+                        }}
+                      >
+                        Vrati se na listuklijenata
+                      </button>
                     </div>
                   </div>
                 </div>
