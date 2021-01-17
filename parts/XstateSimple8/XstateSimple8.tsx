@@ -51,7 +51,7 @@ export function XstateSimple8() {
                         });
                       }}
                     >
-                      Vidi klijenta
+                      Vidi logove klijenta
                     </button>
                     {r.klijent}{' '}
                   </div>

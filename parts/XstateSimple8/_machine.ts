@@ -13,6 +13,7 @@ import { ApolloClient } from 'apollo-client';
 import { HttpLink } from 'apollo-link-http';
 import { ApolloLink } from 'apollo-link';
 import gql from 'graphql-tag';
+import { type } from 'os';
 
 export const backendServer = new ApolloClient({
   ssrMode: true,
@@ -56,6 +57,12 @@ type Ilogklijenta = {
   id_klijent: number; // ovo ide na dno
 };
 
+type Itransakcijaklijenta = {
+  id: number;
+  transakcijatekst: string;
+  id_klijent: number;
+};
+
 // Icontext - nema glagola kao prve reci = da je kljuc iz konteksta
 export interface Icontext {
   listaklijenata: Iklijent[];
@@ -63,6 +70,8 @@ export interface Icontext {
   listalogovaklijenta: Ilogklijenta[];
   novilogklijenta: string; // ovo isto
   trenutniklijent: number;
+  listatransakcijaklijenta: Itransakcijaklijenta[];
+  novatransakcijaklijenta: string;
 }
 
 // Ievents
@@ -108,12 +117,29 @@ type evLISTAKLIJENATA = {
   };
 };
 
+type evNOVATRANSAKCIJAKLIJENTA = {
+  type: 'NOVATRANSAKCIJAKLIJENTA';
+  data: {
+    transakcijatekst: string;
+  };
+};
+
+type evDODAJNOVUTRANSAKCIJUKLIJENTA = {
+  type: 'DODAJNOVUTRANSAKCIJUKLIJENTA';
+  data: {
+    transakcijatekst: string;
+    id_klijent: number;
+  };
+};
+
 export type Ievents =
   | evNOVIKLIJENT // input
   | evDODAJNOVIKLIJENT // button
   | evNOVILOGKLIJENTA // input
   | evDODAJNOVILOGKLIJENTA // button
   | evLOGKLIJENTA // button
+  | evNOVATRANSAKCIJAKLIJENTA
+  | evDODAJNOVUTRANSAKCIJUKLIJENTA
   | { type: 'ABORT' } // button
   | evLISTAKLIJENATA // button
   | { type: 'BROWSER' }; // ssr OK
@@ -132,6 +158,9 @@ interface Istates {
     vidilistulogovaklijenta: {};
     dodajlogklijenta: {}; //  invoke
     // snimiubazu: {};
+    ucitajtransakcijeklijenta: {};
+    vidilistutransakcijaklijenta: {};
+    dodajtransakcijuklijenta: {};
   };
 }
 
@@ -142,12 +171,18 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
   context: {
     noviklijent: '',
     novilogklijenta: '',
+    novatransakcijaklijenta: '',
     trenutniklijent: 1,
     listaklijenata: [],
     listalogovaklijenta: [
       { id: 1, id_klijent: 1, logtekst: 'zaposlen' },
       { id: 2, id_klijent: 1, logtekst: 'auto' },
       { id: 3, id_klijent: 1, logtekst: 'nabavka' },
+    ],
+    listatransakcijaklijenta: [
+      { id: 1, id_klijent: 1, transakcijatekst: 'kredit' },
+      { id: 2, id_klijent: 1, transakcijatekst: 'tekuciracun' },
+      { id: 3, id_klijent: 1, transakcijatekst: 'pozajmica' },
     ],
   },
   // BIKA FOKUS END <<<<<
@@ -383,5 +418,8 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
         },
       },
     },
+    ucitajtransakcijeklijenta: {},
+    vidilistutransakcijaklijenta: {},
+    dodajtransakcijuklijenta: {},
   },
 });
