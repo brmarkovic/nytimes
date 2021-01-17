@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { Machine } from 'xstate';
 import { send as untypedSend } from 'xstate/lib/actions';
 import { assign } from '@xstate/immer';
@@ -438,12 +439,115 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
         },
       },
     },
-    ucitajtransakcijeklijenta: {},
-    vidilistutransakcijaklijenta: {
-      // NOVATRANSAKCIJAKLIJENTA: {},
-      // DODAJNOVUTRANSAKCIJUKLIJENTA: {},
-      // LISTAKLIJENATA: {},
+    ucitajtransakcijeklijenta: {
+      invoke: {
+        src: async () => {
+          const [ERRdata, data] = await backendServer
+            .query({
+              query: gql`
+                query klijenttransakcija {
+                  klijenttransakcija {
+                    id_klijent
+                    transakcijatekst
+                  }
+                }
+              `,
+            })
+            .then((r) => [null, r])
+            .catch((e) => [e]);
+          if ((data && data.errors) || ERRdata) {
+            throw new Error('error');
+          }
+          return data;
+        },
+        onDone: {
+          // kada server vrati odgovor
+          actions: [
+            assign((cx, ev) => {
+              // console.log({ ev });
+              cx.listatransakcijaklijenta = ev.data.data.klijentlog; // izmeniti
+            }),
+          ],
+          target: 'vidilistutransakcijaklijenta',
+        },
+        onError: {
+          // kada server napravi gresku
+          // internet ne radi, ne vidi server
+          target: 'vidilistutransakcijaklijenta',
+        },
+      },
     },
-    dodajtransakcijuklijenta: {},
+    vidilistutransakcijaklijenta: {
+      on: {
+        NOVATRANSAKCIJAKLIJENTA: [
+          {
+            actions: [
+              assign((cx, ev: evNOVATRANSAKCIJAKLIJENTA) => {
+                cx.novatransakcijaklijenta = ev?.data.transakcijatekst || '';
+              }),
+            ],
+          },
+        ],
+        DODAJNOVUTRANSAKCIJUKLIJENTA: [
+          {
+            cond: (cx) => cx?.novatransakcijaklijenta === null || false,
+            target: 'vidilistutransakcijaklijenta',
+          },
+          {
+            target: 'dodajtransakcijuklijenta',
+          },
+        ],
+        LISTAKLIJENATA: [
+          {
+            actions: [
+              assign((cx, ev: evLISTAKLIJENATA) => {
+                cx.trenutniklijent = 1; // izmeni
+              }),
+            ],
+            target: 'vidilistuklijenata',
+          },
+        ],
+      },
+    },
+    dodajtransakcijuklijenta: {
+      invoke: {
+        src: async (_cx, ev: evDODAJNOVUTRANSAKCIJUKLIJENTA) => {
+          const [ERRdata, data] = await backendServer
+            .mutate({
+              variables: {
+                transakcijatekst: ev.data.transakcijatekst,
+                id_klijent: 1, // izmeniti
+              },
+              mutation: gql`
+                mutation insertklijenttransakcija($id_klijent: Int, $transakcijatekst: String) {
+                  insert_klijenttransakcija(objects: { id_klijent: $id_klijent, transakcijatekst: $transakcijatekst }) {
+                    affected_rows
+                  }
+                }
+              `,
+            })
+            .then((r) => [null, r])
+            .catch((e) => [e]);
+          if ((data && data.errors) || ERRdata) {
+            throw new Error('error');
+          }
+          return data;
+        },
+        onDone: {
+          // kada server vrati odgovor
+          actions: [
+            assign((cx) => {
+              cx.novatransakcijaklijenta = null;
+            }),
+          ],
+          target: 'vidilistutransakcijaklijenta',
+        },
+        onError: {
+          // kada server napravi gresku
+          // internet ne radi, ne vidi server
+          target: 'vidilistuklijenata',
+        },
+      },
+    },
   },
 });
