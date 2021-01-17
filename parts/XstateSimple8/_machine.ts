@@ -279,12 +279,11 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
         TRANSAKCIJAKLIJENTA: [
           {
             actions: [
-              // eslint-disable-next-line no-unused-vars
               assign((cx, ev: evTRANSAKCIJAKLIJENTA) => {
-                cx.trenutniklijent = 1; // IZMENITI
+                cx.trenutniklijent = ev.data.id; // IZMENITI//promenila
               }),
             ],
-            target: 'vidilistutransakcijaklijenta',
+            target: 'ucitajtransakcijeklijenta',
           },
         ],
       },
@@ -465,7 +464,7 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
           actions: [
             assign((cx, ev) => {
               // console.log({ ev });
-              cx.listatransakcijaklijenta = ev.data.data.klijentlog; // izmeniti
+              cx.listatransakcijaklijenta = ev.data.data.klijenttransakcija; // izmeniti//izmenjeno
             }),
           ],
           target: 'vidilistutransakcijaklijenta',
@@ -501,7 +500,7 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
           {
             actions: [
               assign((cx, ev: evLISTAKLIJENATA) => {
-                cx.trenutniklijent = 1; // izmeni
+                cx.trenutniklijent = ev.data.id_klijent; // izmeni/izmenjeno
               }),
             ],
             target: 'vidilistuklijenata',
@@ -516,7 +515,7 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
             .mutate({
               variables: {
                 transakcijatekst: ev.data.transakcijatekst,
-                id_klijent: 1, // izmeniti
+                id_klijent: ev.data.id_klijent, // izmeniti//izmenjeno
               },
               mutation: gql`
                 mutation insertklijenttransakcija($id_klijent: Int, $transakcijatekst: String) {
@@ -540,7 +539,7 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
               cx.novatransakcijaklijenta = null;
             }),
           ],
-          target: 'vidilistutransakcijaklijenta',
+          target: 'ucitajtransakcijeklijenta',
         },
         onError: {
           // kada server napravi gresku

@@ -60,7 +60,7 @@ export function XstateSimple8() {
                         send({
                           type: 'TRANSAKCIJAKLIJENTA',
                           data: {
-                            id: 1, // IZMENITI HRADCODOVANU VREDNOST
+                            id: r.id, // IZMENITI HRADCODOVANU VREDNOST/izmenila
                           },
                         });
                       }}
@@ -138,7 +138,7 @@ export function XstateSimple8() {
                             type: 'DODAJNOVILOGKLIJENTA',
                             data: {
                               logtekst: cx.novilogklijenta,
-                              id_klijent: 1,
+                              id_klijent: cx.trenutniklijent,
                             },
                           });
                         }}
@@ -168,10 +168,12 @@ export function XstateSimple8() {
           <div className="flex flex-col">
             {['vidilistutransakcijaklijenta'].some(ma) && (
               <div className="flex flex-col">
-                {cx?.listatransakcijaklijenta?.map((r) => {
-                  // dodati filter
-                  return <div> Lista transakcija klijenta {r.transakcijatekst} </div>;
-                })}
+                {cx?.listatransakcijaklijenta
+                  ?.filter((r) => cx.trenutniklijent === r.id_klijent)
+                  .map((r) => {
+                    // dodati filter/dodala
+                    return <div> Lista transakcija klijenta {r.transakcijatekst} </div>;
+                  })}
                 <div className="flex flex-col">
                   <div> Unesite novu transakciju za klijenta </div>
                   <div>
@@ -196,7 +198,7 @@ export function XstateSimple8() {
                             type: 'DODAJNOVUTRANSAKCIJUKLIJENTA',
                             data: {
                               transakcijatekst: cx.novatransakcijaklijenta,
-                              id_klijent: 1, // izmeniti
+                              id_klijent: cx.trenutniklijent, // izmeniti
                             },
                           });
                         }}
