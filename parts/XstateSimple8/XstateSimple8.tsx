@@ -53,6 +53,20 @@ export function XstateSimple8() {
                     >
                       Vidi logove klijenta
                     </button>
+                    <button
+                      className="p-1 mx-1 text-white bg-purple-800 rounded-lg"
+                      type="button"
+                      onClick={() => {
+                        send({
+                          type: 'TRANSAKCIJAKLIJENTA',
+                          data: {
+                            id: 1, // IZMENITI HRADCODOVANU VREDNOST
+                          },
+                        });
+                      }}
+                    >
+                      Vidi transakcije klijenta
+                    </button>
                     {r.klijent}{' '}
                   </div>
                 );
@@ -151,7 +165,64 @@ export function XstateSimple8() {
               </div>
             )}
           </div>
-
+          <div className="flex flex-col">
+            {['vidilistutransakcijaklijenta'].some(ma) && (
+              <div className="flex flex-col">
+                {cx?.listatransakcijaklijenta?.map((r) => {
+                  // dodati filter
+                  return <div> Lista transakcija klijenta {r.transakcijatekst} </div>;
+                })}
+                <div className="flex flex-col">
+                  <div> Unesite novu transakciju za klijenta </div>
+                  <div>
+                    <textarea
+                      value={cx?.novatransakcijaklijenta}
+                      onChange={(ev) => {
+                        send({
+                          type: 'NOVATRANSAKCIJAKLIJENTA',
+                          data: {
+                            transakcijatekst: ev.target.value,
+                          },
+                        });
+                      }}
+                      className="border border-gray-500"
+                    />
+                    <div className="flex flex-col">
+                      <button
+                        className="p-1 mx-1 text-white bg-purple-800 rounded-lg"
+                        type="button"
+                        onClick={() => {
+                          send({
+                            type: 'DODAJNOVUTRANSAKCIJUKLIJENTA',
+                            data: {
+                              transakcijatekst: cx.novatransakcijaklijenta,
+                              id_klijent: 1, // izmeniti
+                            },
+                          });
+                        }}
+                      >
+                        Dodaj novu transakciju klijenta
+                      </button>
+                      <button
+                        className="p-1 mx-1 text-white bg-purple-800 rounded-lg"
+                        type="button"
+                        onClick={() => {
+                          send({
+                            type: 'LISTAKLIJENATA',
+                            data: {
+                              id_klijent: 0,
+                            },
+                          });
+                        }}
+                      >
+                        Vrati se na listuklijenata
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
           <pre>{JSON.stringify({ cx }, null, 2)}</pre>
         </div>
       </div>

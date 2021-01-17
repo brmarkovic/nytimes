@@ -110,6 +110,14 @@ type evLOGKLIJENTA = {
     id: number;
   };
 };
+
+type evTRANSAKCIJAKLIJENTA = {
+  type: 'TRANSAKCIJAKLIJENTA';
+  data: {
+    id: number;
+  };
+};
+
 type evLISTAKLIJENATA = {
   type: 'LISTAKLIJENATA';
   data: {
@@ -138,6 +146,7 @@ export type Ievents =
   | evNOVILOGKLIJENTA // input
   | evDODAJNOVILOGKLIJENTA // button
   | evLOGKLIJENTA // button
+  | evTRANSAKCIJAKLIJENTA
   | evNOVATRANSAKCIJAKLIJENTA
   | evDODAJNOVUTRANSAKCIJUKLIJENTA
   | { type: 'ABORT' } // button
@@ -266,11 +275,22 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
             target: 'ucitajlogoveklijenta',
           },
         ],
+        TRANSAKCIJAKLIJENTA: [
+          {
+            actions: [
+              // eslint-disable-next-line no-unused-vars
+              assign((cx, ev: evTRANSAKCIJAKLIJENTA) => {
+                cx.trenutniklijent = 1; // IZMENITI
+              }),
+            ],
+            target: 'vidilistutransakcijaklijenta',
+          },
+        ],
       },
     },
     dodajnovogklijenta: {
       invoke: {
-        src: async (cx, ev: evDODAJNOVIKLIJENT) => {
+        src: async (_cx, ev: evDODAJNOVIKLIJENT) => {
           const [ERRdata, data] = await backendServer
             .mutate({
               variables: {
@@ -380,7 +400,7 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
     },
     dodajlogklijenta: {
       invoke: {
-        src: async (cx, ev: evDODAJNOVILOGKLIJENTA) => {
+        src: async (_cx, ev: evDODAJNOVILOGKLIJENTA) => {
           const [ERRdata, data] = await backendServer
             .mutate({
               variables: {
@@ -419,7 +439,11 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
       },
     },
     ucitajtransakcijeklijenta: {},
-    vidilistutransakcijaklijenta: {},
+    vidilistutransakcijaklijenta: {
+      // NOVATRANSAKCIJAKLIJENTA: {},
+      // DODAJNOVUTRANSAKCIJUKLIJENTA: {},
+      // LISTAKLIJENATA: {},
+    },
     dodajtransakcijuklijenta: {},
   },
 });
