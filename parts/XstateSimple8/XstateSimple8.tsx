@@ -515,7 +515,7 @@ export function XstateSimple8() {
                             maticnibroj: cx.maticnibroj,
                             razlozi: cx.razlozi,
                             olaksice: cx.olaksice,
-                            id_klijent: 1,
+                            id_klijent: cx.trenutniklijent,
                           },
                         });
                       }}
