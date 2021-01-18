@@ -64,6 +64,16 @@ type Itransakcijaklijenta = {
   id_klijent: number;
 };
 
+type Izahtevklijenta = {
+  id: number;
+  tipklijenta: string;
+  jmbg: number;
+  maticnibroj: number;
+  razlozi: string;
+  olaksice: string;
+  id_klijent: number;
+};
+
 // Icontext - nema glagola kao prve reci = da je kljuc iz konteksta
 export interface Icontext {
   listaklijenata: Iklijent[];
@@ -73,6 +83,8 @@ export interface Icontext {
   trenutniklijent: number;
   listatransakcijaklijenta: Itransakcijaklijenta[];
   novatransakcijaklijenta: string;
+  listazhatevaklijenta: Izahtevklijenta[];
+  novizahtevklijenta: string;
 }
 
 // Ievents
@@ -90,6 +102,7 @@ type evDODAJNOVIKLIJENT = {
     klijent: string;
   };
 };
+
 type evDODAJNOVILOGKLIJENTA = {
   type: 'DODAJNOVILOGKLIJENTA';
   data: {
@@ -141,6 +154,36 @@ type evDODAJNOVUTRANSAKCIJUKLIJENTA = {
   };
 };
 
+type evZAHTEVKLIJENTA = {
+  type: 'ZAHTEVKLIJENTA';
+  data: {
+    id: number;
+  };
+};
+
+type evNOVZAHTEVKLIJENTA = {
+  type: 'NOVZAHTEVKLIJENTA';
+  data: {
+    tipklijenta: string;
+    jmbg: number;
+    maticnibroj: number;
+    razlozi: string;
+    olaksice: string;
+  };
+};
+
+type evDODAJNOVZAHTEVKLIJENTA = {
+  type: 'DODAJNOVZAHTEVKLIJENTA';
+  data: {
+    tipklijenta: string;
+    jmbg: number;
+    maticnibroj: number;
+    razlozi: string;
+    olaksice: string;
+    id_klijent: number;
+  };
+};
+
 export type Ievents =
   | evNOVIKLIJENT // input
   | evDODAJNOVIKLIJENT // button
@@ -150,8 +193,12 @@ export type Ievents =
   | evTRANSAKCIJAKLIJENTA
   | evNOVATRANSAKCIJAKLIJENTA
   | evDODAJNOVUTRANSAKCIJUKLIJENTA
+  | evZAHTEVKLIJENTA
+  | evNOVZAHTEVKLIJENTA
+  | evDODAJNOVZAHTEVKLIJENTA
   | { type: 'ABORT' } // button
   | evLISTAKLIJENATA // button
+  | { type: 'PODNESIZAHTEV' }
   | { type: 'BROWSER' }; // ssr OK
 const send = (sendEvent: Ievents, sendOptions?: any) => untypedSend(sendEvent, sendOptions);
 
@@ -167,10 +214,14 @@ interface Istates {
     ucitajlogoveklijenta: {}; //  invoke
     vidilistulogovaklijenta: {};
     dodajlogklijenta: {}; //  invoke
-    // snimiubazu: {};
+    // TRANSAKCIJE KLIJENTA
     ucitajtransakcijeklijenta: {};
     vidilistutransakcijaklijenta: {};
     dodajtransakcijuklijenta: {};
+    // ZAHTEVIKLIJENTA
+    ucitajzahteveklijenta: {};
+    vidilistuzahtevaklijenta: {};
+    dodajzahtevklijenta: {};
   };
 }
 
@@ -182,6 +233,7 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
     noviklijent: '',
     novilogklijenta: '',
     novatransakcijaklijenta: '',
+    novizahtevklijenta: '',
     trenutniklijent: 1,
     listaklijenata: [],
     listalogovaklijenta: [
@@ -193,6 +245,26 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
       { id: 1, id_klijent: 1, transakcijatekst: 'kredit' },
       { id: 2, id_klijent: 1, transakcijatekst: 'tekuciracun' },
       { id: 3, id_klijent: 1, transakcijatekst: 'pozajmica' },
+    ],
+    listazhatevaklijenta: [
+      {
+        id: 1,
+        id_klijent: 1,
+        jmbg: 23456,
+        maticnibroj: null,
+        tipklijenta: 'fizickolice',
+        razlozi: 'Razlog1',
+        olaksice: 'kredit',
+      },
+      {
+        id: 2,
+        id_klijent: 1,
+        jmbg: null,
+        maticnibroj: 112233,
+        tipklijenta: 'preduzetnik',
+        razlozi: 'Razlog3',
+        olaksice: 'kartice',
+      },
     ],
   },
   // BIKA FOKUS END <<<<<
@@ -476,38 +548,7 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
         },
       },
     },
-    vidilistutransakcijaklijenta: {
-      on: {
-        NOVATRANSAKCIJAKLIJENTA: [
-          {
-            actions: [
-              assign((cx, ev: evNOVATRANSAKCIJAKLIJENTA) => {
-                cx.novatransakcijaklijenta = ev?.data.transakcijatekst || '';
-              }),
-            ],
-          },
-        ],
-        DODAJNOVUTRANSAKCIJUKLIJENTA: [
-          {
-            cond: (cx) => cx?.novatransakcijaklijenta === null || false,
-            target: 'vidilistutransakcijaklijenta',
-          },
-          {
-            target: 'dodajtransakcijuklijenta',
-          },
-        ],
-        LISTAKLIJENATA: [
-          {
-            actions: [
-              assign((cx, ev: evLISTAKLIJENATA) => {
-                cx.trenutniklijent = ev.data.id_klijent; // izmeni/izmenjeno
-              }),
-            ],
-            target: 'vidilistuklijenata',
-          },
-        ],
-      },
-    },
+    vidilistutransakcijaklijenta: {},
     dodajtransakcijuklijenta: {
       invoke: {
         src: async (_cx, ev: evDODAJNOVUTRANSAKCIJUKLIJENTA) => {
@@ -548,5 +589,8 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
         },
       },
     },
+    ucitajzahteveklijenta: {},
+    vidilistuzahtevaklijenta: {},
+    dodajzahtevklijenta: {},
   },
 });

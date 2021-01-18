@@ -67,6 +67,20 @@ export function XstateSimple8() {
                     >
                       Vidi transakcije klijenta
                     </button>
+                    <button
+                      className="p-1 mx-1 text-white bg-purple-800 rounded-lg"
+                      type="button"
+                      onClick={() => {
+                        send({
+                          type: 'ZAHTEVKLIJENTA',
+                          data: {
+                            id: 1, // IZMENITI HRADCODOVANU VREDNOST/
+                          },
+                        });
+                      }}
+                    >
+                      Vidi zahteve klijenta
+                    </button>
                     {r.klijent}{' '}
                   </div>
                 );
@@ -224,6 +238,51 @@ export function XstateSimple8() {
                 </div>
               </div>
             )}
+            <div className="flex flex-col">
+              {['vidilistuzahtevaklijenta'].some(ma) && (
+                <div className="flex flex-col">
+                  {cx?.listazhatevaklijenta?.map((r) => {
+                    return (
+                      <div>
+                        {' '}
+                        Lista zahteva klijenta {r.tipklijenta}
+                        {r.jmbg}
+                        {r.maticnibroj}
+                        {r.razlozi}
+                        {r.olaksice}{' '}
+                      </div>
+                    );
+                  })}
+                  <div className="flex-col flec">
+                    <button
+                      className="p-1 mx-1 text-white bg-purple-800 rounded-lg"
+                      type="button"
+                      onClick={() => {
+                        send({
+                          type: 'PODNESIZAHTEV',
+                        });
+                      }}
+                    >
+                      Podnesi zahtev
+                    </button>
+                    <button
+                      className="p-1 mx-1 text-white bg-purple-800 rounded-lg"
+                      type="button"
+                      onClick={() => {
+                        send({
+                          type: 'LISTAKLIJENATA',
+                          data: {
+                            id_klijent: 0,
+                          },
+                        });
+                      }}
+                    >
+                      Vrati se na listuklijenata
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
           <pre>{JSON.stringify({ cx }, null, 2)}</pre>
         </div>
