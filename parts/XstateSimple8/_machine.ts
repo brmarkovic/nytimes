@@ -85,6 +85,11 @@ export interface Icontext {
   novatransakcijaklijenta: string;
   listazhatevaklijenta: Izahtevklijenta[];
   novizahtevklijenta: string;
+  jmbg: string;
+  maticnibroj: string;
+  tipklijenta: string;
+  razlozi: string;
+  olaksice: string;
 }
 
 // Ievents
@@ -184,6 +189,26 @@ type evDODAJNOVZAHTEVKLIJENTA = {
   };
 };
 
+type evINPUT = {
+  type: 'INPUT';
+  data: string;
+};
+
+type evSET_CLIENT = {
+  type: 'SET_CLIENT';
+  data: string;
+};
+
+type evSETRAZLOG = {
+  type: 'SET_RAZLOG';
+  data: string;
+};
+
+type evSETOLAKSICE = {
+  type: 'SET_OLAKSICE';
+  data: string;
+};
+
 export type Ievents =
   | evNOVIKLIJENT // input
   | evDODAJNOVIKLIJENT // button
@@ -198,7 +223,12 @@ export type Ievents =
   | evDODAJNOVZAHTEVKLIJENTA
   | { type: 'ABORT' } // button
   | evLISTAKLIJENATA // button
+  | evINPUT
+  | evSET_CLIENT
+  | evSETRAZLOG
+  | evSETOLAKSICE
   | { type: 'PODNESIZAHTEV' }
+  | { type: 'SUBMIT' }
   | { type: 'BROWSER' }; // ssr OK
 const send = (sendEvent: Ievents, sendOptions?: any) => untypedSend(sendEvent, sendOptions);
 
@@ -221,6 +251,11 @@ interface Istates {
     // ZAHTEVIKLIJENTA
     ucitajzahteveklijenta: {};
     vidilistuzahtevaklijenta: {};
+    tipklijenta: {};
+    jmbg: {};
+    maticnibroj: {};
+    razlozi: {};
+    olaksice: {};
     dodajzahtevklijenta: {};
   };
 }
@@ -235,6 +270,11 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
     novatransakcijaklijenta: '',
     novizahtevklijenta: '',
     trenutniklijent: 1,
+    jmbg: '',
+    maticnibroj: '',
+    tipklijenta: '',
+    razlozi: '',
+    olaksice: '',
     listaklijenata: [],
     listalogovaklijenta: [
       { id: 1, id_klijent: 1, logtekst: 'zaposlen' },
@@ -548,7 +588,38 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
         },
       },
     },
-    vidilistutransakcijaklijenta: {},
+    vidilistutransakcijaklijenta: {
+      on: {
+        NOVATRANSAKCIJAKLIJENTA: [
+          {
+            actions: [
+              assign((cx, ev: evNOVATRANSAKCIJAKLIJENTA) => {
+                cx.novatransakcijaklijenta = ev?.data.transakcijatekst || '';
+              }),
+            ],
+          },
+        ],
+        DODAJNOVUTRANSAKCIJUKLIJENTA: [
+          {
+            cond: (cx) => cx?.novatransakcijaklijenta === null || false,
+            target: 'vidilistutransakcijaklijenta',
+          },
+          {
+            target: 'dodajtransakcijuklijenta',
+          },
+        ],
+        LISTAKLIJENATA: [
+          {
+            actions: [
+              assign((cx, ev: evLISTAKLIJENATA) => {
+                cx.trenutniklijent = ev.data.id_klijent; // izmeni/izmenjeno
+              }),
+            ],
+            target: 'vidilistuklijenata',
+          },
+        ],
+      },
+    },
     dodajtransakcijuklijenta: {
       invoke: {
         src: async (_cx, ev: evDODAJNOVUTRANSAKCIJUKLIJENTA) => {
@@ -590,7 +661,152 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
       },
     },
     ucitajzahteveklijenta: {},
-    vidilistuzahtevaklijenta: {},
+    vidilistuzahtevaklijenta: {
+      on: {
+        PODNESIZAHTEV: {
+          target: 'tipklijenta',
+        },
+        LISTAKLIJENATA: [
+          {
+            actions: [
+              assign((cx, ev: evLISTAKLIJENATA) => {
+                cx.trenutniklijent = ev.data.id_klijent; // izmeni/izmenjeno
+              }),
+            ],
+            target: 'vidilistuklijenata',
+          },
+        ],
+      },
+    },
+    tipklijenta: {
+      on: {
+        SET_CLIENT: [
+          {
+            cond: (cx, ev: evSET_CLIENT) => ev.data === 'fizickolice' || ev.data === 'poljoprivrednik',
+            actions: [
+              assign((cx, ev: evSET_CLIENT) => {
+                cx.tipklijenta = ev?.data || '';
+              }),
+            ],
+            target: 'jmbg',
+          },
+          {
+            cond: (cx, ev: evSET_CLIENT) => ev.data === 'preduzetnik' || ev.data === 'pravnolice',
+            actions: [
+              assign((cx, ev: evSET_CLIENT) => {
+                cx.tipklijenta = ev?.data || '';
+              }),
+            ],
+            target: 'maticnibroj',
+          },
+        ],
+      },
+    },
+    jmbg: {
+      on: {
+        INPUT: [
+          {
+            actions: [
+              assign((cx, ev: evINPUT) => {
+                cx.jmbg = ev?.data || '';
+              }),
+            ],
+          },
+        ],
+        SUBMIT: [
+          {
+            cond: (cx) => cx?.jmbg === null || false,
+            target: 'jmbg',
+          },
+          {
+            target: 'razlozi',
+          },
+        ],
+        ABORT: [
+          {
+            actions: [
+              assign((cx) => {
+                cx.jmbg = '';
+              }),
+            ],
+            target: 'idle',
+          },
+        ],
+      },
+    },
+
+    maticnibroj: {
+      on: {
+        INPUT: [
+          {
+            actions: [
+              assign((cx, ev: evINPUT) => {
+                cx.maticnibroj = ev?.data || '';
+              }),
+            ],
+          },
+        ],
+        SUBMIT: [
+          {
+            cond: (cx) => cx?.maticnibroj === null || false,
+            target: 'maticnibroj',
+          },
+          {
+            target: 'razlozi',
+          },
+        ],
+
+        ABORT: [
+          {
+            actions: [
+              assign((cx) => {
+                cx.maticnibroj = '';
+              }),
+            ],
+            target: 'idle',
+          },
+        ],
+      },
+    },
+
+    razlozi: {
+      on: {
+        SET_RAZLOG: [
+          {
+            cond: (cx, ev: evSETRAZLOG) => ev.data === 'razlog1' || ev.data === 'razlog2' || ev.data === 'razlog3',
+            actions: [
+              assign((cx, ev: evSETRAZLOG) => {
+                cx.razlozi = ev?.data || '';
+              }),
+            ],
+            target: 'olaksice',
+          },
+        ],
+
+        ABORT: 'idle',
+      },
+    },
+
+    olaksice: {
+      on: {
+        SET_OLAKSICE: [
+          {
+            cond: (cx, ev: evSETOLAKSICE) =>
+              ev.data === 'trpozajmica' ||
+              ev.data === 'kreditnekartice' ||
+              ev.data === 'karticesaodlplacanjem' ||
+              ev.data === 'krediti',
+            actions: [
+              assign((cx, ev: evSETOLAKSICE) => {
+                cx.olaksice = ev?.data || '';
+              }),
+            ],
+            target: 'provera',
+          },
+        ],
+        ABORT: 'idle',
+      },
+    },
     dodajzahtevklijenta: {},
   },
 });
