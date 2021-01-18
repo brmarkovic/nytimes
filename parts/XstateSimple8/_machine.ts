@@ -404,10 +404,10 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
           {
             actions: [
               assign((cx, ev: evZAHTEVKLIJENTA) => {
-                cx.trenutniklijent = 1; // IZMENITI//
+                cx.trenutniklijent = ev.data.id; // IZMENITI// izmenila
               }),
             ],
-            target: 'vidilistuzahtevaklijenta',
+            target: 'ucitajzahteveklijenta',
           },
         ],
       },
@@ -705,7 +705,7 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
               cx.listazhatevaklijenta = ev.data.data.klijentzahtev; // izmeniti//izmenjeno
             }),
           ],
-          target: 'vidilistuzahtvaklijenta',
+          target: 'vidilistuzahtevaklijenta',
         },
         onError: {
           // kada server napravi gresku
@@ -887,7 +887,7 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
                 maticnibroj: ev.data.maticnibroj,
                 razlozi: ev.data.razlozi,
                 olaksice: ev.data.olaksice,
-                id_klijent: 1, // izmeniti//izmenjeno
+                id_klijent: ev.data.id_klijent, // izmeniti//izmenjeno
               },
               mutation: gql`
                 mutation insertklijentzahtev(

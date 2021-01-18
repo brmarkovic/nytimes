@@ -74,7 +74,7 @@ export function XstateSimple8() {
                         send({
                           type: 'ZAHTEVKLIJENTA',
                           data: {
-                            id: 1, // IZMENITI HRADCODOVANU VREDNOST/
+                            id: r.id, // IZMENITI HRADCODOVANU VREDNOST/
                           },
                         });
                       }}
