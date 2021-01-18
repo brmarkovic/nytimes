@@ -282,6 +282,263 @@ export function XstateSimple8() {
                   </div>
                 </div>
               )}
+              {['tipklijenta'].some(ma) && (
+                <div className="flex flex-col">
+                  <div> Izaberite odgovarajuci tip klijenta! </div>
+                  <div className="flex flex-col">
+                    <button
+                      className="p-1 mx-1 bg-purple-500 rounded-lg"
+                      type="button"
+                      onClick={() => {
+                        send({ type: 'SET_CLIENT', data: 'fizickolice' });
+                      }}
+                    >
+                      Fizicko lice!
+                    </button>
+                    <button
+                      className="p-1 mx-1 bg-yellow-500 rounded-lg"
+                      type="button"
+                      onClick={() => {
+                        send({ type: 'SET_CLIENT', data: 'poljoprivrednik' });
+                      }}
+                    >
+                      Poljoprivrednik!
+                    </button>
+                    <button
+                      className="p-1 mx-1 bg-red-500 rounded-lg"
+                      type="button"
+                      onClick={() => {
+                        send({ type: 'SET_CLIENT', data: 'preduzetnik' });
+                      }}
+                    >
+                      Preduzetnik
+                    </button>{' '}
+                    <button
+                      className="p-1 mx-1 bg-yellow-700 rounded-lg"
+                      type="button"
+                      onClick={() => {
+                        send({ type: 'SET_CLIENT', data: 'pravnolice' });
+                      }}
+                    >
+                      Pravno lice!
+                    </button>{' '}
+                  </div>
+                </div>
+              )}
+              {['jmbg'].some(ma) && (
+                <div className="flex flex-col">
+                  <div className="flex flex-col">
+                    <div> Unesite vas JMBG </div>
+
+                    <div>
+                      <textarea
+                        value={cx?.jmbg}
+                        onChange={(ev) => {
+                          send({ type: 'INPUT', data: ev.target.value });
+                        }}
+                        className="border border-gray-500"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <button
+                      className="p-1 mx-1 bg-green-500 rounded-lg"
+                      type="button"
+                      onClick={() => {
+                        send({ type: 'SUBMIT' });
+                      }}
+                    >
+                      Potvrdi
+                    </button>
+                    <button
+                      className="p-1 mx-1 bg-red-500 rounded-lg"
+                      type="button"
+                      onClick={() => {
+                        send({ type: 'ABORT' });
+                      }}
+                    >
+                      Odustani
+                    </button>
+                  </div>
+                </div>
+              )}
+              {['maticnibroj'].some(ma) && (
+                <div className="flex flex-col">
+                  <div className="flex flex-col">
+                    <div> Unesite vas MB firme </div>
+
+                    <div>
+                      <textarea
+                        value={cx?.maticnibroj}
+                        onChange={(ev) => {
+                          send({ type: 'INPUT', data: ev.target.value });
+                        }}
+                        className="border border-gray-500"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <button
+                      className="p-1 mx-1 bg-green-500 rounded-lg"
+                      type="button"
+                      onClick={() => {
+                        send({ type: 'SUBMIT' });
+                      }}
+                    >
+                      Potvrdi
+                    </button>
+                    <button
+                      className="p-1 mx-1 bg-red-500 rounded-lg"
+                      type="button"
+                      onClick={() => {
+                        send({ type: 'ABORT' });
+                      }}
+                    >
+                      Odustani
+                    </button>
+                  </div>
+                </div>
+              )}
+              {['razlozi'].some(ma) && (
+                <div className="flex flex-col">
+                  <div> Izaberite odgovarajuci razlog podnosenja zahteva! </div>
+                  <div className="flex flex-col">
+                    <button
+                      className="p-1 mx-1 bg-purple-500 rounded-lg"
+                      type="button"
+                      onClick={() => {
+                        send({ type: 'SET_RAZLOG', data: 'razlog1' });
+                      }}
+                    >
+                      Razlog1
+                    </button>
+                    <button
+                      className="p-1 mx-1 bg-yellow-500 rounded-lg"
+                      type="button"
+                      onClick={() => {
+                        send({ type: 'SET_RAZLOG', data: 'razlog2' });
+                      }}
+                    >
+                      Razlog2
+                    </button>
+                    <button
+                      className="p-1 mx-1 bg-red-500 rounded-lg"
+                      type="button"
+                      onClick={() => {
+                        send({ type: 'SET_RAZLOG', data: 'razlog3' });
+                      }}
+                    >
+                      Razlog3
+                    </button>{' '}
+                    <button
+                      className="p-1 mx-1 bg-yellow-700 rounded-lg"
+                      type="button"
+                      onClick={() => {
+                        send({ type: 'ABORT' });
+                      }}
+                    >
+                      Odustani
+                    </button>{' '}
+                  </div>
+                </div>
+              )}
+              {['olaksice'].some(ma) && (
+                <div className="flex flex-col">
+                  <div> Izaberite olaksicu za koju podnosite zahtev </div>
+                  <div className="flex flex-col">
+                    <button
+                      className="p-1 mx-1 bg-purple-500 rounded-lg"
+                      type="button"
+                      onClick={() => {
+                        send({ type: 'SET_OLAKSICE', data: 'trpozajmica' });
+                      }}
+                    >
+                      Pozajmica po TR
+                    </button>
+                    <button
+                      className="p-1 mx-1 bg-yellow-500 rounded-lg"
+                      type="button"
+                      onClick={() => {
+                        send({ type: 'SET_OLAKSICE', data: 'kreditnekartice' });
+                      }}
+                    >
+                      Kreditne kartice
+                    </button>
+                    <button
+                      className="p-1 mx-1 bg-red-500 rounded-lg"
+                      type="button"
+                      onClick={() => {
+                        send({ type: 'SET_OLAKSICE', data: 'karticesaodlplacanjem' });
+                      }}
+                    >
+                      Kartice sa odlozenim placanjem
+                    </button>{' '}
+                    <button
+                      className="p-1 mx-1 bg-red-500 rounded-lg"
+                      type="button"
+                      onClick={() => {
+                        send({ type: 'SET_OLAKSICE', data: 'krediti' });
+                      }}
+                    >
+                      Kredit
+                    </button>{' '}
+                    <button
+                      className="p-1 mx-1 bg-yellow-700 rounded-lg"
+                      type="button"
+                      onClick={() => {
+                        send({ type: 'ABORT' });
+                      }}
+                    >
+                      Odustani
+                    </button>{' '}
+                  </div>
+                </div>
+              )}
+              {['provera'].some(ma) && (
+                <div className="flex flex-col">
+                  <div> Molim vas proverite tacnost unetih podataka </div>
+                  <div> Tip klijenta: {cx.tipklijenta} </div>
+                  <div> jmbg: {cx.jmbg} </div>
+                  <div> maticnibroj: {cx.maticnibroj} </div>
+                  <div> Razlog: {cx.razlozi} </div>
+                  <div> Tip olaksice: {cx.olaksice} </div>
+                  <div>
+                    <button
+                      className="p-1 mx-1 bg-green-500 rounded-lg"
+                      type="button"
+                      onClick={() => {
+                        send({
+                          type: 'DODAJNOVZAHTEVKLIJENTA',
+                          data: {
+                            tipklijenta: cx.tipklijenta,
+                            jmbg: cx.jmbg,
+                            maticnibroj: cx.maticnibroj,
+                            razlozi: cx.razlozi,
+                            olaksice: cx.olaksice,
+                            id_klijent: 1,
+                          },
+                        });
+                      }}
+                    >
+                      Dodaj zahtev klijenta
+                    </button>
+                    <button
+                      className="p-1 mx-1 text-white bg-purple-800 rounded-lg"
+                      type="button"
+                      onClick={() => {
+                        send({
+                          type: 'LISTAKLIJENATA',
+                          data: {
+                            id_klijent: 0,
+                          },
+                        });
+                      }}
+                    >
+                      Vrati se na listuklijenata
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
           <pre>{JSON.stringify({ cx }, null, 2)}</pre>

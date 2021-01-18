@@ -229,6 +229,7 @@ export type Ievents =
   | evSETOLAKSICE
   | { type: 'PODNESIZAHTEV' }
   | { type: 'SUBMIT' }
+  | { type: 'BACK' }
   | { type: 'BROWSER' }; // ssr OK
 const send = (sendEvent: Ievents, sendOptions?: any) => untypedSend(sendEvent, sendOptions);
 
@@ -256,6 +257,7 @@ interface Istates {
     maticnibroj: {};
     razlozi: {};
     olaksice: {};
+    provera: {};
     dodajzahtevklijenta: {};
   };
 }
@@ -396,6 +398,16 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
               }),
             ],
             target: 'ucitajtransakcijeklijenta',
+          },
+        ],
+        ZAHTEVKLIJENTA: [
+          {
+            actions: [
+              assign((cx, ev: evZAHTEVKLIJENTA) => {
+                cx.trenutniklijent = 1; // IZMENITI//
+              }),
+            ],
+            target: 'vidilistuzahtevaklijenta',
           },
         ],
       },
@@ -660,7 +672,48 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
         },
       },
     },
-    ucitajzahteveklijenta: {},
+    ucitajzahteveklijenta: {
+      invoke: {
+        src: async () => {
+          const [ERRdata, data] = await backendServer
+            .query({
+              query: gql`
+                query klijentzahtev {
+                  klijentzahtev {
+                    id_klijent
+                    jmbg
+                    maticnibroj
+                    olaksice
+                    razlozi
+                    tipklijenta
+                  }
+                }
+              `,
+            })
+            .then((r) => [null, r])
+            .catch((e) => [e]);
+          if ((data && data.errors) || ERRdata) {
+            throw new Error('error');
+          }
+          return data;
+        },
+        onDone: {
+          // kada server vrati odgovor
+          actions: [
+            assign((cx, ev) => {
+              // console.log({ ev });
+              cx.listazhatevaklijenta = ev.data.data.klijentzahtev; // izmeniti//izmenjeno
+            }),
+          ],
+          target: 'vidilistuzahtvaklijenta',
+        },
+        onError: {
+          // kada server napravi gresku
+          // internet ne radi, ne vidi server
+          target: 'vidilistuzahtevaklijenta',
+        },
+      },
+    },
     vidilistuzahtevaklijenta: {
       on: {
         PODNESIZAHTEV: {
@@ -729,7 +782,7 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
                 cx.jmbg = '';
               }),
             ],
-            target: 'idle',
+            target: 'vidilistuzahtevaklijenta',
           },
         ],
       },
@@ -763,7 +816,7 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
                 cx.maticnibroj = '';
               }),
             ],
-            target: 'idle',
+            target: 'vidilistuzahtevaklijenta',
           },
         ],
       },
@@ -783,7 +836,7 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
           },
         ],
 
-        ABORT: 'idle',
+        ABORT: 'vidilistuzahtevaklijenta',
       },
     },
 
@@ -804,9 +857,84 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
             target: 'provera',
           },
         ],
-        ABORT: 'idle',
+        ABORT: 'vidilistuzahtevaklijenta',
       },
     },
-    dodajzahtevklijenta: {},
+    provera: {
+      on: {
+        DODAJNOVZAHTEVKLIJENTA: [
+          {
+            cond: (cx) => cx?.tipklijenta === null || false, // ovde ovaj uslov treba promeniti
+
+            target: 'vidilistutransakcijaklijenta',
+          },
+          {
+            target: 'dodajzahtevklijenta',
+          },
+        ],
+
+        BACK: 'tipklijenta',
+      },
+    },
+    dodajzahtevklijenta: {
+      invoke: {
+        src: async (_cx, ev: evDODAJNOVZAHTEVKLIJENTA) => {
+          const [ERRdata, data] = await backendServer
+            .mutate({
+              variables: {
+                tipklijenta: ev.data.tipklijenta,
+                jmbg: ev.data.jmbg,
+                maticnibroj: ev.data.maticnibroj,
+                razlozi: ev.data.razlozi,
+                olaksice: ev.data.olaksice,
+                id_klijent: 1, // izmeniti//izmenjeno
+              },
+              mutation: gql`
+                mutation insertklijentzahtev(
+                  $id_klijent: Int
+                  $jmbg: String
+                  $maticnibroj: String
+                  $olaksice: String
+                  $razlozi: String
+                  $tipklijenta: String
+                ) {
+                  insert_klijentzahtev(
+                    objects: {
+                      id_klijent: $id_klijent
+                      jmbg: $jmbg
+                      maticnibroj: $maticnibroj
+                      olaksice: $olaksice
+                      razlozi: $razlozi
+                      tipklijenta: $tipklijenta
+                    }
+                  ) {
+                    affected_rows
+                  }
+                }
+              `,
+            })
+            .then((r) => [null, r])
+            .catch((e) => [e]);
+          if ((data && data.errors) || ERRdata) {
+            throw new Error('error');
+          }
+          return data;
+        },
+        onDone: {
+          // kada server vrati odgovor
+          actions: [
+            assign((cx) => {
+              cx.tipklijenta = null; // vidi sa Milanom
+            }),
+          ],
+          target: 'vidilistuzahtevaklijenta',
+        },
+        onError: {
+          // kada server napravi gresku
+          // internet ne radi, ne vidi server
+          target: 'vidilistuklijenata',
+        },
+      },
+    },
   },
 });
