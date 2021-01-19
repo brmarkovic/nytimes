@@ -373,7 +373,13 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
         ],
         DODAJNOVIKLIJENT: [
           {
-            cond: (cx) => cx?.noviklijent === null || false,
+            // cx?.noviklijent === null || false
+            cond: (cx) => {
+              if (cx?.noviklijent === null) {
+                return true;
+              }
+              return false;
+            },
             target: 'vidilistuklijenata',
           },
           {
@@ -564,7 +570,7 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
     },
     ucitajtransakcijeklijenta: {
       invoke: {
-        src: async () => {
+        src: async (cx, ev) => {
           const [ERRdata, data] = await backendServer
             .query({
               query: gql`
@@ -867,8 +873,15 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
       on: {
         DODAJNOVZAHTEVKLIJENTA: [
           {
-            cond: (cx) => cx?.tipklijenta === null || false, // ovde ovaj uslov treba promeniti videti saMilanom
+            cond: (cx, ev) => {
+              if (cx.tipklijenta) {
+                if (cx.jmbg || cx.maticnibroj) {
+                  return true;
+                }
+              }
 
+              return false;
+            }, // ovde ovaj uslov treba promeniti videti saMilanom
             target: 'vidilistutransakcijaklijenta',
           },
           {
