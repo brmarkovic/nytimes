@@ -927,7 +927,7 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
               cx.tipklijenta = null; // vidi sa Milanom
             }),
           ],
-          target: 'ucitajlogoveklijenta',
+          target: 'ucitajzahteveklijenta',
         },
         onError: {
           // kada server napravi gresku
