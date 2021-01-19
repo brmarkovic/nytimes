@@ -29,6 +29,20 @@ export function XstateSimple8() {
   // REACT (HTML+) KOMPONENTA
   return (
     <div className="p-2">
+      {/* <div style={{ position: 'relative' }}>
+        <div>
+          <div style={{ position: 'absolute', left: 50, bottom: 10 }}>
+            ponasa se kao fixed, tj. cela strana mu je igraliste ili prvi relative
+          </div>
+        </div>
+      </div>
+
+      <div style={{ position: 'relative' }}>
+        <div style={{ position: 'absolute', left: 50, bottom: 10 }}>
+          ponasa se kao absolute, samo parent prostor mu je igraliste
+        </div>
+      </div> */}
+
       <div className="font-extrabold bg-gray-600">Pogledaj listu klijenata njihove logove,transakcije i zahteve</div>
 
       <div>
