@@ -181,8 +181,8 @@ type evDODAJNOVZAHTEVKLIJENTA = {
   type: 'DODAJNOVZAHTEVKLIJENTA';
   data: {
     tipklijenta: string;
-    jmbg: number;
-    maticnibroj: number;
+    jmbg: string;
+    maticnibroj: string;
     razlozi: string;
     olaksice: string;
     id_klijent: number;
@@ -864,7 +864,7 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
       on: {
         DODAJNOVZAHTEVKLIJENTA: [
           {
-            cond: (cx) => cx?.tipklijenta === null || false, // ovde ovaj uslov treba promeniti
+            cond: (cx) => cx?.tipklijenta === null || false, // ovde ovaj uslov treba promeniti videti saMilanom
 
             target: 'vidilistutransakcijaklijenta',
           },
@@ -927,7 +927,7 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
               cx.tipklijenta = null; // vidi sa Milanom
             }),
           ],
-          target: 'vidilistuzahtevaklijenta',
+          target: 'ucitajlogoveklijenta',
         },
         onError: {
           // kada server napravi gresku

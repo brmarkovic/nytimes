@@ -241,18 +241,17 @@ export function XstateSimple8() {
             <div className="flex flex-col">
               {['vidilistuzahtevaklijenta'].some(ma) && (
                 <div className="flex flex-col">
-                  {cx?.listazhatevaklijenta?.map((r) => {
-                    return (
-                      <div>
-                        {' '}
-                        Lista zahteva klijenta {r.tipklijenta}
-                        {r.jmbg}
-                        {r.maticnibroj}
-                        {r.razlozi}
-                        {r.olaksice}{' '}
-                      </div>
-                    );
-                  })}
+                  {cx?.listazhatevaklijenta
+                    ?.filter((r) => cx.trenutniklijent === r.id_klijent)
+                    .map((r) => {
+                      return (
+                        <div>
+                          {' '}
+                          Lista zahteva klijenta Tip klijenta: ({r.tipklijenta}) JMBG: ({r.jmbg}) MB:({r.maticnibroj})
+                          Razlozi:({r.razlozi}) Olaksice: ({r.olaksice}){' '}
+                        </div>
+                      );
+                    })}
                   <div className="flex-col flec">
                     <button
                       className="p-1 mx-1 text-white bg-purple-800 rounded-lg"
