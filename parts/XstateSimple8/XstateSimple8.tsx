@@ -13,6 +13,16 @@ import { XstateSimple8Machine } from './_machine';
 //  iframe: false, // open in new window
 // });
 
+// redux hronologija dogadjaja
+// 1. okine se event (isto kao xstate) >>>>>>>>  (korisnik okida event - redux, invoke okida event - redux saga)
+// 2. hvata se event (isto kao xstate)  --------  EXTREMNO STANDARDIZOVAN!!
+// 3. menja se context (isto kao xstate) <<<<<<<
+
+// redux
+// redux = hvata event i menja context (evengt okida korisnik ili saga)
+// redux saga = invoke ide na server i kada zavrsi okida event, onda ga redux hvata
+// !!!!! states = ne postoji reduxu ==== gomila if-ova svuda (kao u xstateu)
+
 export function XstateSimple8() {
   // STARTOVANJE MASINE
   const machine = useMachine(XstateSimple8Machine, {
