@@ -550,6 +550,42 @@ export function XstateSimple8() {
                   </div>
                 </div>
               )}
+              {['provera'].some(ma) && (
+                <div className="p-10 text-white bg-red-500" style={{ position: 'fixed', top: 100, left: 100 }}>
+                  Prihvatate?
+                  <button
+                    type="button"
+                    onClick={() => {
+                      send({
+                        type: 'DODAJNOVZAHTEVKLIJENTA',
+                        data: {
+                          tipklijenta: cx.tipklijenta,
+                          jmbg: cx.jmbg,
+                          maticnibroj: cx.maticnibroj,
+                          razlozi: cx.razlozi,
+                          olaksice: cx.olaksice,
+                          id_klijent: cx.trenutniklijent,
+                        },
+                      });
+                    }}
+                  >
+                    Da
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      send({
+                        type: 'LISTAKLIJENATA',
+                        data: {
+                          id_klijent: 0,
+                        },
+                      });
+                    }}
+                  >
+                    Ne
+                  </button>
+                </div>
+              )}
             </div>
           </div>
           <pre>{JSON.stringify({ cx }, null, 2)}</pre>

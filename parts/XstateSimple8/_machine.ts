@@ -882,10 +882,10 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
 
               return false;
             }, // ovde ovaj uslov treba promeniti videti saMilanom
-            target: 'vidilistutransakcijaklijenta',
+            target: 'dodajzahtevklijenta',
           },
           {
-            target: 'dodajzahtevklijenta',
+            target: 'vidilistuzahtevaklijenta',
           },
         ],
 
