@@ -674,12 +674,15 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
     },
     ucitajzahteveklijenta: {
       invoke: {
-        src: async () => {
+        src: async (cx, ev) => {
           const [ERRdata, data] = await backendServer
             .query({
+              variables: {
+                id_klijent: cx.trenutniklijent,
+              },
               query: gql`
-                query klijentzahtev {
-                  klijentzahtev {
+                query klijentzahtev($id_klijent: Int) {
+                  klijentzahtev(where: { id_klijent: { _eq: $id_klijent } }, order_by: { id: desc }, limit: 5) {
                     id_klijent
                     jmbg
                     maticnibroj

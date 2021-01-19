@@ -29,7 +29,7 @@ export function XstateSimple8() {
   // REACT (HTML+) KOMPONENTA
   return (
     <div className="p-2">
-      <div className="font-extrabold">Pogledaj listu klijenata i logove klijenata</div>
+      <div className="font-extrabold bg-gray-600">Pogledaj listu klijenata njihove logove,transakcije i zahteve</div>
 
       <div>
         <div className="flex flex-col">
@@ -86,7 +86,7 @@ export function XstateSimple8() {
                 );
               })}
               <div className="flex flex-col ">
-                <div>Unesite novog klijenta</div>
+                <div className="text-lg font-bold">Unesite novog klijenta</div>
                 <div>
                   <textarea
                     value={cx?.noviklijent}
@@ -241,17 +241,15 @@ export function XstateSimple8() {
             <div className="flex flex-col">
               {['vidilistuzahtevaklijenta'].some(ma) && (
                 <div className="flex flex-col">
-                  {cx?.listazhatevaklijenta
-                    ?.filter((r) => cx.trenutniklijent === r.id_klijent)
-                    .map((r) => {
-                      return (
-                        <div>
-                          {' '}
-                          Lista zahteva klijenta Tip klijenta: ({r.tipklijenta}) JMBG: ({r.jmbg}) MB:({r.maticnibroj})
-                          Razlozi:({r.razlozi}) Olaksice: ({r.olaksice}){' '}
-                        </div>
-                      );
-                    })}
+                  {cx?.listazhatevaklijenta?.map((r) => {
+                    return (
+                      <div>
+                        {' '}
+                        Lista zahteva klijenta Tip klijenta: ({r.tipklijenta}) JMBG: ({r.jmbg}) MB:({r.maticnibroj})
+                        Razlozi:({r.razlozi}) Olaksice: ({r.olaksice}){' '}
+                      </div>
+                    );
+                  })}
                   <div className="flex-col flec">
                     <button
                       className="p-1 mx-1 text-white bg-purple-800 rounded-lg"
