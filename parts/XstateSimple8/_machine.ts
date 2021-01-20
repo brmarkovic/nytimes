@@ -73,6 +73,11 @@ type Izahtevklijenta = {
   olaksice: string;
   id_klijent: number;
 };
+type Idetaljizahteva = {
+  id: number;
+  odgovornolice: string;
+  id_zahtev: number;
+};
 
 // Icontext - nema glagola kao prve reci = da je kljuc iz konteksta
 export interface Icontext {
@@ -81,10 +86,13 @@ export interface Icontext {
   listalogovaklijenta: Ilogklijenta[];
   novilogklijenta: string; // ovo isto
   trenutniklijent: number;
+  trenutnizahtev: number;
   listatransakcijaklijenta: Itransakcijaklijenta[];
   novatransakcijaklijenta: string;
   listazhatevaklijenta: Izahtevklijenta[];
   novizahtevklijenta: string;
+  listadetaljizahteva: Idetaljizahteva[];
+  novidetaljzahteva: string;
   jmbg: string;
   maticnibroj: string;
   tipklijenta: string;
@@ -130,6 +138,12 @@ type evLOGKLIJENTA = {
   };
 };
 
+type evNOVIDETALJZAHTEVA = {
+  type: 'NOVIDETALJZAHTEVA';
+  data: {
+    odgovornolice: string;
+  };
+};
 type evTRANSAKCIJAKLIJENTA = {
   type: 'TRANSAKCIJAKLIJENTA';
   data: {
@@ -141,6 +155,12 @@ type evLISTAKLIJENATA = {
   type: 'LISTAKLIJENATA';
   data: {
     id_klijent: number;
+  };
+};
+type evLISTAZAHTEVA = {
+  type: 'LISTAZAHTEVA';
+  data: {
+    id_zahtev: number;
   };
 };
 
@@ -163,6 +183,20 @@ type evZAHTEVKLIJENTA = {
   type: 'ZAHTEVKLIJENTA';
   data: {
     id: number;
+  };
+};
+type evDETALJIZAHTEVA = {
+  type: 'DETALJIZAHTEVA';
+  data: {
+    id: number;
+  };
+};
+
+type evDODAJNOVIDETALJZAHTEVA = {
+  type: 'DODAJNOVIDETALJZAHTEVA';
+  data: {
+    odgovornolice: string;
+    id_zahtev: number;
   };
 };
 
@@ -219,6 +253,10 @@ export type Ievents =
   | evNOVATRANSAKCIJAKLIJENTA
   | evDODAJNOVUTRANSAKCIJUKLIJENTA
   | evZAHTEVKLIJENTA
+  | evDETALJIZAHTEVA
+  | evDODAJNOVIDETALJZAHTEVA
+  | evLISTAZAHTEVA
+  | evNOVIDETALJZAHTEVA
   | evNOVZAHTEVKLIJENTA
   | evDODAJNOVZAHTEVKLIJENTA
   | { type: 'ABORT' } // button
@@ -259,6 +297,10 @@ interface Istates {
     olaksice: {};
     provera: {};
     dodajzahtevklijenta: {};
+    // DETALJIZAHTEVA
+    ucitajdetaljezahteva: {};
+    vidilistudetaljizahteva: {};
+    dodajdetaljzahteva: {};
   };
 }
 
@@ -272,6 +314,8 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
     novatransakcijaklijenta: '',
     novizahtevklijenta: '',
     trenutniklijent: 1,
+    trenutnizahtev: 1,
+    novidetaljzahteva: '',
     jmbg: '',
     maticnibroj: '',
     tipklijenta: '',
@@ -307,6 +351,10 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
         razlozi: 'Razlog3',
         olaksice: 'kartice',
       },
+    ],
+    listadetaljizahteva: [
+      { id: 1, id_zahtev: 1, odgovornolice: 'mika' },
+      { id: 2, id_zahtev: 2, odgovornolice: 'pera' },
     ],
   },
   // BIKA FOKUS END <<<<<
@@ -728,6 +776,16 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
         PODNESIZAHTEV: {
           target: 'tipklijenta',
         },
+        DETALJIZAHTEVA: [
+          {
+            actions: [
+              assign((cx, ev: evDETALJIZAHTEVA) => {
+                cx.trenutnizahtev = ev.data.id;
+              }),
+            ],
+            target: 'vidilistudetaljizahteva', // promeniti u ucitajdetaljezahteva
+          },
+        ],
         LISTAKLIJENATA: [
           {
             actions: [
@@ -944,6 +1002,119 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
             }),
           ],
           target: 'ucitajzahteveklijenta',
+        },
+        onError: {
+          // kada server napravi gresku
+          // internet ne radi, ne vidi server
+          target: 'vidilistuklijenata',
+        },
+      },
+    },
+    ucitajdetaljezahteva: {
+      invoke: {
+        src: async (cx, ev) => {
+          const [ERRdata, data] = await backendServer
+            .query({
+              variables: {
+                id_zahtev: cx.trenutnizahtev,
+              },
+              query: gql`
+                query odgovornolice($id_zahtev: Int) {
+                  odgovornolicezahteva(where: { id_zahtev: { _eq: $id_zahtev } }, order_by: { id: desc }, limit: 5) {
+                    id_zahtev
+                    odgovornolice
+                  }
+                }
+              `,
+            })
+            .then((r) => [null, r])
+            .catch((e) => [e]);
+          if ((data && data.errors) || ERRdata) {
+            throw new Error('error');
+          }
+          return data;
+        },
+        onDone: {
+          // kada server vrati odgovor
+          actions: [
+            assign((cx, ev) => {
+              // console.log({ ev });
+              cx.listadetaljizahteva = ev.data.data.odgovornolicezahteva; // izmeniti//izmenjeno
+            }),
+          ],
+          target: 'vidilistudetaljizahteva',
+        },
+        onError: {
+          // kada server napravi gresku
+          // internet ne radi, ne vidi server
+          target: 'vidilistudetaljizahteva',
+        },
+      },
+    },
+    vidilistudetaljizahteva: {
+      on: {
+        NOVIDETALJZAHTEVA: [
+          {
+            actions: [
+              assign((cx, ev: evNOVIDETALJZAHTEVA) => {
+                cx.novidetaljzahteva = ev?.data.odgovornolice || ''; // dodati
+              }),
+            ],
+          },
+        ],
+        DODAJNOVIDETALJZAHTEVA: [
+          {
+            cond: (cx) => cx?.novidetaljzahteva === null || false,
+            target: 'vidilistudetaljizahteva',
+          },
+          {
+            target: 'dodajdetaljzahteva',
+          },
+        ],
+        LISTAKLIJENATA: [
+          {
+            actions: [
+              assign((cx, ev: evLISTAKLIJENATA) => {
+                cx.trenutniklijent = ev.data.id_klijent;
+              }),
+            ],
+            target: 'vidilistuklijenata',
+          },
+        ],
+      },
+    },
+    dodajdetaljzahteva: {
+      invoke: {
+        src: async (_cx, ev: evDODAJNOVIDETALJZAHTEVA) => {
+          const [ERRdata, data] = await backendServer
+            .mutate({
+              variables: {
+                odgovornolice: ev.data.odgovornolice,
+                id_zahtev: ev.data.id_zahtev,
+              },
+              mutation: gql`
+                mutation insertodgovornolice($id_zahtev: Int, $odgovornolice: String) {
+                  insert_odgovornolicezahteva(objects: { id_zahtev: $id_zahtev, odgovornolice: $odgovornolice }) {
+                    affected_rows
+                  }
+                }
+              `,
+            })
+            .then((r) => [null, r])
+            .catch((e) => [e]);
+          if ((data && data.errors) || ERRdata) {
+            throw new Error('error');
+          }
+          return data;
+        },
+        onDone: {
+          // kada server vrati odgovor
+          actions: [
+            assign((cx) => {
+              cx.novidetaljzahteva = null;
+            }),
+          ],
+          target: 'ucitajdetaljezahteva',
         },
         onError: {
           // kada server napravi gresku

@@ -268,7 +268,20 @@ export function XstateSimple8() {
                   {cx?.listazhatevaklijenta?.map((r) => {
                     return (
                       <div>
-                        {' '}
+                        <button
+                          className="p-1 mx-1 text-white bg-purple-800 rounded-lg"
+                          type="button"
+                          onClick={() => {
+                            send({
+                              type: 'DETALJIZAHTEVA',
+                              data: {
+                                id: r.id,
+                              },
+                            });
+                          }}
+                        >
+                          Vidi detalje zahteva
+                        </button>{' '}
                         Lista zahteva klijenta Tip klijenta: ({r.tipklijenta}) JMBG: ({r.jmbg}) MB:({r.maticnibroj})
                         Razlozi:({r.razlozi}) Olaksice: ({r.olaksice}){' '}
                       </div>
@@ -594,6 +607,61 @@ export function XstateSimple8() {
                   >
                     Ne
                   </button>
+                </div>
+              )}
+              {['vidilistudetaljizahteva'].some(ma) && (
+                <div className="flex flex-col">
+                  {cx?.listadetaljizahteva?.map((r) => {
+                    return <div> Detalji zahteva {r.odgovornolice} </div>;
+                  })}
+                  <div className="flex flex-col ">
+                    <div>Unesite odgovorno lice za zahtev</div>
+                    <div>
+                      <textarea
+                        value={cx?.novidetaljzahteva}
+                        onChange={(ev) => {
+                          send({
+                            type: 'NOVIDETALJZAHTEVA',
+                            data: {
+                              odgovornolice: ev.target.value,
+                            },
+                          });
+                        }}
+                        className="border border-gray-500"
+                      />
+                      <div className="flex flex-col">
+                        <button
+                          className="p-1 mx-1 text-white bg-purple-800 rounded-lg"
+                          type="button"
+                          onClick={() => {
+                            send({
+                              type: 'DODAJNOVIDETALJZAHTEVA',
+                              data: {
+                                odgovornolice: cx.novidetaljzahteva,
+                                id_zahtev: cx.trenutnizahtev,
+                              },
+                            });
+                          }}
+                        >
+                          Dodaj odgovorno lice za zahtev
+                        </button>
+                        <button
+                          className="p-1 mx-1 text-white bg-purple-800 rounded-lg"
+                          type="button"
+                          onClick={() => {
+                            send({
+                              type: 'LISTAKLIJENATA',
+                              data: {
+                                id_klijent: 0,
+                              },
+                            });
+                          }}
+                        >
+                          Vrati se na listuklijenata
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               )}
             </div>
