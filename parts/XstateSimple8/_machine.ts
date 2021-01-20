@@ -1020,7 +1020,7 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
               },
               query: gql`
                 query odgovornolice($id_zahtev: Int) {
-                  odgovornolicezahteva(where: { id_zahtev: { _eq: $id_zahtev } }, order_by: { id: desc }, limit: 5) {
+                  odgovornolicezahteva(where: { id_zahtev: { _eq: $id_zahtev } }, order_by: { id: desc }, limit: 10) {
                     id_zahtev
                     odgovornolice
                   }
@@ -1047,7 +1047,7 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
         onError: {
           // kada server napravi gresku
           // internet ne radi, ne vidi server
-          target: 'vidilistudetaljizahteva',
+          target: 'vidilistuklijenata',
         },
       },
     },
