@@ -783,7 +783,7 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
                 cx.trenutnizahtev = ev.data.id;
               }),
             ],
-            target: 'vidilistudetaljizahteva', // promeniti u ucitajdetaljezahteva
+            target: 'ucitajdetaljezahteva', // promeniti u ucitajdetaljezahteva
           },
         ],
         LISTAKLIJENATA: [
