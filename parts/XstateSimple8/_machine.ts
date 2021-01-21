@@ -780,7 +780,7 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
           {
             actions: [
               assign((cx, ev: evDETALJIZAHTEVA) => {
-                cx.trenutnizahtev = ev.data.id;
+                cx.trenutnizahtev = 1;
               }),
             ],
             target: 'ucitajdetaljezahteva', // promeniti u ucitajdetaljezahteva
@@ -1016,7 +1016,7 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
           const [ERRdata, data] = await backendServer
             .query({
               variables: {
-                id_zahtev: cx.trenutnizahtev,
+                id_zahtev: 1,
               },
               query: gql`
                 query odgovornolice($id_zahtev: Int) {
@@ -1090,7 +1090,7 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
             .mutate({
               variables: {
                 odgovornolice: ev.data.odgovornolice,
-                id_zahtev: ev.data.id_zahtev,
+                id_zahtev: 1,
               },
               mutation: gql`
                 mutation insertodgovornolice($id_zahtev: Int, $odgovornolice: String) {

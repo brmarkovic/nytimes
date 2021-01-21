@@ -275,7 +275,7 @@ export function XstateSimple8() {
                             send({
                               type: 'DETALJIZAHTEVA',
                               data: {
-                                id: r.id,
+                                id: 1,
                               },
                             });
                           }}
