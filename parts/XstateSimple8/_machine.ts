@@ -750,7 +750,7 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
               },
               query: gql`
                 query klijentzahtev($id_klijent: Int) {
-                  klijentzahtev(where: { id_klijent: { _eq: $id_klijent } }, order_by: { id: desc }, limit: 5) {
+                  klijentzahtev(where: { id_klijent: { _eq: $id_klijent } }, order_by: { id: desc }, limit: 50) {
                     id_klijent
                     jmbg
                     maticnibroj
@@ -1035,9 +1035,10 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
               },
               query: gql`
                 query odgovornolice($id_zahtev: Int) {
-                  odgovornolicezahteva(where: { id_zahtev: { _eq: $id_zahtev } }, order_by: { id: desc }, limit: 10) {
+                  odgovornolicezahteva(where: { id_zahtev: { _eq: $id_zahtev } }, order_by: { id: desc }, limit: 50) {
                     id_zahtev
                     odgovornolice
+                    id
                   }
                 }
               `,
@@ -1068,6 +1069,16 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
     },
     vidilistudetaljizahteva: {
       on: {
+        STATUSZAHTEVA: [
+          {
+            actions: [
+              assign((cx, ev: evSTATUSZAHTEVA) => {
+                cx.trenutnoodgovornolice = 1;
+              }),
+            ],
+            target: 'vidilistustatusazahteva', // promeniti u ucitajdetaljezahteva
+          },
+        ],
         NOVIDETALJZAHTEVA: [
           {
             actions: [
@@ -1139,7 +1150,38 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
       },
     },
     ucitajstatusezahteva: {},
-    vidilistustatusazahteva: {},
+    vidilistustatusazahteva: {
+      on: {
+        NOVISTATUSZAHTEVA: [
+          {
+            actions: [
+              assign((cx, ev: evNOVISTATUSZAHTEVA) => {
+                cx.novistatuszahteva = ev?.data.status || ''; // dodati
+              }),
+            ],
+          },
+        ],
+        DODAJNOVISTATUSZAHTEVA: [
+          {
+            cond: (cx) => cx?.novistatuszahteva === null || false,
+            target: 'vidilistustatusazahteva',
+          },
+          {
+            target: 'dodajstatuszahteva',
+          },
+        ],
+        LISTAKLIJENATA: [
+          {
+            actions: [
+              assign((cx, ev: evLISTAKLIJENATA) => {
+                cx.trenutniklijent = ev.data.id_klijent;
+              }),
+            ],
+            target: 'vidilistuklijenata',
+          },
+        ],
+      },
+    },
     dodajstatuszahteva: {},
   },
 });

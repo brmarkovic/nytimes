@@ -612,7 +612,27 @@ export function XstateSimple8() {
               {['vidilistudetaljizahteva'].some(ma) && (
                 <div className="flex flex-col">
                   {cx?.listadetaljizahteva?.map((r) => {
-                    return <div> Detalji zahteva {r.odgovornolice} </div>;
+                    return (
+                      <div>
+                        {' '}
+                        Statusi zahteva
+                        <button
+                          className="p-1 mx-1 text-white bg-purple-800 rounded-lg"
+                          type="button"
+                          onClick={() => {
+                            send({
+                              type: 'STATUSZAHTEVA',
+                              data: {
+                                id: 1,
+                              },
+                            });
+                          }}
+                        >
+                          Vidi statuse zahteva
+                        </button>{' '}
+                        {r.odgovornolice}{' '}
+                      </div>
+                    );
                   })}
                   <div className="flex flex-col ">
                     <div>Unesite odgovorno lice za zahtev</div>
@@ -644,6 +664,61 @@ export function XstateSimple8() {
                           }}
                         >
                           Dodaj odgovorno lice za zahtev
+                        </button>
+                        <button
+                          className="p-1 mx-1 text-white bg-purple-800 rounded-lg"
+                          type="button"
+                          onClick={() => {
+                            send({
+                              type: 'LISTAKLIJENATA',
+                              data: {
+                                id_klijent: 0,
+                              },
+                            });
+                          }}
+                        >
+                          Vrati se na listuklijenata
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+              {['vidilistustatusazahteva'].some(ma) && (
+                <div className="flex flex-col">
+                  {cx?.listastatusazahteva?.map((r) => {
+                    return <div>Lista statusa zahteva {r.status} </div>;
+                  })}
+                  <div className="flex flex-col ">
+                    <div>Unesite status zahteva</div>
+                    <div>
+                      <textarea
+                        value={cx?.novistatuszahteva}
+                        onChange={(ev) => {
+                          send({
+                            type: 'NOVISTATUSZAHTEVA',
+                            data: {
+                              status: ev.target.value,
+                            },
+                          });
+                        }}
+                        className="border border-gray-500"
+                      />
+                      <div className="flex flex-col">
+                        <button
+                          className="p-1 mx-1 text-white bg-purple-800 rounded-lg"
+                          type="button"
+                          onClick={() => {
+                            send({
+                              type: 'DODAJNOVISTATUSZAHTEVA',
+                              data: {
+                                status: cx.novistatuszahteva,
+                                id_odgovornolice: cx.trenutnoodgovornolice,
+                              },
+                            });
+                          }}
+                        >
+                          Dodaj status zahteva
                         </button>
                         <button
                           className="p-1 mx-1 text-white bg-purple-800 rounded-lg"
