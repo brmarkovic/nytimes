@@ -743,6 +743,7 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
                     olaksice
                     razlozi
                     tipklijenta
+                    id
                   }
                 }
               `,
