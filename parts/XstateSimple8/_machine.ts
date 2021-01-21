@@ -78,6 +78,11 @@ type Idetaljizahteva = {
   odgovornolice: string;
   id_zahtev: number;
 };
+type Istatuszahteva = {
+  id: number;
+  status: string;
+  id_odgovornolice: number;
+};
 
 // Icontext - nema glagola kao prve reci = da je kljuc iz konteksta
 export interface Icontext {
@@ -87,12 +92,15 @@ export interface Icontext {
   novilogklijenta: string; // ovo isto
   trenutniklijent: number;
   trenutnizahtev: number;
+  trenutnoodgovornolice: number;
   listatransakcijaklijenta: Itransakcijaklijenta[];
   novatransakcijaklijenta: string;
   listazhatevaklijenta: Izahtevklijenta[];
   novizahtevklijenta: string;
   listadetaljizahteva: Idetaljizahteva[];
+  listastatusazahteva: Istatuszahteva[];
   novidetaljzahteva: string;
+  novistatuszahteva: string;
   jmbg: string;
   maticnibroj: string;
   tipklijenta: string;
@@ -144,6 +152,12 @@ type evNOVIDETALJZAHTEVA = {
     odgovornolice: string;
   };
 };
+type evNOVISTATUSZAHTEVA = {
+  type: 'NOVISTATUSZAHTEVA';
+  data: {
+    status: string;
+  };
+};
 type evTRANSAKCIJAKLIJENTA = {
   type: 'TRANSAKCIJAKLIJENTA';
   data: {
@@ -192,11 +206,25 @@ type evDETALJIZAHTEVA = {
   };
 };
 
+type evSTATUSZAHTEVA = {
+  type: 'STATUSZAHTEVA';
+  data: {
+    id: number;
+  };
+};
+
 type evDODAJNOVIDETALJZAHTEVA = {
   type: 'DODAJNOVIDETALJZAHTEVA';
   data: {
     odgovornolice: string;
     id_zahtev: number;
+  };
+};
+type evDODANOVISTATUSZAHTEVA = {
+  type: 'DODAJNOVISTATUSZAHTEVA';
+  data: {
+    status: string;
+    id_odgovornolice: number;
   };
 };
 
@@ -259,6 +287,9 @@ export type Ievents =
   | evNOVIDETALJZAHTEVA
   | evNOVZAHTEVKLIJENTA
   | evDODAJNOVZAHTEVKLIJENTA
+  | evSTATUSZAHTEVA
+  | evNOVISTATUSZAHTEVA
+  | evDODANOVISTATUSZAHTEVA
   | { type: 'ABORT' } // button
   | evLISTAKLIJENATA // button
   | evINPUT
@@ -301,6 +332,10 @@ interface Istates {
     ucitajdetaljezahteva: {};
     vidilistudetaljizahteva: {};
     dodajdetaljzahteva: {};
+    // STATUSIZAHTEVA
+    ucitajstatusezahteva: {};
+    vidilistustatusazahteva: {};
+    dodajstatuszahteva: {};
   };
 }
 
@@ -315,46 +350,25 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
     novizahtevklijenta: '',
     trenutniklijent: 1,
     trenutnizahtev: 1,
+    trenutnoodgovornolice: 1,
     novidetaljzahteva: '',
+    novistatuszahteva: '',
     jmbg: '',
     maticnibroj: '',
     tipklijenta: '',
     razlozi: '',
     olaksice: '',
     listaklijenata: [],
-    listalogovaklijenta: [
-      { id: 1, id_klijent: 1, logtekst: 'zaposlen' },
-      { id: 2, id_klijent: 1, logtekst: 'auto' },
-      { id: 3, id_klijent: 1, logtekst: 'nabavka' },
-    ],
-    listatransakcijaklijenta: [
-      { id: 1, id_klijent: 1, transakcijatekst: 'kredit' },
-      { id: 2, id_klijent: 1, transakcijatekst: 'tekuciracun' },
-      { id: 3, id_klijent: 1, transakcijatekst: 'pozajmica' },
-    ],
-    listazhatevaklijenta: [
-      {
-        id: 1,
-        id_klijent: 1,
-        jmbg: 23456,
-        maticnibroj: null,
-        tipklijenta: 'fizickolice',
-        razlozi: 'Razlog1',
-        olaksice: 'kredit',
-      },
-      {
-        id: 2,
-        id_klijent: 1,
-        jmbg: null,
-        maticnibroj: 112233,
-        tipklijenta: 'preduzetnik',
-        razlozi: 'Razlog3',
-        olaksice: 'kartice',
-      },
-    ],
+    listalogovaklijenta: [],
+    listatransakcijaklijenta: [],
+    listazhatevaklijenta: [],
     listadetaljizahteva: [
       { id: 1, id_zahtev: 1, odgovornolice: 'mika' },
       { id: 2, id_zahtev: 2, odgovornolice: 'pera' },
+    ],
+    listastatusazahteva: [
+      { id: 1, id_odgovornolice: 1, status: 'u obradi' },
+      { id: 2, id_odgovornolice: 1, status: 'vracen' },
     ],
   },
   // BIKA FOKUS END <<<<<
@@ -1124,5 +1138,8 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
         },
       },
     },
+    ucitajstatusezahteva: {},
+    vidilistustatusazahteva: {},
+    dodajstatuszahteva: {},
   },
 });
