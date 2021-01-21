@@ -1016,7 +1016,7 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
           const [ERRdata, data] = await backendServer
             .query({
               variables: {
-                id_zahtev: 1,
+                id_zahtev: cx.trenutnizahtev,
               },
               query: gql`
                 query odgovornolice($id_zahtev: Int) {
@@ -1065,10 +1065,10 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
         DODAJNOVIDETALJZAHTEVA: [
           {
             cond: (cx) => cx?.novidetaljzahteva === null || false,
-            target: 'vidilistudetaljizahteva',
+            target: 'dodajdetaljzahteva',
           },
           {
-            target: 'dodajdetaljzahteva',
+            target: 'vidilistudetaljizahteva',
           },
         ],
         LISTAKLIJENATA: [
