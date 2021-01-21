@@ -623,7 +623,7 @@ export function XstateSimple8() {
                             send({
                               type: 'STATUSZAHTEVA',
                               data: {
-                                id: 1,
+                                id: r.id,
                               },
                             });
                           }}

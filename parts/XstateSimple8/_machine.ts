@@ -220,7 +220,8 @@ type evDODAJNOVIDETALJZAHTEVA = {
     id_zahtev: number;
   };
 };
-type evDODANOVISTATUSZAHTEVA = {
+
+type evDODAJNOVISTATUSZAHTEVA = {
   type: 'DODAJNOVISTATUSZAHTEVA';
   data: {
     status: string;
@@ -289,7 +290,7 @@ export type Ievents =
   | evDODAJNOVZAHTEVKLIJENTA
   | evSTATUSZAHTEVA
   | evNOVISTATUSZAHTEVA
-  | evDODANOVISTATUSZAHTEVA
+  | evDODAJNOVISTATUSZAHTEVA
   | { type: 'ABORT' } // button
   | evLISTAKLIJENATA // button
   | evINPUT
@@ -1073,7 +1074,7 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
           {
             actions: [
               assign((cx, ev: evSTATUSZAHTEVA) => {
-                cx.trenutnoodgovornolice = 1;
+                cx.trenutnoodgovornolice = ev.data.id;
               }),
             ],
             target: 'vidilistustatusazahteva', // promeniti u ucitajdetaljezahteva
@@ -1149,7 +1150,52 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
         },
       },
     },
-    ucitajstatusezahteva: {},
+    ucitajstatusezahteva: {
+      invoke: {
+        src: async (cx, ev) => {
+          const [ERRdata, data] = await backendServer
+            .query({
+              variables: {
+                id_odgovornolice: cx.trenutnoodgovornolice,
+              },
+              query: gql`
+                query statuszahteva($id_odgovornolice: Int) {
+                  statuszahteva(
+                    where: { id_odgovornolice: { _eq: $id_odgovornolice } }
+                    order_by: { id: desc }
+                    limit: 100
+                  ) {
+                    id_odgovornolice
+                    status
+                    id
+                  }
+                }
+              `,
+            })
+            .then((r) => [null, r])
+            .catch((e) => [e]);
+          if ((data && data.errors) || ERRdata) {
+            throw new Error('error');
+          }
+          return data;
+        },
+        onDone: {
+          // kada server vrati odgovor
+          actions: [
+            assign((cx, ev) => {
+              // console.log({ ev });
+              cx.listastatusazahteva = ev.data.data.statuszahteva; // izmeniti//izmenjeno
+            }),
+          ],
+          target: 'vidilistustatusazahteva',
+        },
+        onError: {
+          // kada server napravi gresku
+          // internet ne radi, ne vidi server
+          target: 'vidilistuklijenata',
+        },
+      },
+    },
     vidilistustatusazahteva: {
       on: {
         NOVISTATUSZAHTEVA: [
@@ -1182,6 +1228,45 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
         ],
       },
     },
-    dodajstatuszahteva: {},
+    dodajstatuszahteva: {
+      invoke: {
+        src: async (_cx, ev: evDODAJNOVISTATUSZAHTEVA) => {
+          const [ERRdata, data] = await backendServer
+            .mutate({
+              variables: {
+                status: ev.data.status,
+                id_odgovornolice: ev.data.id_odgovornolice,
+              },
+              mutation: gql`
+                mutation insertstatuszahteva($id_odgovornolice: Int, $status: String) {
+                  insert_statuszahteva(objects: { id_odgovornolice: $id_odgovornolice, status: $status }) {
+                    affected_rows
+                  }
+                }
+              `,
+            })
+            .then((r) => [null, r])
+            .catch((e) => [e]);
+          if ((data && data.errors) || ERRdata) {
+            throw new Error('error');
+          }
+          return data;
+        },
+        onDone: {
+          // kada server vrati odgovor
+          actions: [
+            assign((cx) => {
+              cx.novistatuszahteva = null;
+            }),
+          ],
+          target: 'ucitajstatusezahteva',
+        },
+        onError: {
+          // kada server napravi gresku
+          // internet ne radi, ne vidi server
+          target: 'vidilistuklijenata',
+        },
+      },
+    },
   },
 });
