@@ -780,7 +780,7 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
           {
             actions: [
               assign((cx, ev: evDETALJIZAHTEVA) => {
-                cx.trenutnizahtev = 1;
+                cx.trenutnizahtev = ev.data.id;
               }),
             ],
             target: 'ucitajdetaljezahteva', // promeniti u ucitajdetaljezahteva
@@ -1065,10 +1065,10 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
         DODAJNOVIDETALJZAHTEVA: [
           {
             cond: (cx) => cx?.novidetaljzahteva === null || false,
-            target: 'dodajdetaljzahteva',
+            target: 'vidilistudetaljizahteva',
           },
           {
-            target: 'vidilistudetaljizahteva',
+            target: 'dodajdetaljzahteva',
           },
         ],
         LISTAKLIJENATA: [
@@ -1090,7 +1090,7 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
             .mutate({
               variables: {
                 odgovornolice: ev.data.odgovornolice,
-                id_zahtev: 1,
+                id_zahtev: ev.data.id_zahtev,
               },
               mutation: gql`
                 mutation insertodgovornolice($id_zahtev: Int, $odgovornolice: String) {
