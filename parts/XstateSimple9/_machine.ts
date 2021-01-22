@@ -45,30 +45,69 @@ export const backendServer = new ApolloClient({
 // SNIMANJE NA SERVER KRAJ
 // SNIMANJE NA SERVER KRAJ
 
+type Iclan = {
+  id: number;
+  imeclan: string;
+};
+
+type Ikomedija = {
+  id: number;
+  imekomedija: string;
+};
+
 // Icontext
 export interface Icontext {
-  show: boolean;
+  noviclan: string;
+  novakomedija: string;
+  listaclanova: Iclan[];
+  listakomedija: Ikomedija[];
 }
 
 // Ievents
-type evSHOW = {
-  type: 'SHOW';
-  data: boolean;
+
+type evNOVICLAN = {
+  type: 'NOVICLAN';
+  data: {
+    imeclan: string;
+  };
 };
 
-type evINPUT = {
-  type: 'INPUT';
-  data: string;
+type evNOVAKOMEDIJA = {
+  type: 'NOVAKOMEDIJA';
+  data: {
+    imekomedija: string;
+  };
+};
+type evDODAJNOVICLAN = {
+  type: 'DODAJNOVICLAN';
+  data: {
+    imeclan: string;
+  };
 };
 
-export type Ievents = evINPUT | evSHOW | { type: 'idle' };
+type evDODAJNOVAKOMEDIJA = {
+  type: 'DODAJNOVAKOMEDIJA';
+  data: {
+    imekomedija: string;
+  };
+};
+
+export type Ievents = evNOVICLAN | evNOVAKOMEDIJA | evDODAJNOVICLAN | evDODAJNOVAKOMEDIJA | { type: 'BROWSER' };
 
 const send = (sendEvent: Ievents, sendOptions?: any) => untypedSend(sendEvent, sendOptions);
 
 interface Istates {
   states: {
     ssr: {};
-    idle: {};
+    videoklub: {};
+    // clanovi
+    ucitajclanove: {};
+    vidilistuclanova: {};
+    dodajnoviclan: {};
+    // komedija
+    ucitajkomedije: {};
+    vidilistukomedije: {};
+    dodajnovukomediju: {};
   };
 }
 
@@ -77,30 +116,35 @@ export const XstateSimple9Machine = Machine<Icontext, Istates, Ievents>({
   initial: 'ssr',
   // BIKA FOKUS >>>>>>>>>>
   context: {
-    show: false,
+    noviclan: '',
+    novakomedija: '',
+    listaclanova: [
+      { id: 1, imeclan: 'Biljana Markovic' },
+      { id: 2, imeclan: 'Ivana Savic' },
+    ],
+    listakomedija: [
+      { id: 1, imekomedija: 'Alfi' },
+      { id: 2, imekomedija: 'Rastanak' },
+    ],
   },
   // BIKA FOKUS END <<<<<<
   states: {
     // DEFAULT MILAN STATE
     ssr: {
       on: {
-        idle: [
+        BROWSER: [
           {
-            target: 'idle',
+            target: 'videoklub',
           },
         ],
       },
     },
-    idle: {
-      on: {
-        SHOW: {
-          actions: [
-            assign((cx, ev: evSHOW) => {
-              cx.show = ev.data;
-            }),
-          ],
-        },
-      },
-    },
+    videoklub: {},
+    ucitajclanove: {},
+    vidilistuclanova: {},
+    dodajnoviclan: {},
+    ucitajkomedije: {},
+    vidilistukomedije: {},
+    dodajnovukomediju: {},
   },
 });
