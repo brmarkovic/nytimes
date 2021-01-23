@@ -169,30 +169,54 @@ export function XstateSimple9() {
             </div>
           </div>
         )}
-        {['pocniiznajmljivanje'].some(ma) && (
-          <div className="flex flex-col">
-            <div>Izaberi zeljeni film</div>
-            {cx?.listakomedija?.map((r) => {
-              return (
-                <div>
-                  {' '}
-                  <button
-                    className="p-1 mx-1 text-yellow-400 bg-green-900"
-                    type="button"
-                    onClick={() => {
-                      send({
-                        type: 'IZABERIKOMEDIJA',
-                        data: {
-                          imekomedija: ,
-                        },
-                      });
-                    }}
-                  >
-                    {r.imekomedija}
-                  </button>{' '}
-                </div>
-              );
-            })}
+        {['vidilistuiznajmljivanja'].some(ma) && (
+          <div className="flex ">
+            <div className="flex flex-col">
+              {cx?.listakomedija?.map((r) => {
+                return (
+                  <div>
+                    {' '}
+                    <button
+                      className="p-1 mx-1 text-yellow-400 bg-green-900"
+                      type="button"
+                      onClick={() => {
+                        send({
+                          type: 'IZABERIKOMEDIJA',
+                          data: {
+                            imekomedija: 'xxx',
+                          },
+                        });
+                      }}
+                    >
+                      {r.imekomedija}
+                    </button>{' '}
+                  </div>
+                );
+              })}
+            </div>
+            <div className="flex flex-col">
+              {cx?.listaclanova?.map((r) => {
+                return (
+                  <div>
+                    {' '}
+                    <button
+                      className="p-1 mx-1 text-yellow-400 bg-green-900"
+                      type="button"
+                      onClick={() => {
+                        send({
+                          type: 'IZABERIKOMEDIJA',
+                          data: {
+                            imekomedija: 'xxx',
+                          },
+                        });
+                      }}
+                    >
+                      {r.imeclan}
+                    </button>{' '}
+                  </div>
+                );
+              })}
+            </div>
           </div>
         )}
         <pre>{JSON.stringify({ cx }, null, 2)}</pre>

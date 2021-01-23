@@ -128,7 +128,11 @@ interface Istates {
     vidilistukomedije: {};
     dodajnovukomediju: {};
     // iznajmljivanje
-    pocniiznajmljivanje: {};
+    ucitajiznajmljivanje: {};
+    ucitajiznajmljivanjekomedije: {};
+    ucitajiznamljivanjeclan: {};
+    vidilistuiznajmljivanja: {};
+    dodajiznajmljivanje: {};
   };
 }
 
@@ -142,12 +146,12 @@ export const XstateSimple9Machine = Machine<Icontext, Istates, Ievents>({
     trenutnakomedija: 1,
     trenutniclan: 1,
     listaclanova: [
-      { id: 1, imeclan: 'Biljana Markovic' },
-      { id: 2, imeclan: 'Ivana Savic' },
+      { id: 1, imeclan: 'BILJANA MARKOVIC' },
+      { id: 2, imeclan: 'IVANA SAVIC' },
     ],
     listakomedija: [
-      { id: 1, imekomedija: 'Alfi' },
-      { id: 2, imekomedija: 'Rastanak' },
+      { id: 1, imekomedija: 'ALFI' },
+      { id: 2, imekomedija: 'RASTANAK' },
     ],
   },
   // BIKA FOKUS END <<<<<<
@@ -176,7 +180,7 @@ export const XstateSimple9Machine = Machine<Icontext, Istates, Ievents>({
         ],
         ZAPOCNIIZNAJMI: [
           {
-            target: 'pocniiznajmljivanje',
+            target: 'vidilistuiznajmljivanja',
           },
         ],
       },
@@ -403,6 +407,10 @@ export const XstateSimple9Machine = Machine<Icontext, Istates, Ievents>({
         },
       },
     },
-    pocniiznajmljivanje: {},
+    ucitajiznajmljivanje: {},
+    ucitajiznajmljivanjekomedije: {},
+    ucitajiznamljivanjeclan: {},
+    vidilistuiznajmljivanja: {},
+    dodajiznajmljivanje: {},
   },
 });
