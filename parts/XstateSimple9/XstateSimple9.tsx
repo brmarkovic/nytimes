@@ -48,7 +48,7 @@ export function XstateSimple9() {
               type="button"
               onClick={() => {
                 send({
-                  type: 'VIDIKOMEDIJU',
+                  type: 'VIDIKOMEDIJA',
                 });
               }}
             >
@@ -78,7 +78,7 @@ export function XstateSimple9() {
                 />
                 <div className="flex flex-col">
                   <button
-                    className="p-1 mx-1 text-white bg-purple-800 rounded-lg"
+                    className="p-1 mx-1 text-yellow-400 bg-green-900 rounded-lg"
                     type="button"
                     onClick={() => {
                       send({
@@ -92,7 +92,7 @@ export function XstateSimple9() {
                     Potvrdi clanstvo
                   </button>
                   <button
-                    className="p-1 mx-1 text-white bg-purple-800 rounded-lg"
+                    className="p-1 mx-1 text-yellow-400 bg-green-900 rounded-lg"
                     type="button"
                     onClick={() => {
                       send({
@@ -129,7 +129,7 @@ export function XstateSimple9() {
                 />
                 <div className="flex flex-col">
                   <button
-                    className="p-1 mx-1 text-white bg-purple-800 rounded-lg"
+                    className="p-1 mx-1 text-yellow-400 bg-green-900"
                     type="button"
                     onClick={() => {
                       send({
@@ -140,10 +140,10 @@ export function XstateSimple9() {
                       });
                     }}
                   >
-                    Potvrdi clanstvo
+                    Ptvrdite unos zeljenog filma
                   </button>
                   <button
-                    className="p-1 mx-1 text-white bg-purple-800 rounded-lg"
+                    className="p-1 mx-1 text-yellow-400 bg-green-900 rounded-lg"
                     type="button"
                     onClick={() => {
                       send({

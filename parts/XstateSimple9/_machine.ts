@@ -233,9 +233,155 @@ export const XstateSimple9Machine = Machine<Icontext, Istates, Ievents>({
         ],
       },
     },
-    dodajnoviclan: {},
-    ucitajkomedije: {},
-    vidilistukomedije: {},
-    dodajnovukomediju: {},
+    dodajnoviclan: {
+      invoke: {
+        src: async (_cx, ev: evDODAJNOVICLAN) => {
+          const [ERRdata, data] = await backendServer
+            .mutate({
+              variables: {
+                imeclan: ev.data.imeclan,
+              },
+              mutation: gql`
+                mutation insertclanovikluba($imeclan: String) {
+                  insert_clanovikluba(objects: { imeclan: $imeclan }) {
+                    affected_rows
+                  }
+                }
+              `,
+            })
+            .then((r) => [null, r])
+            .catch((e) => [e]);
+          if ((data && data.errors) || ERRdata) {
+            throw new Error('error');
+          }
+          return data;
+        },
+        onDone: {
+          // kada server vrati odgovor
+          actions: [
+            assign((cx) => {
+              cx.noviclan = null;
+            }),
+          ],
+          target: 'ucitajclanove',
+        },
+        onError: {
+          // kada server napravi gresku
+          // internet ne radi, ne vidi server
+          target: 'ucitajclanove',
+        },
+      },
+    },
+    ucitajkomedije: {
+      invoke: {
+        src: async () => {
+          const [ERRdata, data] = await backendServer
+            .query({
+              // u navodnicima je ono sto smo u Hasuri definisali i radi
+              query: gql`
+                query listakomedija {
+                  listakomedija {
+                    id
+                    imekomedija
+                  }
+                }
+              `,
+            })
+            .then((r) => [null, r])
+            .catch((e) => [e]);
+          if ((data && data.errors) || ERRdata) {
+            throw new Error('error');
+          }
+          return data;
+        },
+        onDone: {
+          // kada server vrati odgovor
+          actions: [
+            assign((cx, ev) => {
+              // console.log({ ev });
+              cx.listakomedija = ev.data.data.listakomedija;
+            }),
+          ],
+          target: 'vidilistukomedije',
+        },
+        onError: {
+          // kada server napravi gresku
+          // internet ne radi, ne vidi server
+          target: 'videoklub',
+        },
+      },
+    },
+    vidilistukomedije: {
+      on: {
+        NOVAKOMEDIJA: [
+          {
+            actions: [
+              assign((cx, ev: evNOVAKOMEDIJA) => {
+                cx.novakomedija = ev?.data.imekomedija || '';
+              }),
+            ],
+          },
+        ],
+        DODAJNOVAKOMEDIJA: [
+          {
+            // cx?.noviklijent === null || false
+            cond: (cx) => {
+              if (cx?.novakomedija === null) {
+                return true;
+              }
+              return false;
+            },
+            target: 'vidilistukomedije',
+          },
+          {
+            target: 'dodajnovukomediju',
+          },
+        ],
+        HOME: [
+          {
+            target: 'videoklub',
+          },
+        ],
+      },
+    },
+    dodajnovukomediju: {
+      invoke: {
+        src: async (_cx, ev: evDODAJNOVAKOMEDIJA) => {
+          const [ERRdata, data] = await backendServer
+            .mutate({
+              variables: {
+                imekomedija: ev.data.imekomedija,
+              },
+              mutation: gql`
+                mutation insertlistakomedija($imekomedija: String) {
+                  insert_listakomedija(objects: { imekomedija: $imekomedija }) {
+                    affected_rows
+                  }
+                }
+              `,
+            })
+            .then((r) => [null, r])
+            .catch((e) => [e]);
+          if ((data && data.errors) || ERRdata) {
+            throw new Error('error');
+          }
+          return data;
+        },
+        onDone: {
+          // kada server vrati odgovor
+          actions: [
+            assign((cx) => {
+              cx.novakomedija = null;
+            }),
+          ],
+          target: 'ucitajkomedije',
+        },
+        onError: {
+          // kada server napravi gresku
+          // internet ne radi, ne vidi server
+          target: 'ucitajkomedije',
+        },
+      },
+    },
   },
 });
