@@ -99,6 +99,7 @@ export type Ievents =
   | evDODAJNOVAKOMEDIJA
   | { type: 'VIDICLAN' }
   | { type: 'VIDIKOMEDIJA' }
+  | { type: 'IZNAJMI' }
   | { type: 'HOME' }
   | { type: 'BROWSER' };
 
@@ -116,6 +117,8 @@ interface Istates {
     ucitajkomedije: {};
     vidilistukomedije: {};
     dodajnovukomediju: {};
+    // iznajmljivanje
+    pocniiznajmljivanje: {};
   };
 }
 
@@ -383,5 +386,6 @@ export const XstateSimple9Machine = Machine<Icontext, Istates, Ievents>({
         },
       },
     },
+    pocniiznajmljivanje: {},
   },
 });

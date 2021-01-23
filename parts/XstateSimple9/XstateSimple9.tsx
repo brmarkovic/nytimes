@@ -54,6 +54,17 @@ export function XstateSimple9() {
             >
               Vidi ponudu filmova - KOMEDIJE
             </button>
+            <button
+              className="p-1 mx-1 text-green-700 bg-yellow-600 rounded-lg"
+              type="button"
+              onClick={() => {
+                send({
+                  type: 'IZNAJMI',
+                });
+              }}
+            >
+              IZNAJMI FILM 
+            </button>
           </div>
         )}
         {['vidilistuclanova'].some(ma) && (
@@ -157,6 +168,9 @@ export function XstateSimple9() {
               </div>
             </div>
           </div>
+        )}
+        {['pocniiznajmljivanje'].some(ma) && (
+
         )}
         <pre>{JSON.stringify({ cx }, null, 2)}</pre>
       </div>
