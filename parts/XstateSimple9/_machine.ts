@@ -54,6 +54,11 @@ type Ikomedija = {
   id: number;
   imekomedija: string;
 };
+type Iiznajmljivanje = {
+  id: number;
+  id_clan: number;
+  id_komedija: number;
+};
 
 // Icontext
 export interface Icontext {
@@ -63,6 +68,7 @@ export interface Icontext {
   trenutniclan: number;
   listaclanova: Iclan[];
   listakomedija: Ikomedija[];
+  listaiznajmljivanja: Iiznajmljivanje[];
 }
 
 // Ievents
@@ -97,7 +103,22 @@ type evDODAJNOVAKOMEDIJA = {
 type evIZABERIKOMEDIJA = {
   type: 'IZABERIKOMEDIJA';
   data: {
-    imekomedija: string;
+    id: number;
+  };
+};
+
+type evIZABERICLAN = {
+  type: 'IZABERICLAN';
+  data: {
+    id: number;
+  };
+};
+
+type evIZNAJMI = {
+  type: 'IZNAJMI';
+  data: {
+    id_komedija: number;
+    id_clan: number;
   };
 };
 
@@ -107,6 +128,8 @@ export type Ievents =
   | evDODAJNOVICLAN
   | evDODAJNOVAKOMEDIJA
   | evIZABERIKOMEDIJA
+  | evIZABERICLAN
+  | evIZNAJMI
   | { type: 'VIDICLAN' }
   | { type: 'VIDIKOMEDIJA' }
   | { type: 'ZAPOCNIIZNAJMI' }
@@ -144,7 +167,7 @@ export const XstateSimple9Machine = Machine<Icontext, Istates, Ievents>({
     noviclan: '',
     novakomedija: '',
     trenutnakomedija: 1,
-    trenutniclan: 1,
+    trenutniclan: 2,
     listaclanova: [
       { id: 1, imeclan: 'BILJANA MARKOVIC' },
       { id: 2, imeclan: 'IVANA SAVIC' },
@@ -152,6 +175,10 @@ export const XstateSimple9Machine = Machine<Icontext, Istates, Ievents>({
     listakomedija: [
       { id: 1, imekomedija: 'ALFI' },
       { id: 2, imekomedija: 'RASTANAK' },
+    ],
+    listaiznajmljivanja: [
+      { id: 1, id_clan: 1, id_komedija: 2 },
+      { id: 2, id_clan: 2, id_komedija: 1 },
     ],
   },
   // BIKA FOKUS END <<<<<<

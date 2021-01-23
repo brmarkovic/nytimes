@@ -170,53 +170,83 @@ export function XstateSimple9() {
           </div>
         )}
         {['vidilistuiznajmljivanja'].some(ma) && (
-          <div className="flex ">
-            <div className="flex flex-col">
-              {cx?.listakomedija?.map((r) => {
-                return (
-                  <div>
-                    {' '}
-                    <button
-                      className="p-1 mx-1 text-yellow-400 bg-green-900"
-                      type="button"
-                      onClick={() => {
-                        send({
-                          type: 'IZABERIKOMEDIJA',
-                          data: {
-                            imekomedija: 'xxx',
-                          },
-                        });
-                      }}
-                    >
-                      {r.imekomedija}
-                    </button>{' '}
-                  </div>
-                );
-              })}
+          <div className="flex flex-col">
+            <div className="flex ">
+              <div className="flex flex-col">
+                <div>Izaberi film </div>
+                {cx?.listakomedija?.map((r) => {
+                  return (
+                    <div>
+                      {' '}
+                      <button
+                        className="p-1 mx-1 text-yellow-400 bg-green-900"
+                        type="button"
+                        onClick={() => {
+                          send({
+                            type: 'IZABERIKOMEDIJA',
+                            data: {
+                              id: cx.trenutnakomedija,
+                            },
+                          });
+                        }}
+                      >
+                        {r.imekomedija}
+                      </button>{' '}
+                    </div>
+                  );
+                })}
+              </div>
+              <div className="flex flex-col">
+                <div> Izaberi clana </div>
+                {cx?.listaclanova?.map((r) => {
+                  return (
+                    <div>
+                      {' '}
+                      <button
+                        className="p-1 mx-1 text-yellow-400 bg-green-900"
+                        type="button"
+                        onClick={() => {
+                          send({
+                            type: 'IZABERICLAN',
+                            data: {
+                              id: cx.trenutniclan,
+                            },
+                          });
+                        }}
+                      >
+                        {r.imeclan}
+                      </button>{' '}
+                    </div>
+                  );
+                })}
+              </div>
             </div>
-            <div className="flex flex-col">
-              {cx?.listaclanova?.map((r) => {
-                return (
-                  <div>
-                    {' '}
-                    <button
-                      className="p-1 mx-1 text-yellow-400 bg-green-900"
-                      type="button"
-                      onClick={() => {
-                        send({
-                          type: 'IZABERIKOMEDIJA',
-                          data: {
-                            imekomedija: 'xxx',
-                          },
-                        });
-                      }}
-                    >
-                      {r.imeclan}
-                    </button>{' '}
-                  </div>
-                );
-              })}
-            </div>
+            <button
+              className="p-1 mx-1 text-yellow-400 bg-green-900"
+              type="button"
+              onClick={() => {
+                send({
+                  type: 'IZNAJMI',
+                  data: {
+                    id_clan: 1,
+                    id_komedija: 1,
+                  },
+                });
+              }}
+            >
+              IZNAJMI
+            </button>
+            <button
+              className="p-1 mx-1 text-yellow-400 bg-green-900 rounded-lg"
+              type="button"
+              onClick={() => {
+                send({
+                  type: 'HOME',
+                });
+              }}
+            >
+              Vrati se na pocetnu stranu
+            </button>
           </div>
         )}
         <pre>{JSON.stringify({ cx }, null, 2)}</pre>
