@@ -14,7 +14,7 @@ import { XstateTodos } from '@/parts/XstateTodos/XstateTodos';
 export function PageXstate() {
   return (
     <div className="p-2">
-      <XstateSimple2 />
+      {/* <XstateSimple2 /> */}
       {/* <XstateSimple3 /> */}
       {/* <XstateSimple4 /> */}
       {/* <XstateSimple5 /> */}

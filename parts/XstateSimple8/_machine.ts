@@ -1077,7 +1077,7 @@ export const XstateSimple8Machine = Machine<Icontext, Istates, Ievents>({
                 cx.trenutnoodgovornolice = ev.data.id;
               }),
             ],
-            target: 'ucitajstatuszahteva', // promeniti u ucitajdetaljezahteva
+            target: 'ucitajstatusezahteva', // promeniti u ucitajdetaljezahteva
           },
         ],
         NOVIDETALJZAHTEVA: [

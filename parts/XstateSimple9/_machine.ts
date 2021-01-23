@@ -92,7 +92,15 @@ type evDODAJNOVAKOMEDIJA = {
   };
 };
 
-export type Ievents = evNOVICLAN | evNOVAKOMEDIJA | evDODAJNOVICLAN | evDODAJNOVAKOMEDIJA | { type: 'BROWSER' };
+export type Ievents =
+  | evNOVICLAN
+  | evNOVAKOMEDIJA
+  | evDODAJNOVICLAN
+  | evDODAJNOVAKOMEDIJA
+  | { type: 'VIDICLAN' }
+  | { type: 'VIDIKOMEDIJA' }
+  | { type: 'HOME' }
+  | { type: 'BROWSER' };
 
 const send = (sendEvent: Ievents, sendOptions?: any) => untypedSend(sendEvent, sendOptions);
 
@@ -139,9 +147,92 @@ export const XstateSimple9Machine = Machine<Icontext, Istates, Ievents>({
         ],
       },
     },
-    videoklub: {},
-    ucitajclanove: {},
-    vidilistuclanova: {},
+    videoklub: {
+      on: {
+        VIDICLAN: [
+          {
+            target: 'ucitajclanove', // promeniti posle u ucitajclanove
+          },
+        ],
+        VIDIKOMEDIJA: [
+          {
+            target: 'ucitajkomedije',
+          },
+        ],
+      },
+    },
+    ucitajclanove: {
+      invoke: {
+        src: async () => {
+          const [ERRdata, data] = await backendServer
+            .query({
+              // u navodnicima je ono sto smo u Hasuri definisali i radi
+              query: gql`
+                query clanovikluba {
+                  clanovikluba {
+                    id
+                    imeclan
+                  }
+                }
+              `,
+            })
+            .then((r) => [null, r])
+            .catch((e) => [e]);
+          if ((data && data.errors) || ERRdata) {
+            throw new Error('error');
+          }
+          return data;
+        },
+        onDone: {
+          // kada server vrati odgovor
+          actions: [
+            assign((cx, ev) => {
+              // console.log({ ev });
+              cx.listaclanova = ev.data.data.clanovikluba;
+            }),
+          ],
+          target: 'vidilistuclanova',
+        },
+        onError: {
+          // kada server napravi gresku
+          // internet ne radi, ne vidi server
+          target: 'videoklub',
+        },
+      },
+    },
+    vidilistuclanova: {
+      on: {
+        NOVICLAN: [
+          {
+            actions: [
+              assign((cx, ev: evNOVICLAN) => {
+                cx.noviclan = ev?.data.imeclan || '';
+              }),
+            ],
+          },
+        ],
+        DODAJNOVICLAN: [
+          {
+            // cx?.noviklijent === null || false
+            cond: (cx) => {
+              if (cx?.noviclan === null) {
+                return true;
+              }
+              return false;
+            },
+            target: 'vidilistuclanova',
+          },
+          {
+            target: 'dodajnoviclan',
+          },
+        ],
+        HOME: [
+          {
+            target: 'videoklub',
+          },
+        ],
+      },
+    },
     dodajnoviclan: {},
     ucitajkomedije: {},
     vidilistukomedije: {},
