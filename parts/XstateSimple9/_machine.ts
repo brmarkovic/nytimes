@@ -518,7 +518,27 @@ export const XstateSimple9Machine = Machine<Icontext, Istates, Ievents>({
     dodajiznajmljivanje: {
       invoke: {
         src: async (cx, ev: evIZNAJMI) => {
-          return {}; // on Done
+          const [ERRdata, data] = await backendServer
+            .mutate({
+              variables: {
+                id_clan: ev.data.id_clan,
+                id_komedija: ev.data.id_komedija,
+              },
+              mutation: gql`
+                mutation insertlistaiznajmljivanja($id_clan: Int, $id_komedija: Int) {
+                  insert_listaiznajmljivanja(objects: { id_clan: $id_clan, id_komedija: $id_komedija }) {
+                    affected_rows
+                  }
+                }
+              `,
+            })
+            .then((r) => [null, r])
+            .catch((e) => [e]);
+          if ((data && data.errors) || ERRdata) {
+            throw new Error('error');
+          }
+          return data;
+          // return {}; // on Done
           // throw new Error('neka greska, salje na onError');
         },
         onDone: {
