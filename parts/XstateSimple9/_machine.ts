@@ -156,6 +156,7 @@ interface Istates {
     ucitajiznajmljivanje: {};
     ucitajiznajmljivanjekomedije: {};
     ucitajiznamljivanjeclan: {};
+    ucitajiznajmljivanjeiznajmljeno: {};
     vidilistuiznajmljivanja: {};
     dodajiznajmljivanje: {};
   };
@@ -437,9 +438,56 @@ export const XstateSimple9Machine = Machine<Icontext, Istates, Ievents>({
         },
       },
     },
-    ucitajiznajmljivanje: {},
-    ucitajiznajmljivanjekomedije: {},
-    ucitajiznamljivanjeclan: {},
+    ucitajiznajmljivanje: {
+      after: {
+        1: 'ucitajiznajmljivanjekomedije',
+      },
+    },
+    ucitajiznajmljivanjekomedije: {
+      invoke: {
+        src: async () => {
+          return {};
+          // throw new Error('asaa');
+        },
+        onDone: {
+          target: 'ucitajiznamljivanjeclan',
+        },
+        onError: {
+          actions: [
+            assign((cx, ev) => {
+              cx.greska = 'Server nije ucitao clanove!';
+            }),
+          ],
+          target: 'vidilistuiznajmljivanja',
+        },
+      },
+    },
+    ucitajiznamljivanjeclan: {
+      invoke: {
+        src: async () => {
+          return {};
+        },
+        onDone: {
+          target: 'ucitajiznajmljivanjeiznajmljeno',
+        },
+        onError: {
+          target: 'vidilistuiznajmljivanja',
+        },
+      },
+    },
+    ucitajiznajmljivanjeiznajmljeno: {
+      invoke: {
+        src: async () => {
+          return {};
+        },
+        onDone: {
+          target: 'vidilistuiznajmljivanja',
+        },
+        onError: {
+          target: 'vidilistuiznajmljivanja',
+        },
+      },
+    },
     vidilistuiznajmljivanja: {
       on: {
         IZABERIKOMEDIJA: [
