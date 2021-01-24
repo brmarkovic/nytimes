@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
 import { Machine } from 'xstate';
 import { send as untypedSend } from 'xstate/lib/actions';
@@ -446,10 +447,32 @@ export const XstateSimple9Machine = Machine<Icontext, Istates, Ievents>({
     ucitajiznajmljivanjekomedije: {
       invoke: {
         src: async () => {
-          return {};
-          // throw new Error('asaa');
+          const [ERRdata, data] = await backendServer
+            .query({
+              // u navodnicima je ono sto smo u Hasuri definisali i radi
+              query: gql`
+                query listaiznajmljivanjakomedije {
+                  listaiznajmljivanja {
+                    id_komedija
+                    id
+                  }
+                }
+              `,
+            })
+            .then((r) => [null, r])
+            .catch((e) => [e]);
+          if ((data && data.errors) || ERRdata) {
+            throw new Error('error');
+          }
+          return data;
         },
         onDone: {
+          actions: [
+            assign((cx, ev) => {
+              // console.log({ ev });
+              cx.listaiznajmljivanja = ev.data.data.listaiznajmljivanjakomedije;
+            }),
+          ],
           target: 'ucitajiznamljivanjeclan',
         },
         onError: {
@@ -465,9 +488,32 @@ export const XstateSimple9Machine = Machine<Icontext, Istates, Ievents>({
     ucitajiznamljivanjeclan: {
       invoke: {
         src: async () => {
-          return {};
+          const [ERRdata, data] = await backendServer
+            .query({
+              // u navodnicima je ono sto smo u Hasuri definisali i radi
+              query: gql`
+                query listaiznajmljivanjeclan {
+                  listaiznajmljivanja {
+                    id_clan
+                    id
+                  }
+                }
+              `,
+            })
+            .then((r) => [null, r])
+            .catch((e) => [e]);
+          if ((data && data.errors) || ERRdata) {
+            throw new Error('error');
+          }
+          return data;
         },
         onDone: {
+          actions: [
+            assign((cx, ev) => {
+              // console.log({ ev });
+              cx.listaiznajmljivanja = ev.data.data.listaiznajmljivanjeclan;
+            }),
+          ],
           target: 'ucitajiznajmljivanjeiznajmljeno',
         },
         onError: {
@@ -478,9 +524,34 @@ export const XstateSimple9Machine = Machine<Icontext, Istates, Ievents>({
     ucitajiznajmljivanjeiznajmljeno: {
       invoke: {
         src: async () => {
-          return {};
+          const [ERRdata, data] = await backendServer
+            .query({
+              // u navodnicima je ono sto smo u Hasuri definisali i radi
+              query: gql`
+                query listaiznajmljivanjaiznajmljeno {
+                  listaiznajmljivanja {
+                    id
+                    id_clan
+                    id_komedija
+                  }
+                }
+              `,
+            })
+            .then((r) => [null, r])
+            .catch((e) => [e]);
+          if ((data && data.errors) || ERRdata) {
+            throw new Error('error');
+          }
+          return data;
         },
+
         onDone: {
+          actions: [
+            assign((cx, ev) => {
+              // console.log({ ev });
+              cx.listaiznajmljivanja = ev.data.data.listaiznajmljivanjaiznajmljeno;
+            }),
+          ],
           target: 'vidilistuiznajmljivanja',
         },
         onError: {
