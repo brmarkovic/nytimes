@@ -17,7 +17,7 @@ export function XstateSimple9() {
   const machine = useMachine(XstateSimple9Machine, {
     show: false,
   });
-  const [{ context: cx, matches: ma }, send] = machine || [{}];
+  const [{ context: cx, matches: ma, value: currentState }, send] = machine || [{}];
   useXstateDebugger({ machine, name: '__' });
 
   useEffect(() => {
@@ -179,13 +179,15 @@ export function XstateSimple9() {
                     <div>
                       {' '}
                       <button
-                        className="p-1 mx-1 text-yellow-400 bg-green-900"
+                        className={`p-1 mx-1 text-yellow-400  ${
+                          r.id === cx.trenutnakomedija ? `bg-blue-500` : `bg-green-900`
+                        }`}
                         type="button"
                         onClick={() => {
                           send({
                             type: 'IZABERIKOMEDIJA',
                             data: {
-                              id: cx.trenutnakomedija,
+                              id: r.id,
                             },
                           });
                         }}
@@ -203,13 +205,15 @@ export function XstateSimple9() {
                     <div>
                       {' '}
                       <button
-                        className="p-1 mx-1 text-yellow-400 bg-green-900"
+                        className={`p-1 mx-1 text-yellow-400  ${
+                          r.id === cx.trenutniclan ? `bg-blue-500` : `bg-green-900`
+                        }`}
                         type="button"
                         onClick={() => {
                           send({
                             type: 'IZABERICLAN',
                             data: {
-                              id: cx.trenutniclan,
+                              id: r.id,
                             },
                           });
                         }}
@@ -249,7 +253,8 @@ export function XstateSimple9() {
             </button>
           </div>
         )}
-        <pre>{JSON.stringify({ cx }, null, 2)}</pre>
+        {cx.greska !== '' && <div className="p-2 text-white bg-red-500">{cx.greska}</div>}
+        <pre>{JSON.stringify({ currentState, cx }, null, 2)}</pre>
       </div>
     </div>
   );

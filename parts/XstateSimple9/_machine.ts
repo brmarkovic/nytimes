@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { Machine } from 'xstate';
 import { send as untypedSend } from 'xstate/lib/actions';
 import { assign } from '@xstate/immer';
@@ -69,6 +70,7 @@ export interface Icontext {
   listaclanova: Iclan[];
   listakomedija: Ikomedija[];
   listaiznajmljivanja: Iiznajmljivanje[];
+  greska: string;
 }
 
 // Ievents
@@ -164,10 +166,11 @@ export const XstateSimple9Machine = Machine<Icontext, Istates, Ievents>({
   initial: 'ssr',
   // BIKA FOKUS >>>>>>>>>>
   context: {
+    greska: '',
     noviclan: '',
     novakomedija: '',
-    trenutnakomedija: 1,
-    trenutniclan: 2,
+    trenutnakomedija: 0,
+    trenutniclan: 0,
     listaclanova: [
       { id: 1, imeclan: 'BILJANA MARKOVIC' },
       { id: 2, imeclan: 'IVANA SAVIC' },
@@ -437,7 +440,59 @@ export const XstateSimple9Machine = Machine<Icontext, Istates, Ievents>({
     ucitajiznajmljivanje: {},
     ucitajiznajmljivanjekomedije: {},
     ucitajiznamljivanjeclan: {},
-    vidilistuiznajmljivanja: {},
-    dodajiznajmljivanje: {},
+    vidilistuiznajmljivanja: {
+      on: {
+        IZABERIKOMEDIJA: [
+          {
+            actions: [
+              assign((cx, ev: evIZABERIKOMEDIJA) => {
+                cx.trenutnakomedija = ev.data.id; // dir: cx, ev, ind: nema *u masini smo"
+              }),
+            ],
+          },
+        ],
+        IZABERICLAN: [
+          {
+            actions: [
+              assign((cx, ev: evIZABERICLAN) => {
+                cx.trenutniclan = ev.data.id; // dir: cx, ev, ind: nema *u masini smo"
+              }),
+            ],
+          },
+        ],
+        IZNAJMI: [
+          {
+            target: 'dodajiznajmljivanje', // + prosledi ev dalje
+          },
+        ],
+      },
+    },
+    dodajiznajmljivanje: {
+      invoke: {
+        src: async (cx, ev: evIZNAJMI) => {
+          return {}; // on Done
+          // throw new Error('neka greska, salje na onError');
+        },
+        onDone: {
+          actions: [
+            assign((cx, ev) => {
+              //
+              cx.greska = '';
+              cx.trenutnakomedija = 0;
+              cx.trenutniclan = 0;
+            }),
+          ],
+          target: 'ucitajiznajmljivanje',
+        },
+        onError: {
+          actions: [
+            assign((cx, ev) => {
+              cx.greska = 'Iznajmljivanje nije uspelo! Kliknite ponovo!';
+            }),
+          ],
+          target: 'vidilistuiznajmljivanja',
+        },
+      },
+    },
   },
 });
