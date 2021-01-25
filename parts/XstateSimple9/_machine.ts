@@ -212,7 +212,7 @@ export const XstateSimple9Machine = Machine<Icontext, Istates, Ievents>({
         ],
         ZAPOCNIIZNAJMI: [
           {
-            target: 'vidilistuiznajmljivanja',
+            target: 'ucitajiznajmljivanje',
           },
         ],
       },
@@ -582,6 +582,11 @@ export const XstateSimple9Machine = Machine<Icontext, Istates, Ievents>({
         IZNAJMI: [
           {
             target: 'dodajiznajmljivanje', // + prosledi ev dalje
+          },
+        ],
+        HOME: [
+          {
+            target: 'videoklub',
           },
         ],
       },
