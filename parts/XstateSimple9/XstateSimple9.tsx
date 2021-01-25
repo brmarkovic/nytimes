@@ -251,13 +251,15 @@ export function XstateSimple9() {
             >
               Vrati se na pocetnu stranu
             </button>
-            {cx?.listaiznajmljivanja?.map((r) => {
-              return (
-                <div>
-                  Lista iznajmljenih filmova {r.id_clan} {r.id_komedija}{' '}
-                </div>
-              );
-            })}
+            <div>
+              {cx?.listaiznajmljivanja?.map((r) => {
+                return (
+                  <div>
+                    Lista iznajmljenih filmova {r.id_clan} {r.id_komedija}{' '}
+                  </div>
+                );
+              })}
+            </div>
           </div>
         )}
         {cx.greska !== '' && <div className="p-2 text-white bg-red-500">{cx.greska}</div>}

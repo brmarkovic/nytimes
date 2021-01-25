@@ -451,10 +451,10 @@ export const XstateSimple9Machine = Machine<Icontext, Istates, Ievents>({
             .query({
               // u navodnicima je ono sto smo u Hasuri definisali i radi
               query: gql`
-                query listaiznajmljivanjakomedije {
-                  listaiznajmljivanja {
-                    id_komedija
+                query listakomedija {
+                  listakomedija {
                     id
+                    imekomedija
                   }
                 }
               `,
@@ -470,7 +470,7 @@ export const XstateSimple9Machine = Machine<Icontext, Istates, Ievents>({
           actions: [
             assign((cx, ev) => {
               // console.log({ ev });
-              cx.listaiznajmljivanja = ev.data.data.listaiznajmljivanjakomedije;
+              cx.listakomedija = ev.data.data.listakomedija;
             }),
           ],
           target: 'ucitajiznamljivanjeclan',
@@ -492,10 +492,10 @@ export const XstateSimple9Machine = Machine<Icontext, Istates, Ievents>({
             .query({
               // u navodnicima je ono sto smo u Hasuri definisali i radi
               query: gql`
-                query listaiznajmljivanjeclan {
-                  listaiznajmljivanja {
-                    id_clan
+                query clanovikluba {
+                  clanovikluba {
                     id
+                    imeclan
                   }
                 }
               `,
@@ -511,7 +511,7 @@ export const XstateSimple9Machine = Machine<Icontext, Istates, Ievents>({
           actions: [
             assign((cx, ev) => {
               // console.log({ ev });
-              cx.listaiznajmljivanja = ev.data.data.listaiznajmljivanjeclan;
+              cx.listaclanova = ev.data.data.clanovikluba;
             }),
           ],
           target: 'ucitajiznajmljivanjeiznajmljeno',
@@ -528,8 +528,12 @@ export const XstateSimple9Machine = Machine<Icontext, Istates, Ievents>({
             .query({
               // u navodnicima je ono sto smo u Hasuri definisali i radi
               query: gql`
-                query listaiznajmljivanjaiznajmljeno {
-                  listaiznajmljivanja {
+                query listaiznajmljivanja($id_clan: Int, $id_komedija: Int) {
+                  listaiznajmljivanja(
+                    where: { id_clan: { _eq: $id_clan }, id_komedija: { _eq: $id_komedija } }
+                    order_by: { id: desc }
+                    limit: 100
+                  ) {
                     id
                     id_clan
                     id_komedija
@@ -549,7 +553,7 @@ export const XstateSimple9Machine = Machine<Icontext, Istates, Ievents>({
           actions: [
             assign((cx, ev) => {
               // console.log({ ev });
-              cx.listaiznajmljivanja = ev.data.data.listaiznajmljivanjaiznajmljeno;
+              cx.listaiznajmljivanja = ev.data.data.listaiznajmljivanja;
             }),
           ],
           target: 'vidilistuiznajmljivanja',
