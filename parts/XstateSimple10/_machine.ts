@@ -44,31 +44,116 @@ export const backendServer = new ApolloClient({
 // SNIMANJE NA SERVER KRAJ
 // SNIMANJE NA SERVER KRAJ
 // SNIMANJE NA SERVER KRAJ
+type Iclan = {
+  id: number;
+  imeclan: string;
+};
+type Ikomedija = {
+  id: number;
+  imekomedija: string;
+};
+type Iiznajmljivanje = {
+  id: number;
+  id_clan: number;
+  id_komedija: number;
+};
 
 // Icontext
 export interface Icontext {
-  show: boolean;
+  noviclan: string;
+  novakomedija: string;
+  trenutnakomedija: number;
+  trenutniclan: number;
+  listaclanova: Iclan[];
+  listakomedija: Ikomedija[];
+  listaiznajmljivanja: Iiznajmljivanje[];
 }
 
 // Ievents
-type evSHOW = {
-  type: 'SHOW';
-  data: boolean;
+
+type evNOVICLAN = {
+  type: 'NOVICLAN';
+  data: {
+    imeclan: string;
+  };
 };
 
-type evINPUT = {
-  type: 'INPUT';
-  data: string;
+type evNOVAKOMEDIJA = {
+  type: 'NOVAKOMEDIJA';
+  data: {
+    imekomedija: string;
+  };
 };
 
-export type Ievents = evINPUT | evSHOW | { type: 'idle' };
+type evDODAJNOVICLAN = {
+  type: 'DODAJNOVICLAN';
+  data: {
+    imeclan: string;
+  };
+};
+
+type evDODAJNOVAKOMEDIJA = {
+  type: 'DODAJNOVAKOMEDIJA';
+  data: {
+    imekomedija: string;
+  };
+};
+
+type evIZABERICLAN = {
+  type: 'IZABERICLAN';
+  data: {
+    id: number;
+  };
+};
+
+type evIZABERIKOMEDIJA = {
+  type: 'IZABERIKOMEDIJA';
+  data: {
+    id: number;
+  };
+};
+
+type evIZNAJMI = {
+  type: 'IZNAJMI';
+  data: {
+    id_clan: number;
+    id_komedija: number;
+  };
+};
+
+export type Ievents =
+  | evNOVICLAN
+  | evNOVAKOMEDIJA
+  | evDODAJNOVICLAN
+  | evDODAJNOVAKOMEDIJA
+  | evIZABERICLAN
+  | evIZABERIKOMEDIJA
+  | evIZNAJMI
+  | { type: 'HOME' }
+  | { type: 'VIDICLAN' }
+  | { type: 'VIDIKOMEDIJA' }
+  | { type: 'ZAPOCNIIZNAJMI' }
+  | { type: 'BROWSER' };
 
 const send = (sendEvent: Ievents, sendOptions?: any) => untypedSend(sendEvent, sendOptions);
 
 interface Istates {
   states: {
     ssr: {};
-    idle: {};
+    videoklub: {};
+    // clanov
+    ucitajclanove: {};
+    vidilistuclanova: {};
+    dodajnoviclan: {};
+    // komedija
+    ucitajkomedije: {};
+    vidilistukomedija: {};
+    dodajnovakomedija: {};
+    // iznajmljivanje
+    ucitajiznajmljivanje: {};
+    ucitajiznajmljivanjeclan: {};
+    ucitajiznajmljivanjekomedija: {};
+    ucitajiznajmljivanjeiznajmljeno: {};
   };
 }
 
@@ -77,30 +162,36 @@ export const XstateSimple10Machine = Machine<Icontext, Istates, Ievents>({
   initial: 'ssr',
   // BIKA FOKUS >>>>>>>>>>
   context: {
-    show: false,
+    noviclan: '',
+    novakomedija: '',
+    trenutnakomedija: 0,
+    trenutniclan: 0,
+    listaclanova: [],
+    listakomedija: [],
+    listaiznajmljivanja: [],
   },
   // BIKA FOKUS END <<<<<<
   states: {
     // DEFAULT MILAN STATE
     ssr: {
       on: {
-        idle: [
+        BROWSER: [
           {
-            target: 'idle',
+            target: 'videoklub',
           },
         ],
       },
     },
-    idle: {
-      on: {
-        SHOW: {
-          actions: [
-            assign((cx, ev: evSHOW) => {
-              cx.show = ev.data;
-            }),
-          ],
-        },
-      },
-    },
+    videoklub: {},
+    ucitajclanove: {},
+    vidilistuclanova: {},
+    dodajnoviclan: {},
+    ucitajkomedije: {},
+    vidilistukomedija: {},
+    dodajnovakomedija: {},
+    ucitajiznajmljivanje: {},
+    ucitajiznajmljivanjeclan: {},
+    ucitajiznajmljivanjekomedija: {},
+    ucitajiznajmljivanjeiznajmljeno: {},
   },
 });
