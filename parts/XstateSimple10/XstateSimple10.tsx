@@ -27,9 +27,48 @@ export function XstateSimple10() {
 
   // REACT (HTML+) KOMPONENTA
   return (
-    <div className="p-2">
-      <div>Simple Machine10</div>
+    <div className="p-2 bg-gradient-to-tr from-green-600 to-orange-500">
+      <div className="font-serif text-lg font-extrabold text-center text-yellow-500">VIDEO KLUB VASA</div>
       <div>
+        <div className="flex flex-col">
+          {['videoklub'].some(ma) && (
+            <div className="flex flex-col">
+              <button
+                className="p-5 mx-1 font-serif text-lg text-green-700 bg-yellow-600 rounded-lg "
+                type="button"
+                onClick={() => {
+                  send({
+                    type: 'VIDICLAN',
+                  });
+                }}
+              >
+                CLANOVI KLUBA
+              </button>
+              <button
+                className="p-5 mx-1 font-serif text-lg text-green-700 bg-yellow-600 rounded-lg"
+                type="button"
+                onClick={() => {
+                  send({
+                    type: 'VIDIKOMEDIJA',
+                  });
+                }}
+              >
+                IZBOR FILMOVA
+              </button>
+              <button
+                className="p-5 mx-1 font-serif text-lg text-green-700 bg-yellow-600 rounded-lg"
+                type="button"
+                onClick={() => {
+                  send({
+                    type: 'ZAPOCNIIZNAJMI',
+                  });
+                }}
+              >
+                IZNAJMI
+              </button>
+            </div>
+          )}
+        </div>
         <pre>{JSON.stringify({ currentState, cx }, null, 2)}</pre>
       </div>
     </div>
