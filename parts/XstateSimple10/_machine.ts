@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { Machine } from 'xstate';
 import { send as untypedSend } from 'xstate/lib/actions';
 import { assign } from '@xstate/immer';
@@ -64,6 +65,7 @@ export interface Icontext {
   novakomedija: string;
   trenutnakomedija: number;
   trenutniclan: number;
+  greska: string;
   listaclanova: Iclan[];
   listakomedija: Ikomedija[];
   listaiznajmljivanja: Iiznajmljivanje[];
@@ -168,6 +170,7 @@ export const XstateSimple10Machine = Machine<Icontext, Istates, Ievents>({
     novakomedija: '',
     trenutnakomedija: 0,
     trenutniclan: 0,
+    greska: '',
     listaclanova: [
       { id: 1, imeclan: 'BILJANA MARKOVIC' },
       { id: 2, imeclan: 'JELENA CVORKOV' },
@@ -176,7 +179,10 @@ export const XstateSimple10Machine = Machine<Icontext, Istates, Ievents>({
       { id: 1, imekomedija: 'PETAK 13' },
       { id: 2, imekomedija: 'PUTOVANJE' },
     ],
-    listaiznajmljivanja: [],
+    listaiznajmljivanja: [
+      { id: 1, id_clan: 1, id_komedija: 2 },
+      { id: 2, id_clan: 2, id_komedija: 1 },
+    ],
   },
   // BIKA FOKUS END <<<<<<
   states: {
@@ -204,16 +210,223 @@ export const XstateSimple10Machine = Machine<Icontext, Istates, Ievents>({
       },
     },
     ucitajclanove: {},
-    vidilistuclanova: {},
-    dodajnoviclan: {},
+    vidilistuclanova: {
+      on: {
+        NOVICLAN: [
+          {
+            actions: [
+              assign((cx, ev: evNOVICLAN) => {
+                cx.noviclan = ev?.data.imeclan || '';
+              }),
+            ],
+          },
+        ],
+        DODAJNOVICLAN: [
+          {
+            cond: (cx) => {
+              if (cx?.noviclan === null) {
+                return true;
+              }
+              return false;
+            },
+            target: 'vidilistuclanova',
+          },
+          {
+            target: 'dodajnoviclan',
+          },
+        ],
+        HOME: [
+          {
+            target: 'videoklub',
+          },
+        ],
+      },
+    },
+    dodajnoviclan: {
+      invoke: {
+        src: async (_cx, ev: evDODAJNOVICLAN) => {
+          const [ERRdata, data] = await backendServer
+            .mutate({
+              variables: {
+                imeclan: ev.data.imeclan,
+              },
+              mutation: gql`
+                mutation insertclanovikluba($imeclan: String) {
+                  insert_clanovikluba(objects: { imeclan: $imeclan }) {
+                    affected_rows
+                  }
+                }
+              `,
+            })
+            .then((r) => [null, r])
+            .catch((e) => [e]);
+          if ((data && data.errors) || ERRdata) {
+            throw new Error('error');
+          }
+          return data;
+        },
+        onDone: {
+          actions: [
+            assign((cx) => {
+              cx.noviclan = null;
+            }),
+          ],
+          target: 'vidilistuclanova',
+        },
+
+        onError: {
+          target: 'vidilistuclanova',
+        },
+      },
+    },
     ucitajkomedije: {},
-    vidilistukomedija: {},
-    dodajnovakomedija: {},
+    vidilistukomedija: {
+      on: {
+        NOVAKOMEDIJA: [
+          {
+            actions: [
+              assign((cx, ev: evNOVAKOMEDIJA) => {
+                cx.novakomedija = ev?.data.imekomedija || '';
+              }),
+            ],
+          },
+        ],
+        DODAJNOVAKOMEDIJA: [
+          {
+            cond: (cx) => {
+              if (cx?.novakomedija === null) {
+                return true;
+              }
+              return false;
+            },
+            target: 'vidilistukomedija',
+          },
+          {
+            target: 'dodajnovakomedija',
+          },
+        ],
+        HOME: [
+          {
+            target: 'videoklub',
+          },
+        ],
+      },
+    },
+    dodajnovakomedija: {
+      invoke: {
+        src: async (_cx, ev: evDODAJNOVAKOMEDIJA) => {
+          const [ERRdata, data] = await backendServer
+            .mutate({
+              variables: {
+                imekomedija: ev.data.imekomedija,
+              },
+              mutation: gql`
+                mutation insertlistakomedija($imekomedija: String) {
+                  insert_listakomedija(objects: { imekomedija: $imekomedija }) {
+                    affected_rows
+                  }
+                }
+              `,
+            })
+            .then((r) => [null, r])
+            .catch((e) => [e]);
+          if ((data && data.errors) || ERRdata) {
+            throw new Error('error');
+          }
+          return data;
+        },
+        onDone: {
+          actions: [
+            assign((cx) => {
+              cx.novakomedija = null;
+            }),
+          ],
+          target: 'vidilistukomedija',
+        },
+        onError: {
+          target: 'ucitajkomedije',
+        },
+      },
+    },
     ucitajiznajmljivanje: {},
     ucitajiznajmljivanjeclan: {},
     ucitajiznajmljivanjekomedija: {},
     ucitajiznajmljivanjeiznajmljeno: {},
-    vidilistuiznajmljivanja: {},
-    dodajiznajmljivanje: {},
+    vidilistuiznajmljivanja: {
+      on: {
+        IZABERIKOMEDIJA: [
+          {
+            actions: [
+              assign((cx, ev: evIZABERIKOMEDIJA) => {
+                cx.trenutnakomedija = ev?.data.id;
+              }),
+            ],
+          },
+        ],
+        IZABERICLAN: [
+          {
+            actions: [
+              assign((cx, ev: evIZABERICLAN) => {
+                cx.trenutniclan = ev?.data.id;
+              }),
+            ],
+          },
+        ],
+        IZNAJMI: [
+          {
+            target: 'dodajiznajmljivanje',
+          },
+        ],
+        HOME: [
+          {
+            target: 'videoklub',
+          },
+        ],
+      },
+    },
+    dodajiznajmljivanje: {
+      invoke: {
+        src: async (cx, ev: evIZNAJMI) => {
+          const [ERRdata, data] = await backendServer
+            .mutate({
+              variables: {
+                id_clan: ev.data.id_clan,
+                id_komedija: ev.data.id_komedija,
+              },
+              mutation: gql`
+                mutation listaiznajmljivanja($id_clan: Int, $id_komedija: Int) {
+                  insert_listaiznajmljivanja(objects: { id_clan: $id_clan, id_komedija: $id_komedija }) {
+                    affected_rows
+                  }
+                }
+              `,
+            })
+            .then((r) => [null, r])
+            .catch((e) => [e]);
+          if ((data && data.errors) || ERRdata) {
+            throw new Error('error');
+          }
+          return data;
+        },
+        onDone: {
+          actions: [
+            assign((cx, ev) => {
+              cx.greska = '';
+              cx.trenutnakomedija = 0;
+              cx.trenutniclan = 0;
+            }),
+          ],
+          target: 'vidilistuiznajmljivanje',
+        },
+        onError: {
+          actions: [
+            assign((cx, ev) => {
+              cx.greska = 'Iznajmljivanje nije uspelo! Kliknite ponovo!';
+            }),
+          ],
+          target: 'ucitajiznajmljivanje',
+        },
+      },
+    },
   },
 });

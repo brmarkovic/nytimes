@@ -153,7 +153,7 @@ export function XstateSimple10() {
                         });
                       }}
                     >
-                      Potvrdi clanstvo
+                      Potvrdi film
                     </button>
                     <button
                       className="p-1 text-yellow-400 bg-green-900 rounded-lg"
@@ -251,6 +251,16 @@ export function XstateSimple10() {
               >
                 Vrati se na pocetnu stranu
               </button>
+              <div>
+                {cx?.listaiznajmljivanja?.map((r) => {
+                  return (
+                    <div>
+                      {' '}
+                      lista iznajmljenih filmova {r.id_clan} {r.id_komedija}{' '}
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           )}
         </div>
