@@ -68,6 +68,108 @@ export function XstateSimple10() {
               </button>
             </div>
           )}
+          {['vidilistuclanova'].some(ma) && (
+            <div className="flex flex-col">
+              {cx?.listaclanova?.map((r) => {
+                return <div className="text-justify "> Lista clanova kluba {r.imeclan} </div>;
+              })}
+              <div className="flex flex-col">
+                <div> Uclanite se u klub </div>
+                <div>
+                  <textarea
+                    value={cx?.noviclan}
+                    onChange={(ev) => {
+                      send({
+                        type: 'NOVICLAN',
+                        data: {
+                          imeclan: ev.target.value,
+                        },
+                      });
+                    }}
+                    className="border border-green-900"
+                  />
+                  <div className="flex flex-col">
+                    <button
+                      className="p-1 mx-1 text-yellow-400 bg-green-900 rounded-lg"
+                      type="button"
+                      onClick={() => {
+                        send({
+                          type: 'DODAJNOVICLAN',
+                          data: {
+                            imeclan: cx.noviclan,
+                          },
+                        });
+                      }}
+                    >
+                      Potvrdi clanstvo
+                    </button>
+                    <button
+                      className="p-1 mx-1 text-yellow-400 bg-green-900 rounded-lg"
+                      type="button"
+                      onClick={() => {
+                        send({
+                          type: 'HOME',
+                        });
+                      }}
+                    >
+                      Vrati se na pocetnu stranu
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+          {['vidilistukomedija'].some(ma) && (
+            <div className="flex flex-col ">
+              {cx?.listakomedija?.map((r) => {
+                return <div className="flex flex-col">Lista komedija {r.imekomedija}</div>;
+              })}
+              <div className="flex flex-col">
+                <div> Unesite film koji bi ste zeleli da pogledate </div>
+                <div>
+                  <textarea
+                    value={cx.novakomedija}
+                    onChange={(ev) => {
+                      send({
+                        type: 'NOVAKOMEDIJA',
+                        data: {
+                          imekomedija: ev.target.value,
+                        },
+                      });
+                    }}
+                    className="bg-orange-500 border border-green-900"
+                  />
+                  <div className="flex flex-col">
+                    <button
+                      className="p-1 mx-1 text-yellow-400 bg-green-900 rounded-lg"
+                      type="button"
+                      onClick={() => {
+                        send({
+                          type: 'DODAJNOVAKOMEDIJA',
+                          data: {
+                            imekomedija: cx.novakomedija,
+                          },
+                        });
+                      }}
+                    >
+                      Potvrdi clanstvo
+                    </button>
+                    <button
+                      className="p-1 text-yellow-400 bg-green-900 rounded-lg"
+                      type="button"
+                      onClick={() => {
+                        send({
+                          type: 'HOME',
+                        });
+                      }}
+                    >
+                      Vrati se na pocetnu stranu
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
         <pre>{JSON.stringify({ currentState, cx }, null, 2)}</pre>
       </div>
