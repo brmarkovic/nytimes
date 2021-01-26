@@ -205,7 +205,7 @@ export const XstateSimple10Machine = Machine<Icontext, Istates, Ievents>({
           target: 'ucitajkomedije',
         },
         ZAPOCNIIZNAJMI: {
-          target: 'vidilistuiznajmljivanja',
+          target: 'ucitajiznajmljivanje',
         },
       },
     },
@@ -416,10 +416,139 @@ export const XstateSimple10Machine = Machine<Icontext, Istates, Ievents>({
         },
       },
     },
-    ucitajiznajmljivanje: {},
-    ucitajiznajmljivanjeclan: {},
-    ucitajiznajmljivanjekomedija: {},
-    ucitajiznajmljivanjeiznajmljeno: {},
+    ucitajiznajmljivanje: {
+      after: {
+        1: 'ucitajiznajmljivanjeclan',
+      },
+    },
+    ucitajiznajmljivanjeclan: {
+      invoke: {
+        src: async () => {
+          const [ERRdata, data] = await backendServer
+            .query({
+              // u navodnicima je ono sto smo u Hasuri definisali i radi
+              query: gql`
+                query clanovikluba {
+                  clanovikluba {
+                    id
+                    imeclan
+                  }
+                }
+              `,
+            })
+            .then((r) => [null, r])
+            .catch((e) => [e]);
+          if ((data && data.errors) || ERRdata) {
+            throw new Error('error');
+          }
+          return data;
+        },
+        onDone: {
+          actions: [
+            assign((cx, ev) => {
+              // console.log({ ev });
+              cx.listaclanova = ev.data.data.clanovikluba;
+            }),
+          ],
+          target: 'ucitajiznajmljivanjekomedija',
+        },
+        onError: {
+          actions: [
+            assign((cx, ev) => {
+              cx.greska = 'Server nije ucitao clanove!';
+            }),
+          ],
+          target: 'vidilistuiznajmljivanja',
+        },
+      },
+    },
+    ucitajiznajmljivanjekomedija: {
+      invoke: {
+        src: async () => {
+          const [ERRdata, data] = await backendServer
+            .query({
+              // u navodnicima je ono sto smo u Hasuri definisali i radi
+              query: gql`
+                query listakomedija {
+                  listakomedija {
+                    id
+                    imekomedija
+                  }
+                }
+              `,
+            })
+            .then((r) => [null, r])
+            .catch((e) => [e]);
+          if ((data && data.errors) || ERRdata) {
+            throw new Error('error');
+          }
+          return data;
+        },
+        onDone: {
+          actions: [
+            assign((cx, ev) => {
+              // console.log({ ev });
+              cx.listakomedija = ev.data.data.listakomedija;
+            }),
+          ],
+          target: 'ucitajiznajmljivanjeiznajmljeno',
+        },
+        onError: {
+          actions: [
+            assign((cx, ev) => {
+              cx.greska = 'Server nije ucitao filmove!';
+            }),
+          ],
+          target: 'vidilistuiznajmljivanja',
+        },
+      },
+    },
+    ucitajiznajmljivanjeiznajmljeno: {
+      invoke: {
+        src: async () => {
+          const [ERRdata, data] = await backendServer
+            .query({
+              // u navodnicima je ono sto smo u Hasuri definisali i radi
+              query: gql`
+                query listaiznajmljivanja($id_clan: Int, $id_komedija: Int) {
+                  listaiznajmljivanja(
+                    where: { id_clan: { _eq: $id_clan }, id_komedija: { _eq: $id_komedija } }
+                    order_by: { id: desc }
+                    limit: 100
+                  ) {
+                    id
+                    id_clan
+                    id_komedija
+                  }
+                }
+              `,
+            })
+            .then((r) => [null, r])
+            .catch((e) => [e]);
+          if ((data && data.errors) || ERRdata) {
+            throw new Error('error');
+          }
+          return data;
+        },
+
+        onDone: {
+          actions: [
+            assign((cx, ev) => {
+              cx.listaiznajmljivanja = ev.data.data.listaiznajmljivanja;
+            }),
+          ],
+          target: 'vidilistuiznajmljivanja',
+        },
+        onError: {
+          actions: [
+            assign((cx, ev) => {
+              cx.greska = 'Server nije ucitao iznajmljivanje!';
+            }),
+          ],
+          target: 'vidilistuiznajmljivanja',
+        },
+      },
+    },
     vidilistuiznajmljivanja: {
       on: {
         IZABERIKOMEDIJA: [
@@ -484,7 +613,7 @@ export const XstateSimple10Machine = Machine<Icontext, Istates, Ievents>({
               cx.trenutniclan = 0;
             }),
           ],
-          target: 'vidilistuiznajmljivanja',
+          target: 'ucitajiznajmljivanje',
         },
         onError: {
           actions: [
