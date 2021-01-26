@@ -199,17 +199,51 @@ export const XstateSimple10Machine = Machine<Icontext, Istates, Ievents>({
     videoklub: {
       on: {
         VIDICLAN: {
-          target: 'vidilistuclanova',
+          target: 'ucitajclanove',
         },
         VIDIKOMEDIJA: {
-          target: 'vidilistukomedija',
+          target: 'ucitajkomedije',
         },
         ZAPOCNIIZNAJMI: {
           target: 'vidilistuiznajmljivanja',
         },
       },
     },
-    ucitajclanove: {},
+    ucitajclanove: {
+      invoke: {
+        src: async () => {
+          const [ERRdata, data] = await backendServer
+            .query({
+              // u navodnicima je ono sto smo u Hasuri definisali i radi
+              query: gql`
+                query clanovikluba {
+                  clanovikluba {
+                    id
+                    imeclan
+                  }
+                }
+              `,
+            })
+            .then((r) => [null, r])
+            .catch((e) => [e]);
+          if ((data && data.errors) || ERRdata) {
+            throw new Error('error');
+          }
+          return data;
+        },
+        onDone: {
+          actions: [
+            assign((cx, ev) => {
+              cx.listaclanova = ev.data.data.clanovikluba;
+            }),
+          ],
+          target: 'vidilistuclanova',
+        },
+        onError: {
+          target: 'vidilistuclanova',
+        },
+      },
+    },
     vidilistuclanova: {
       on: {
         NOVICLAN: [
@@ -271,15 +305,49 @@ export const XstateSimple10Machine = Machine<Icontext, Istates, Ievents>({
               cx.noviclan = null;
             }),
           ],
-          target: 'vidilistuclanova',
+          target: 'ucitajclanove',
         },
 
         onError: {
-          target: 'vidilistuclanova',
+          target: 'ucitajclanove',
         },
       },
     },
-    ucitajkomedije: {},
+    ucitajkomedije: {
+      invoke: {
+        src: async () => {
+          const [ERRdata, data] = await backendServer
+            .query({
+              // u navodnicima je ono sto smo u Hasuri definisali i radi
+              query: gql`
+                query listakomedija {
+                  listakomedija {
+                    id
+                    imekomedija
+                  }
+                }
+              `,
+            })
+            .then((r) => [null, r])
+            .catch((e) => [e]);
+          if ((data && data.errors) || ERRdata) {
+            throw new Error('error');
+          }
+          return data;
+        },
+        onDone: {
+          actions: [
+            assign((cx, ev) => {
+              cx.listakomedija = ev.data.data.listakomedija;
+            }),
+          ],
+          target: 'vidilistukomedija',
+        },
+        onError: {
+          target: 'vidilistukomedija',
+        },
+      },
+    },
     vidilistukomedija: {
       on: {
         NOVAKOMEDIJA: [
@@ -341,7 +409,7 @@ export const XstateSimple10Machine = Machine<Icontext, Istates, Ievents>({
               cx.novakomedija = null;
             }),
           ],
-          target: 'vidilistukomedija',
+          target: 'ucitajkomedije',
         },
         onError: {
           target: 'ucitajkomedije',
@@ -416,7 +484,7 @@ export const XstateSimple10Machine = Machine<Icontext, Istates, Ievents>({
               cx.trenutniclan = 0;
             }),
           ],
-          target: 'vidilistuiznajmljivanje',
+          target: 'vidilistuiznajmljivanja',
         },
         onError: {
           actions: [
