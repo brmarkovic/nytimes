@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/control-has-associated-label */
 import React, { useEffect } from 'react';
 import { useMachine } from '@xstate/react';
 // import { inspect } from '@xstate/inspect';
@@ -168,6 +169,88 @@ export function XstateSimple10() {
                   </div>
                 </div>
               </div>
+            </div>
+          )}
+          {['vidilistuiznajmljivanja'].some(ma) && (
+            <div className="flex flex-col">
+              <div className="flex">
+                <div className="flex flex-col">
+                  <div>Izaberi film </div>
+                  {cx?.listakomedija?.map((r) => {
+                    return (
+                      <div>
+                        <button
+                          className={`p-1 mx-1 text-yellow-400  ${
+                            r.id === cx.trenutnakomedija ? `bg-blue-500` : `bg-green-900`
+                          }`}
+                          type="button"
+                          onClick={() => {
+                            send({
+                              type: 'IZABERIKOMEDIJA',
+                              data: {
+                                id: r.id,
+                              },
+                            });
+                          }}
+                        >
+                          {r.imekomedija}
+                        </button>
+                      </div>
+                    );
+                  })}
+                </div>
+                <div className="flex flex-col">
+                  <div> Izaber clan </div>
+                  {cx?.listaclanova?.map((r) => {
+                    return (
+                      <div>
+                        <button
+                          className={`p-1 mx-1 text-yellow-400  ${
+                            r.id === cx.trenutniclan ? `bg-blue-500` : `bg-green-900`
+                          }`}
+                          type="button"
+                          onClick={() => {
+                            send({
+                              type: 'IZABERICLAN',
+                              data: {
+                                id: r.id,
+                              },
+                            });
+                          }}
+                        >
+                          {r.imeclan}
+                        </button>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+              <button
+                className="p-1 mx-1 text-yellow-400 bg-green-900 rounded-lg"
+                type="button"
+                onClick={() => {
+                  send({
+                    type: 'IZNAJMI',
+                    data: {
+                      id_clan: cx.trenutniclan,
+                      id_komedija: cx.trenutnakomedija,
+                    },
+                  });
+                }}
+              >
+                IZNAJMI
+              </button>
+              <button
+                className="p-1 mx-1 text-yellow-400 bg-green-900 rounded-lg"
+                type="button"
+                onClick={() => {
+                  send({
+                    type: 'HOME',
+                  });
+                }}
+              >
+                Vrati se na pocetnu stranu
+              </button>
             </div>
           )}
         </div>
