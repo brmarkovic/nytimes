@@ -71,11 +71,12 @@ export function XstateSimple10() {
           )}
           {['vidilistuclanova'].some(ma) && (
             <div className="flex flex-col">
+              <div className="px-3 font-serif text-lg text-green-900"> Lista clanova</div>
               {cx?.listaclanova?.map((r) => {
-                return <div className="text-justify "> Lista clanova kluba {r.imeclan} </div>;
+                return <div className="px-3 font-serif text-justify text-yellow-900 "> {r.imeclan} </div>;
               })}
               <div className="flex flex-col">
-                <div> Uclanite se u klub </div>
+                <div className="font-serif font-semibold text-green-900"> Uclanite se u klub </div>
                 <div>
                   <textarea
                     value={cx?.noviclan}
@@ -87,11 +88,11 @@ export function XstateSimple10() {
                         },
                       });
                     }}
-                    className="border border-green-900"
+                    className="text-green-900 bg-yellow-600 border border-green-900"
                   />
                   <div className="flex flex-col">
                     <button
-                      className="p-1 mx-1 text-yellow-400 bg-green-900 rounded-lg"
+                      className="p-3 mx-1 font-semibold text-yellow-400 bg-green-900 rounded-lg"
                       type="button"
                       onClick={() => {
                         send({
@@ -105,7 +106,7 @@ export function XstateSimple10() {
                       Potvrdi clanstvo
                     </button>
                     <button
-                      className="p-1 mx-1 text-yellow-400 bg-green-900 rounded-lg"
+                      className="p-3 mx-1 font-semibold text-yellow-400 bg-green-900 rounded-lg"
                       type="button"
                       onClick={() => {
                         send({
@@ -122,11 +123,15 @@ export function XstateSimple10() {
           )}
           {['vidilistukomedija'].some(ma) && (
             <div className="flex flex-col ">
+              <div className="px-3 font-serif font-bold text-green-900"> FILMOVI </div>
               {cx?.listakomedija?.map((r) => {
-                return <div className="flex flex-col">Lista komedija {r.imekomedija}</div>;
+                return <div className="flex flex-col px-3 font-serif text-orange-800"> {r.imekomedija}</div>;
               })}
               <div className="flex flex-col">
-                <div> Unesite film koji bi ste zeleli da pogledate </div>
+                <div className="px-3 font-serif font-semibold text-green-900">
+                  {' '}
+                  Unesite film koji bi ste zeleli da pogledate{' '}
+                </div>
                 <div>
                   <textarea
                     value={cx.novakomedija}
@@ -142,7 +147,7 @@ export function XstateSimple10() {
                   />
                   <div className="flex flex-col">
                     <button
-                      className="p-1 mx-1 text-yellow-400 bg-green-900 rounded-lg"
+                      className="p-3 mx-1 font-semibold text-yellow-400 bg-green-900 rounded-lg"
                       type="button"
                       onClick={() => {
                         send({
@@ -156,7 +161,7 @@ export function XstateSimple10() {
                       Potvrdi film
                     </button>
                     <button
-                      className="p-1 text-yellow-400 bg-green-900 rounded-lg"
+                      className="p-3 font-semibold text-yellow-400 bg-green-900 rounded-lg"
                       type="button"
                       onClick={() => {
                         send({
@@ -175,12 +180,12 @@ export function XstateSimple10() {
             <div className="flex flex-col">
               <div className="flex">
                 <div className="flex flex-col">
-                  <div>Izaberi film </div>
+                  <div className="px-3 font-serif font-semibold text-green-900">Izaberi film </div>
                   {cx?.listakomedija?.map((r) => {
                     return (
                       <div>
                         <button
-                          className={`p-1 mx-1 text-yellow-400  ${
+                          className={`p-1 mx-1 text-yellow-400 w-56  ${
                             r.id === cx.trenutnakomedija ? `bg-blue-500` : `bg-green-900`
                           }`}
                           type="button"
@@ -200,12 +205,12 @@ export function XstateSimple10() {
                   })}
                 </div>
                 <div className="flex flex-col">
-                  <div> Izaber clan </div>
+                  <div className="px-3 font-serif font-semibold text-green-900"> Izaber clan </div>
                   {cx?.listaclanova?.map((r) => {
                     return (
                       <div>
                         <button
-                          className={`p-1 mx-1 text-yellow-400  ${
+                          className={`p-1 mx-1 text-yellow-400 w-56 ${
                             r.id === cx.trenutniclan ? `bg-blue-500` : `bg-green-900`
                           }`}
                           type="button"
@@ -226,7 +231,7 @@ export function XstateSimple10() {
                 </div>
               </div>
               <button
-                className="p-1 mx-1 text-yellow-400 bg-green-900 rounded-lg"
+                className="p-3 mx-1 font-serif font-semibold text-yellow-400 bg-green-900 rounded-lg"
                 type="button"
                 onClick={() => {
                   send({
@@ -241,7 +246,7 @@ export function XstateSimple10() {
                 IZNAJMI
               </button>
               <button
-                className="p-1 mx-1 text-yellow-400 bg-green-900 rounded-lg"
+                className="p-3 mx-1 font-serif font-semibold text-yellow-400 bg-green-900 rounded-lg"
                 type="button"
                 onClick={() => {
                   send({
@@ -252,11 +257,12 @@ export function XstateSimple10() {
                 Vrati se na pocetnu stranu
               </button>
               <div>
+                <div className="px-3 font-serif font-semibold text-green-900">Lista iznajmljenih filmova </div>
                 {cx?.listaiznajmljivanja?.map((r) => {
                   return (
-                    <div>
+                    <div className="px-3 font-serif text-green-900 ">
                       {' '}
-                      lista iznajmljenih filmova {r.id_clan} {r.id_komedija}{' '}
+                      Clan ({r.id_clan}) Film ({r.id_komedija}){' '}
                     </div>
                   );
                 })}
