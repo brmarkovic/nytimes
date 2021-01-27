@@ -262,7 +262,24 @@ export function XstateSimple10() {
                   return (
                     <div className="px-3 font-serif text-green-900 ">
                       {' '}
-                      Clan ({r.id_clan}) Film ({r.id_komedija}){' '}
+                      Clan{' '}
+                      {
+                        cx.listaclanova.find((rr) => {
+                          if (r.id_clan === rr.id) {
+                            return true;
+                          }
+                          return false;
+                        }).imeclan
+                      }{' '}
+                      Film{' '}
+                      {
+                        cx.listakomedija.find((rr) => {
+                          if (r.id_komedija === rr.id) {
+                            return true;
+                          }
+                          return false;
+                        }).imekomedija
+                      }{' '}
                     </div>
                   );
                 })}
