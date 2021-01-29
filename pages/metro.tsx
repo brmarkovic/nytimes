@@ -75,7 +75,6 @@ export default function Metro() {
             </div>
           </div>
         </div>
-        <div>novi red</div>
       </div>
     </div>
   );
