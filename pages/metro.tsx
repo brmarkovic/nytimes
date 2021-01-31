@@ -17,7 +17,7 @@ export default function Metro() {
           <div className="w-auto ml-30">NAJPRODAVANIJE</div>
           <div className="w-1/2 text-center">AKCIJE</div>
         </div>
-        <div className="flex px-5 mt-4 text-gray-600">
+        <div className="flex px-5 mt-4 mb-2 text-gray-600">
           <div className="flex flex-col w-1/4 ">
             <img
               className="mb-2 "
@@ -25,7 +25,7 @@ export default function Metro() {
               alt="metro"
             />
             <div className="-mt-5 -mr-5 text-red-500 rounded-full boreder-red-500 ">20%</div>
-            <div className="mt-4 text-xs">CIPELE DUBOKE ZA ZIMU</div>
+            <div className="mt-4 text-xs truncate ">CIPELE DUBOKE ZA ZIMU</div>
             <div className="text-xs text-gray-900">N4567</div>
             <div className="mt-3 text-xs">Cena 3.456.00 RSD </div>
           </div>
@@ -47,7 +47,7 @@ export default function Metro() {
               alt=""
             />
             <div className="-mt-5 -mr-5 text-red-500 rounded-full boreder-red-500">20%</div>
-            <div className="mt-4 text-xs">CIPELE DUBOKE ZA ZIMU</div>
+            <div className="mt-4 text-xs truncate ">CIPELE DUBOKE ZA ZIMU</div>
             <div className="text-xs text-gray-900">T34267</div>
             <div className="mt-3 text-xs">Cena 1.780,00 RSD</div>
           </div>
@@ -65,22 +65,34 @@ export default function Metro() {
             <div className="mt-3 text-xs">Cena 6.590,00 RSD</div>
           </div>
         </div>
-        <div className="flex">
-          <div className="ml-3">
+        <div className="flex flex-wrap ml-2 mr-2">
+          <div className="flex w-1/2 ">
             <img src="https://www.obucametro.rs/files/images/metro/GLAVNI-SLAJDER/muske%20majice.jpg" alt="" />
           </div>
-          <div className="ml-3 mr-3">
+          <div className="flex w-1/2 ">
             <img src="https://www.obucametro.rs/files/images/metro/GLAVNI-SLAJDER/letnje%20torbe.jpg" alt="" />
           </div>
-          <div className="flex flex-col mr-3">
-            <div>
+          <div className="flex flex-wrap mt-2">
+            <div className="w-1/2">
               <img src="https://www.obucametro.rs/files/images/metro/GLAVNI-SLAJDER/gleznjace.jpg" alt="" />
             </div>
-            <div className="mt-3">
+            <div className="w-1/2 ">
               <img src="https://www.obucametro.rs/files/images/2020/12/15/slajderwaterproof.jpg" alt="" />
             </div>
           </div>
         </div>
+        <div>
+          <div>1</div>
+          <div>1</div>
+          <div>1</div>
+          <div>1</div>
+          <div>1</div>
+          <div>1</div>
+          <div>1</div>
+          <div>1</div>
+        </div>
+        <div>123</div>
+        <div>123</div>
       </div>
     </div>
   );
