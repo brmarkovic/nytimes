@@ -57,9 +57,9 @@ export default function Metro() {
               src="https://www.obucametro.rs/files/thumbs/files/images/slike_proizvoda/thumbs_1200/N70883_1200_1200px.jpg"
               alt=""
             />
-            <a>
-              <div className="-mt-5 -mr-5 text-red-500 rounded-full boreder-red-500">20%</div>
-            </a>
+
+            <div className="-mt-5 -mr-5 text-red-500 rounded-full boreder-red-500">20%</div>
+
             <div className="mt-4 text-xs">SNEGARICA</div>
             <div className="text-xs text-gray-900">T4570</div>
             <div className="mt-3 text-xs">Cena 6.590,00 RSD</div>
