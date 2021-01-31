@@ -81,9 +81,12 @@ export default function Metro() {
             </div>
           </div>
         </div>
-        <div>
-          <div>1</div>
-          <div>1</div>
+        <div className="flex flex-col">
+          <div className="mt-10 text-xl font-thin text-center mb-7">KATEGORIJE</div>
+          <div>
+            <div>slika</div>
+            <div>text</div>
+          </div>
           <div>1</div>
           <div>1</div>
           <div>1</div>
