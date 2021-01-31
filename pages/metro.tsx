@@ -9,56 +9,60 @@ export default function Metro() {
     <div>
       <div className="flex flex-col">
         <MetroMenu />
-        <div>
-          <img src="https://www.obucametro.rs/files/images/2021/1/25/slajder70javeolii.jpg" alt="" />
+        <div className="w-auto h-auto">
+          <img src="https://www.obucametro.rs/files/images/2021/1/26/nova-kol.jpg" alt="" />
         </div>
-        <div className="flex justify-center px-5 mt-6 text-xl font-thin">
-          <div className="w-auto underline">NAJNOVIJE</div>
-          <div className="w-auto ml-4 mr-4 ">NAJPRODAVANIJE</div>
-          <div className="w-auto">AKCIJE</div>
+        <div className="flex flex-wrap justify-center mt-6 text-xl font-thin">
+          <div className="w-auto mr-20 underline">NAJNOVIJE</div>
+          <div className="w-auto ml-30">NAJPRODAVANIJE</div>
+          <div className="w-1/2 text-center">AKCIJE</div>
         </div>
-        <div className="flex px-10 mt-4 text-gray-600">
-          <div className="flex flex-col w-1/4">
+        <div className="flex px-5 mt-4 text-gray-600">
+          <div className="flex flex-col w-1/4 ">
             <img
+              className="mb-2 "
               src="https://www.obucametro.rs/files/thumbs/files/images/slike_proizvoda/thumbs_1200/N70458_1200_1200px.jpg"
               alt="metro"
             />
-            <div className="z-20 px-6 -mt-12 text-red-500 rounded-full">20%</div>
-            <div className="mt-4">CIPELE DUBOKE ZA ZIMU</div>
-            <div className="text-gray-900">N4567</div>
-            <div className="mt-7">Cena 3.456.00 RSD </div>
+            <div className="-mt-5 -mr-5 text-red-500 rounded-full boreder-red-500 ">20%</div>
+            <div className="mt-4 text-xs">CIPELE DUBOKE ZA ZIMU</div>
+            <div className="text-xs text-gray-900">N4567</div>
+            <div className="mt-3 text-xs">Cena 3.456.00 RSD </div>
           </div>
           <div className="flex flex-col w-1/4">
             <img
+              className="mb-2 "
               src="https://www.obucametro.rs/files/thumbs/files/images/slike_proizvoda/thumbs_1200/N69342_1200_1200px.jpg"
               alt=""
             />
-            <div className="z-20 px-6 -mt-12 text-red-500 rounded-full">20%</div>
-            <div className="mt-4">SPORTSKA PATIKA</div>
-            <div className="text-gray-900">N46732</div>
-            <div className="mt-7">Cena 4.350,00 RSD</div>
+            <div className="-mt-5 -mr-5 text-red-500 rounded-full boreder-red-500">20%</div>
+            <div className="mt-4 text-xs">SPORTSKA PATIKA</div>
+            <div className="text-xs text-gray-900">N46732</div>
+            <div className="mt-3 text-xs">Cena 4.350,00 RSD</div>
           </div>
           <div className="flex flex-col w-1/4">
             <img
+              className="mb-2 "
               src="https://www.obucametro.rs/files/thumbs/files/images/slike_proizvoda/thumbs_1200/N70942_1200_1200px.jpg"
               alt=""
             />
-            <div className="z-20 px-6 -mt-12 text-center text-red-500 rounded-full">20%</div>
-            <div className="mt-4">CIPELE DUBOKE ZA ZIMU</div>
-            <div className="text-gray-900">T34267</div>
-            <div className="mt-7">Cena 1.780,00 RSD</div>
+            <div className="-mt-5 -mr-5 text-red-500 rounded-full boreder-red-500">20%</div>
+            <div className="mt-4 text-xs">CIPELE DUBOKE ZA ZIMU</div>
+            <div className="text-xs text-gray-900">T34267</div>
+            <div className="mt-3 text-xs">Cena 1.780,00 RSD</div>
           </div>
           <div className="flex flex-col w-1/4">
             <img
+              className="mb-2 "
               src="https://www.obucametro.rs/files/thumbs/files/images/slike_proizvoda/thumbs_1200/N70883_1200_1200px.jpg"
               alt=""
             />
             <a>
-              <div className="text-center text-white bg-red-700 rounded-full w-9 h-9">20%</div>
+              <div className="-mt-5 -mr-5 text-red-500 rounded-full boreder-red-500">20%</div>
             </a>
-            <div className="mt-4">SNEGARICA</div>
-            <div className="text-gray-900">T4570</div>
-            <div className="mt-7">Cena 6.590,00 RSD</div>
+            <div className="mt-4 text-xs">SNEGARICA</div>
+            <div className="text-xs text-gray-900">T4570</div>
+            <div className="mt-3 text-xs">Cena 6.590,00 RSD</div>
           </div>
         </div>
         <div className="flex">

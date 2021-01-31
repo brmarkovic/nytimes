@@ -60,7 +60,7 @@ export default function MetroMenu() {
               </a>
             </div>
           </div>
-          <div className="flex justify-center flex-auto mt-2 mb-2 ">
+          <div className="flex justify-center flex-auto mt-1 mb-1">
             <Link href="/metro">
               <a>
                 <img
