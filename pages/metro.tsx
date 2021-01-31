@@ -43,7 +43,7 @@ export default function Metro() {
               src="https://www.obucametro.rs/files/thumbs/files/images/slike_proizvoda/thumbs_1200/N70942_1200_1200px.jpg"
               alt=""
             />
-            <div className="z-20 px-6 -mt-12 text-red-500 rounded-full">20%</div>
+            <div className="z-20 px-6 -mt-12 text-center text-red-500 rounded-full">20%</div>
             <div className="mt-4">CIPELE DUBOKE ZA ZIMU</div>
             <div className="text-gray-900">T34267</div>
             <div className="mt-7">Cena 1.780,00 RSD</div>
