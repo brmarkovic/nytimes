@@ -67,18 +67,22 @@ export default function Metro() {
           </div>
         </div>
         <div className="flex flex-wrap ml-2 mr-2">
-          <div className="flex w-1/2 ">
-            <img src="https://www.obucametro.rs/files/images/metro/GLAVNI-SLAJDER/muske%20majice.jpg" alt="" />
-          </div>
-          <div className="flex w-1/2 ">
-            <img src="https://www.obucametro.rs/files/images/metro/GLAVNI-SLAJDER/letnje%20torbe.jpg" alt="" />
-          </div>
           <div className="flex flex-wrap mt-2">
-            <div className="w-1/2">
-              <img src="https://www.obucametro.rs/files/images/metro/GLAVNI-SLAJDER/gleznjace.jpg" alt="" />
+            <div className="flex ml-2 mr-2">
+              <div className="flex flex-wrap mt-2 mr-2">
+                <img src="https://www.obucametro.rs/files/images/metro/GLAVNI-SLAJDER/muske%20majice.jpg" alt="" />
+              </div>
+              <div className="flex flex-wrap mt-2">
+                <img src="https://www.obucametro.rs/files/images/metro/GLAVNI-SLAJDER/letnje%20torbe.jpg" alt="" />
+              </div>
             </div>
-            <div className="w-1/2 ">
-              <img src="https://www.obucametro.rs/files/images/2020/12/15/slajderwaterproof.jpg" alt="" />
+            <div className="flex ml-2 mr-2">
+              <div className="flex flex-wrap mt-2 mr-2">
+                <img src="https://www.obucametro.rs/files/images/metro/GLAVNI-SLAJDER/gleznjace.jpg" alt="" />
+              </div>
+              <div className="flex flex-wrap mt-2 ">
+                <img src="https://www.obucametro.rs/files/images/2020/12/15/slajderwaterproof.jpg" alt="" />
+              </div>
             </div>
           </div>
         </div>
