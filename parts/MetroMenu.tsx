@@ -25,7 +25,7 @@ export default function MetroMenu() {
             </Link>
           </div>
         </div>
-        <div className="flex h-15 lign-text-bottom">
+        <div className="flex  h-15 lign-text-bottom">
           <div className="flex items-center">
             <div className="flex flex-row px-2 ">
               <a>
