@@ -84,11 +84,31 @@ export default function Metro() {
         <div className="flex flex-col">
           <div className="mt-10 text-xl font-thin text-center mb-7">KATEGORIJE</div>
           <div>
-            <div>slika</div>
-            <div>text</div>
+            <div className="ml-20">
+              <img src="https://www.obucametro.rs/files/images/metro/GLAVNI-SLAJDER/zenskanovo.jpg" alt="" />
+            </div>
+            <div className="w-56 mt-4 ml-32 text-xl font-thin text-center border-2 border-black">ZENSKA KOLEKCIJA</div>
           </div>
-          <div>1</div>
-          <div>1</div>
+          <div>
+            <div className="mt-5 ml-20">
+              <img src="https://www.obucametro.rs/files/images/metro/GLAVNI-SLAJDER/muskanovo.jpg" alt="" />
+            </div>
+            <div className="w-56 mt-4 ml-32 text-xl font-thin text-center border-2 border-black">MUSKA KOLEKCIJA</div>
+          </div>
+          <div>
+            <div className="mt-5 ml-20">
+              <img src="https://www.obucametro.rs/files/images/metro/GLAVNI-SLAJDER/decijanovo.jpg" alt="" />
+            </div>
+            <div className="w-56 mt-4 ml-32 text-xl font-thin text-center border-2 border-black">DECIJA KOLEKCIJA</div>
+          </div>
+          <div>
+            <div className="mt-5 ml-20">
+              <img src="https://www.obucametro.rs/files/images/metro/GLAVNI-SLAJDER/musketorbe.jpg" alt="" />
+            </div>
+            <div className="w-56 mt-4 ml-32 text-xl font-thin text-center border-2 border-black">DODATNI PROGRAM</div>
+          </div>
+
+          <div>h</div>
           <div>1</div>
           <div>1</div>
           <div>1</div>
