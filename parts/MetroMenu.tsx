@@ -27,10 +27,10 @@ export default function MetroMenu() {
         </div>
         <div className="flex h-15 lign-text-bottom">
           <div className="flex items-center">
-            <div className="flex flex-row ">
+            <div className="flex flex-row px-2 ">
               <a>
                 <svg
-                  className="text-gray-700 w-7 h-7"
+                  className="text-gray-700 w-9 h-9"
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
                   fill="currentColor"
@@ -46,7 +46,7 @@ export default function MetroMenu() {
             <div className="flex flex-row">
               <a>
                 <svg
-                  className="text-gray-700 w-7 h-7"
+                  className="ml-2 text-gray-700 w-7 h-7"
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
                   fill="currentColor"
@@ -60,11 +60,11 @@ export default function MetroMenu() {
               </a>
             </div>
           </div>
-          <div className="flex justify-center flex-auto mt-1 mb-1">
+          <div className="flex justify-center flex-auto">
             <Link href="/metro">
               <a>
                 <img
-                  className="w-20 h-15"
+                  className="flex-auto w-24 h-15"
                   src="https://www.obucametro.rs/files/images/2019/7/29/LOGO%20METRO%20NOVI%286%29.png"
                   alt=""
                 />
