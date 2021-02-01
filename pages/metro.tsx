@@ -1,3 +1,4 @@
+/* eslint-disable react/button-has-type */
 /* eslint-disable no-unused-vars */
 /* eslint-disable import/no-duplicates */
 
@@ -108,14 +109,68 @@ export default function Metro() {
             <div className="w-56 mt-4 ml-32 text-xl font-thin text-center border-2 border-black">DODATNI PROGRAM</div>
           </div>
 
-          <div>h</div>
-          <div>1</div>
-          <div>1</div>
-          <div>1</div>
-          <div>1</div>
+          <div className="flex flex-row ml-1 mr-1 space-x-2 mt-7">
+            <div>
+              <img src="https://www.obucametro.rs/files/images/metro/GLAVNI-SLAJDER/salvatorerossinovo.jpg" alt="" />
+            </div>
+            <div>
+              <img src="https://www.obucametro.rs/files/images/metro/GLAVNI-SLAJDER/claudiadonatellinovo.jpg" alt="" />
+            </div>
+          </div>
+          <div className="mt-3 bg-red-200">
+            <div className="text-3xl font-semibold text-center mt-7">NEWSLETTER</div>
+            <div className="mt-4 mb-4 text-lg text-center ">Budite u toku sa najnovijim ponudama i novostima</div>
+            <div className="flex items-center w-64 h-10 px-2 ml-32 text-gray-600 bg-white border border-gray-400">
+              Unesite email
+            </div>
+            <button className="w-32 h-8 mt-2 mb-8 ml-48 text-center text-white bg-black ">PRIJAVITE SE</button>
+          </div>
+          <div className="mt-8 text-xl text-center">BRENDOVI PROIZVODA</div>
+          <div className="flex flex-row overflow-x-scroll">
+            <div className="flex-none">
+              <img src="https://www.obucametro.rs/files/images/brendovi/gaia_verdi.png" alt="" />
+            </div>
+            <div className="flex-none">
+              <img src="https://www.obucametro.rs/files/images/brendovi/salvatore_ressi.png" alt="" />
+            </div>
+            <div className="flex-none">
+              <img src="https://www.obucametro.rs/files/images/brendovi/claudia_donatelli.png" alt="" />
+            </div>
+            <div className="flex-none">
+              <img src="https://www.obucametro.rs/files/images/brendovi/zen.png" alt="" />
+            </div>
+            <div className="flex-none">
+              <img src="https://www.obucametro.rs/files/images/2019/10/1/asics%281%29.png" alt="" />
+            </div>
+            <div className="flex-none">
+              <img src="https://www.obucametro.rs/files/images/brendovi/comfort_lusso.png" alt="" />
+            </div>
+            <div className="flex-none">
+              <img src="https://www.obucametro.rs/files/images/brendovi/dft.png" alt="" />
+            </div>
+            <div className="flex-none">
+              <img src="https://www.obucametro.rs/files/images/brendovi/differente.png" alt="" />
+            </div>
+            <div className="flex-none">
+              <img src="https://www.obucametro.rs/files/images/brendovi/lusso.png" alt="" />
+            </div>
+            <div className="flex-none">
+              <img src="https://www.obucametro.rs/files/images/brendovi/marco_tozzi.png" alt="" />
+            </div>
+            <div className="flex-none">
+              <img src="https://www.obucametro.rs/files/images/brendovi/francesca.png" alt="" />
+            </div>
+            <div className="flex-none">
+              <img src="https://www.obucametro.rs/files/images/brendovi/marinaro.png" alt="" />
+            </div>
+            <div className="flex-none">
+              <img src="https://www.obucametro.rs/files/images/brendovi/pandin.png" alt="" />
+            </div>
+            <div className="flex-none">
+              <img src="https://www.obucametro.rs/files/images/brendovi/elly_shoes.png" alt="" />
+            </div>
+          </div>
         </div>
-        <div>123</div>
-        <div>123</div>
       </div>
     </div>
   );
