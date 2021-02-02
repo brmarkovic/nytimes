@@ -75,49 +75,57 @@ export default function Metro() {
             <div className="text-xs ">Cena 3.456.00 RSD </div>
           </div>
         </div>
-        <div className="flex flex-col bg-red-500 mt-7">
+        <div className="flex flex-col mt-7 md:flex-row">
           <div className="flex flex-col sm:flex-row ">
-            <div className="flex w-auto ml-2 mr-2 sm:w-1/2 md:w-1/3">
+            <div className="flex ml-2 mr-2 w-1/1 sm:w-1/2 md:w-1/3">
               <img src="https://www.obucametro.rs/files/images/metro/GLAVNI-SLAJDER/muske%20majice.jpg" alt="" />
             </div>
-            <div className="flex w-auto mt-4 ml-2 mr-2 sm:w-1/2 md:w-1/3">
+            <div className="flex mt-5 ml-2 mr-2 w-1/1 sm:w-1/2 md:w-1/3 md:mt-0">
               <img src="https://www.obucametro.rs/files/images/metro/GLAVNI-SLAJDER/letnje%20torbe.jpg" alt="" />
             </div>
           </div>
-          <div className="flex flex-col sm:flex-row">
-            <div className="flex w-auto mt-4 ml-2 mr-2 sm:w-1/2 md:w-1/3">
+          <div className="flex flex-col sm:w-1/2 md:w-1/3">
+            <div className="flex mt-5 ml-2 mr-2 w-1/1 ">
               <img src="https://www.obucametro.rs/files/images/metro/GLAVNI-SLAJDER/gleznjace.jpg" alt="" />
             </div>
-            <div className="flex w-auto mt-4 ml-2 mr-2 sm:w-1/2 md:w-1/3">
+            <div className="flex mt-5 ml-2 mr-2 w-1/1 ">
               <img src="https://www.obucametro.rs/files/images/2020/12/15/slajderwaterproof.jpg" alt="" />
             </div>
           </div>
         </div>
-        <div className="flex flex-col">
-          <div className="mt-20 mb-6 space-y-1 text-lg text-center">KATEGORIJE</div>
+        <div className="flex flex-col mt-10">
+          <div className="mt-5 mb-6 space-y-1 text-lg text-center">KATEGORIJE</div>
           <div>
             <div className="ml-20">
               <img src="https://www.obucametro.rs/files/images/metro/GLAVNI-SLAJDER/zenskanovo.jpg" alt="" />
             </div>
-            <div className="w-56 mt-3 ml-32 text-lg font-thin text-center border border-black">ZENSKA KOLEKCIJA</div>
+            <div className="w-56 mt-3 ml-32 text-lg font-thin tracking-wider text-center border border-black">
+              ZENSKA KOLEKCIJA
+            </div>
           </div>
           <div>
             <div className="mt-5 ml-20">
               <img src="https://www.obucametro.rs/files/images/metro/GLAVNI-SLAJDER/muskanovo.jpg" alt="" />
             </div>
-            <div className="w-56 mt-3 ml-32 text-lg font-thin text-center border border-black">MUSKA KOLEKCIJA</div>
+            <div className="w-56 mt-3 ml-32 text-lg font-thin tracking-wider text-center border border-black">
+              MUSKA KOLEKCIJA
+            </div>
           </div>
           <div>
             <div className="mt-5 ml-20">
               <img src="https://www.obucametro.rs/files/images/metro/GLAVNI-SLAJDER/decijanovo.jpg" alt="" />
             </div>
-            <div className="w-56 mt-3 ml-32 text-lg font-thin text-center border border-black">DECIJA KOLEKCIJA</div>
+            <div className="w-56 mt-3 ml-32 text-lg font-thin tracking-wider text-center border border-black">
+              DECIJA KOLEKCIJA
+            </div>
           </div>
           <div>
             <div className="mt-5 ml-20">
               <img src="https://www.obucametro.rs/files/images/metro/GLAVNI-SLAJDER/musketorbe.jpg" alt="" />
             </div>
-            <div className="w-56 mt-3 ml-32 text-lg font-thin text-center border border-black">DODATNI PROGRAM</div>
+            <div className="w-56 mt-3 ml-32 text-lg font-thin tracking-wider text-center border border-black">
+              DODATNI PROGRAM
+            </div>
           </div>
 
           <div className="flex flex-row mt-16 ml-2 mr-2 space-x-2">
@@ -132,13 +140,15 @@ export default function Metro() {
             <div className="mt-12 text-3xl font-semibold text-center">NEWSLETTER</div>
             <div className="mt-2 mb-4 text-lg text-center ">Budite u toku sa najnovijim ponudama i novostima!</div>
             <div className="text-gray-500">
-              <div className="flex items-center w-auto h-10 px-2 ml-20 mr-20 bg-white border border-gray-400">
+              <div className="flex items-center w-auto h-10 px-2 ml-2 mr-2 bg-white border border-gray-400">
                 <div className="text-gray-500">Unesite mail</div>
               </div>
             </div>
-            <button className="w-32 h-8 mt-2 mb-16 ml-48 text-center text-white bg-black ">
-              <div> PRIJAVITE SE </div>
-            </button>
+            <div className="flex flex-col md:flex-row">
+              <button className="items-center flex-auto w-32 h-8 mt-2 mb-16 ml-48 bg-black">
+                <div className="flex-auto ml-6 mr-6 text-center text-white ">PRIJAVITE SE</div>
+              </button>
+            </div>
           </div>
           <div className="mt-10 mb-5 text-xl text-center">BRENDOVI PROIZVODA</div>
           <div className="flex flex-row overflow-x-scroll">
