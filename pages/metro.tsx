@@ -1,3 +1,4 @@
+/* eslint-disable react/style-prop-object */
 /* eslint-disable react/button-has-type */
 /* eslint-disable no-unused-vars */
 /* eslint-disable import/no-duplicates */
@@ -8,19 +9,20 @@ import MetroMenu from 'parts/MetroMenu';
 export default function Metro() {
   return (
     <div>
-      <div className="flex flex-col mt-16 ">
+      <div className="flex flex-col mt-15 ">
         <MetroMenu />
-        <div className="flex-auto mt-1 ">
+        <div className="flex-auto ">
           <img
-            className="w-screen h-auto "
-            src="https://www.obucametro.rs/files/images/2021/1/26/nova-kol.jpg"
+            className="object-cover w-full"
+            style={{ height: 558 }}
+            src="https://www.obucametro.rs/files/images/2021/1/25/majicesetmali.jpg"
             alt=""
           />
         </div>
-        <div className="flex flex-wrap justify-center text-lg font-thin mt-7">
-          <div className="w-auto mr-20">NAJPRODAVANIJE</div>
-          <div className="w-auto underline ml-30">NAJNOVIJE</div>
-          <div className="w-1/2 mt-5 text-center">AKCIJE</div>
+        <div className="flex flex-wrap mb-3 font-sans text-lg font-thin mt-9">
+          <div className="w-56 mb-2 ml-10 ">NAJPRODAVANIJE</div>
+          <div className="w-56 mb-2 underline">NAJNOVIJE</div>
+          <div className="w-56 ml-32 text-center ">AKCIJE</div>
         </div>
         <div className="flex px-5 mt-4 mb-2 text-gray-600">
           <div className="flex flex-col w-1/4 ">
@@ -30,9 +32,10 @@ export default function Metro() {
               alt="metro"
             />
             <div className="-mt-5 -mr-5 text-red-500 rounded-full boreder-red-500 ">20%</div>
-            <div className="mt-4 text-xs truncate ">CIPELE DUBOKE ZA ZIMU</div>
+            <div className="text-xs truncate ">CIPELE DUBOKE ZA ZIMU</div>
             <div className="text-xs text-gray-900">N4567</div>
-            <div className="mt-3 text-xs">Cena 3.456.00 RSD </div>
+            <div className="mt-2 text-xs text-gray-900">Cena 3.456.00 RSD </div>
+            <div className="text-xs ">Cena 3.456.00 RSD </div>
           </div>
           <div className="flex flex-col w-1/4">
             <img
@@ -41,9 +44,10 @@ export default function Metro() {
               alt=""
             />
             <div className="-mt-5 -mr-5 text-red-500 rounded-full boreder-red-500">20%</div>
-            <div className="mt-4 text-xs">SPORTSKA PATIKA</div>
+            <div className="text-xs ">SPORTSKA PATIKA</div>
             <div className="text-xs text-gray-900">N46732</div>
-            <div className="mt-3 text-xs">Cena 4.350,00 RSD</div>
+            <div className="mt-2 text-xs text-gray-900">Cena 4.350,00 RSD</div>
+            <div className="text-xs ">Cena 3.456.00 RSD </div>
           </div>
           <div className="flex flex-col w-1/4">
             <img
@@ -52,9 +56,10 @@ export default function Metro() {
               alt=""
             />
             <div className="-mt-5 -mr-5 text-red-500 rounded-full boreder-red-500">20%</div>
-            <div className="mt-4 text-xs truncate ">CIPELE DUBOKE ZA ZIMU</div>
+            <div className="text-xs truncate ">CIPELE DUBOKE ZA ZIMU</div>
             <div className="text-xs text-gray-900">T34267</div>
-            <div className="mt-3 text-xs">Cena 1.780,00 RSD</div>
+            <div className="mt-2 text-xs text-gray-900">Cena 1.780,00 RSD</div>
+            <div className="text-xs ">Cena 3.456.00 RSD </div>
           </div>
           <div className="flex flex-col w-1/4">
             <img
@@ -65,9 +70,10 @@ export default function Metro() {
 
             <div className="-mt-5 -mr-5 text-red-500 rounded-full boreder-red-500">20%</div>
 
-            <div className="mt-4 text-xs">SNEGARICA</div>
+            <div className="text-xs ">SNEGARICA</div>
             <div className="text-xs text-gray-900">T4570</div>
-            <div className="mt-3 text-xs">Cena 6.590,00 RSD</div>
+            <div className="mt-2 text-xs text-gray-900">Cena 6.590,00 RSD</div>
+            <div className="text-xs ">Cena 3.456.00 RSD </div>
           </div>
         </div>
         <div className="flex flex-wrap ">
