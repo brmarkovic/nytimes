@@ -19,77 +19,76 @@ export default function Metro() {
             alt=""
           />
         </div>
-        <div className="flex flex-wrap mb-3 font-sans text-lg font-thin mt-9">
-          <div className="w-56 mb-2 ml-10 ">NAJPRODAVANIJE</div>
-          <div className="w-56 mb-2 underline">NAJNOVIJE</div>
-          <div className="w-56 ml-32 text-center ">AKCIJE</div>
+        <div className="flex flex-col mb-3 text-lg font-thin tracking-wider text-gray-800 md:flex-row mt-9">
+          <div className="flex flex-row ">
+            <div className="flex w-1/2 ml-12 fle ">NAJPRODAVANIJE</div>
+            <div className="flex w-1/2 md:underline ">NAJNOVIJE</div>
+          </div>
+          <div className="mt-4 text-center ">AKCIJE</div>
         </div>
-        <div className="flex px-5 mt-4 mb-2 text-gray-600">
-          <div className="flex flex-col w-1/4 ">
+        <div className="flex px-2 mt-4 truncate">
+          <div className="flex flex-col w-1/2 ml-5 md:w-1/4">
             <img
-              className="mb-2 "
               src="https://www.obucametro.rs/files/thumbs/files/images/slike_proizvoda/thumbs_1200/N70458_1200_1200px.jpg"
               alt="metro"
             />
             <div className="-mt-5 -mr-5 text-red-500 rounded-full boreder-red-500 ">20%</div>
-            <div className="text-xs truncate ">CIPELE DUBOKE ZA ZIMU</div>
+            <div className="text-xs text-gray-600 truncate">CIPELE DUBOKE ZA ZIMU</div>
             <div className="text-xs text-gray-900">N4567</div>
-            <div className="mt-2 text-xs text-gray-900">Cena 3.456.00 RSD </div>
-            <div className="text-xs ">Cena 3.456.00 RSD </div>
+            <div className="mt-4 text-xs text-gray-900"> 3.456.00 RSD </div>
+            <div className="text-xs text-gray-600 "> 3.456.00 RSD </div>
           </div>
-          <div className="flex flex-col w-1/4">
+
+          <div className="flex flex-col w-1/2 ml-5 md:w-1/4 ">
             <img
-              className="mb-2 "
+              src="https://www.obucametro.rs/files/thumbs/files/images/slike_proizvoda/thumbs_1200/N70942_1200_1200px.jpg"
+              alt=""
+            />
+            <div className="-mt-5 -mr-5 text-red-500 rounded-full boreder-red-500">20%</div>
+            <div className="text-xs text-gray-600 truncate ">CIPELE DUBOKE ZA ZIMU</div>
+            <div className="text-xs text-gray-900">T34267</div>
+            <div className="mt-4 text-xs text-gray-900"> 1.780,00 RSD</div>
+            <div className="text-xs text-gray-600"> 3.456.00 RSD </div>
+          </div>
+
+          <div className="flex flex-col ml-5 md:w-1/4">
+            <img
+              src="https://www.obucametro.rs/files/thumbs/files/images/slike_proizvoda/thumbs_1200/N70458_1200_1200px.jpg"
+              alt="metro"
+            />
+            <div className="-mt-5 -mr-5 text-red-500 rounded-full boreder-red-500 ">20%</div>
+            <div className="text-xs text-gray-600 truncate">CIPELE DUBOKE ZA ZIMU</div>
+            <div className="text-xs text-gray-900">N4567</div>
+            <div className="mt-4 text-xs text-gray-900"> 3.456.00 RSD </div>
+            <div className="text-xs text-gray-600 "> 3.456.00 RSD </div>
+          </div>
+
+          <div className="flex flex-col ml-5 md:w-1/4 ">
+            <img
               src="https://www.obucametro.rs/files/thumbs/files/images/slike_proizvoda/thumbs_1200/N69342_1200_1200px.jpg"
               alt=""
             />
             <div className="-mt-5 -mr-5 text-red-500 rounded-full boreder-red-500">20%</div>
             <div className="text-xs ">SPORTSKA PATIKA</div>
             <div className="text-xs text-gray-900">N46732</div>
-            <div className="mt-2 text-xs text-gray-900">Cena 4.350,00 RSD</div>
-            <div className="text-xs ">Cena 3.456.00 RSD </div>
-          </div>
-          <div className="flex flex-col w-1/4">
-            <img
-              className="mb-2 "
-              src="https://www.obucametro.rs/files/thumbs/files/images/slike_proizvoda/thumbs_1200/N70942_1200_1200px.jpg"
-              alt=""
-            />
-            <div className="-mt-5 -mr-5 text-red-500 rounded-full boreder-red-500">20%</div>
-            <div className="text-xs truncate ">CIPELE DUBOKE ZA ZIMU</div>
-            <div className="text-xs text-gray-900">T34267</div>
-            <div className="mt-2 text-xs text-gray-900">Cena 1.780,00 RSD</div>
-            <div className="text-xs ">Cena 3.456.00 RSD </div>
-          </div>
-          <div className="flex flex-col w-1/4">
-            <img
-              className="mb-2 "
-              src="https://www.obucametro.rs/files/thumbs/files/images/slike_proizvoda/thumbs_1200/N70883_1200_1200px.jpg"
-              alt=""
-            />
-
-            <div className="-mt-5 -mr-5 text-red-500 rounded-full boreder-red-500">20%</div>
-
-            <div className="text-xs ">SNEGARICA</div>
-            <div className="text-xs text-gray-900">T4570</div>
-            <div className="mt-2 text-xs text-gray-900">Cena 6.590,00 RSD</div>
+            <div className="mt-4 text-xs text-gray-900">Cena 4.350,00 RSD</div>
             <div className="text-xs ">Cena 3.456.00 RSD </div>
           </div>
         </div>
-        <div className="flex flex-col mt-2">
-          <div className="flex flex-col space-x-0 space-y-1 sm:flex-row sm:space-x-1 sm:space-y-0">
-            <div className="flex w-full sm:w-1/2 md:w-1/3">
+        <div className="flex flex-col bg-red-500 mt-7">
+          <div className="flex flex-col sm:flex-row ">
+            <div className="flex w-auto ml-2 mr-2 sm:w-1/2 md:w-1/3">
               <img src="https://www.obucametro.rs/files/images/metro/GLAVNI-SLAJDER/muske%20majice.jpg" alt="" />
             </div>
-            <div className="flex w-full sm:w-1/2 md:w-1/3">
+            <div className="flex w-auto mt-4 ml-2 mr-2 sm:w-1/2 md:w-1/3">
               <img src="https://www.obucametro.rs/files/images/metro/GLAVNI-SLAJDER/letnje%20torbe.jpg" alt="" />
             </div>
           </div>
           <div className="flex flex-col sm:flex-row">
-            <div className="flex w-full sm:w-1/2 md:w-1/3">
+            <div className="flex w-auto mt-4 ml-2 mr-2 sm:w-1/2 md:w-1/3">
               <img src="https://www.obucametro.rs/files/images/metro/GLAVNI-SLAJDER/gleznjace.jpg" alt="" />
             </div>
-            <div className="flex w-full sm:w-1/2 md:w-1/3">
+            <div className="flex w-auto mt-4 ml-2 mr-2 sm:w-1/2 md:w-1/3">
               <img src="https://www.obucametro.rs/files/images/2020/12/15/slajderwaterproof.jpg" alt="" />
             </div>
           </div>
