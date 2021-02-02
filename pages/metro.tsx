@@ -14,7 +14,7 @@ export default function Metro() {
         <div className="flex-auto ">
           <img
             className="object-cover w-full"
-            style={{ height: 558 }}
+            style={{ height: 500 }}
             src="https://www.obucametro.rs/files/images/2021/1/25/majicesetmali.jpg"
             alt=""
           />
@@ -76,23 +76,21 @@ export default function Metro() {
             <div className="text-xs ">Cena 3.456.00 RSD </div>
           </div>
         </div>
-        <div className="flex flex-wrap ">
-          <div className="flex flex-wrap mt-2">
-            <div className="flex ml-2 mr-2">
-              <div className="flex flex-wrap mt-2 mr-4">
-                <img src="https://www.obucametro.rs/files/images/metro/GLAVNI-SLAJDER/muske%20majice.jpg" alt="" />
-              </div>
-              <div className="flex flex-wrap mt-2">
-                <img src="https://www.obucametro.rs/files/images/metro/GLAVNI-SLAJDER/letnje%20torbe.jpg" alt="" />
-              </div>
+        <div className="flex flex-col mt-2">
+          <div className="flex flex-col space-x-0 space-y-1 sm:flex-row sm:space-x-1 sm:space-y-0">
+            <div className="flex w-full sm:w-1/2 md:w-1/3">
+              <img src="https://www.obucametro.rs/files/images/metro/GLAVNI-SLAJDER/muske%20majice.jpg" alt="" />
             </div>
-            <div className="flex ml-2 mr-2">
-              <div className="flex flex-wrap mt-5 mr-4">
-                <img src="https://www.obucametro.rs/files/images/metro/GLAVNI-SLAJDER/gleznjace.jpg" alt="" />
-              </div>
-              <div className="flex flex-wrap mt-5 ">
-                <img src="https://www.obucametro.rs/files/images/2020/12/15/slajderwaterproof.jpg" alt="" />
-              </div>
+            <div className="flex w-full sm:w-1/2 md:w-1/3">
+              <img src="https://www.obucametro.rs/files/images/metro/GLAVNI-SLAJDER/letnje%20torbe.jpg" alt="" />
+            </div>
+          </div>
+          <div className="flex flex-col sm:flex-row">
+            <div className="flex w-full sm:w-1/2 md:w-1/3">
+              <img src="https://www.obucametro.rs/files/images/metro/GLAVNI-SLAJDER/gleznjace.jpg" alt="" />
+            </div>
+            <div className="flex w-full sm:w-1/2 md:w-1/3">
+              <img src="https://www.obucametro.rs/files/images/2020/12/15/slajderwaterproof.jpg" alt="" />
             </div>
           </div>
         </div>

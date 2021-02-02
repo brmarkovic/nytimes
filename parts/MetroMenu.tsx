@@ -47,7 +47,7 @@ export default function MetroMenu() {
               <div className="flex flex-row">
                 <a>
                   <svg
-                    className="ml-2 text-gray-700 w-7 h-7"
+                    className="mt-2 ml-1 text-gray-700 w-7 h-7"
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 20 20"
                     fill="currentColor"
@@ -72,7 +72,7 @@ export default function MetroMenu() {
                 </a>
               </Link>
             </div>
-            <div className="flex justify-end font-thin text-gray-600 align-bottom">
+            <div className="flex justify-end font-thin text-gray-500 align-bottom">
               <div className="flex flex-col mt-4">
                 <Link href="/Metro/omiljeno">
                   <a>

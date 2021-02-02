@@ -2,9 +2,8 @@ module.exports = {
   purge: ['./pages/**/*.jsx', './pages/**/*.tsx', './parts/**/*.jsx', './parts/**/*.tsx'],
   theme: {
     screens: {
-      mobile: '400px', // RESPONSIVE LAYOUT, MOBILE DEVICES 400px AND UP GET FULL FONT SIZE THROUGHOUT THE CONTENT
-      tablet: '640px', // RESPONSIVE LAYOUT
-      laptop: '1024px', // RESPONSIVE LAYOUT
+      sm: '500px', // RESPONSIVE LAYOUT, MOBILE DEVICES 400px AND UP GET FULL FONT SIZE THROUGHOUT THE CONTENT
+      md: '900px', // RESPONSIVE LAYOUT
     },
     fontFamily: {
       sans:
