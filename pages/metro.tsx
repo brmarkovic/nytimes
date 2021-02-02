@@ -8,7 +8,7 @@ import MetroMenu from 'parts/MetroMenu';
 export default function Metro() {
   return (
     <div>
-      <div className="flex flex-col ">
+      <div className="flex flex-col mt-16 ">
         <MetroMenu />
         <div className="flex-auto mt-1 ">
           <img
