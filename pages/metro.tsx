@@ -27,7 +27,7 @@ export default function Metro() {
           </div>
           <div className="mt-4 text-center ">AKCIJE</div>
         </div>
-        <div className="flex px-2 mt-4 truncate">
+        <div className="flex px-2 mt-4 truncate ">
           <div className="flex flex-col w-1/3 ml-5 min-w-1/3 md:w-1/4">
             <img
               className="w-full"
