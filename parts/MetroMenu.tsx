@@ -8,19 +8,19 @@ export default function MetroMenu() {
     <div className="flex flex-col">
       <div className="flex flex-col ">
         <div className="fixed top-0 w-full bg-white">
-          <div className="hidden h-3 font-sans font-thin text-gray-700">
-            <div className="hidden w-56 px-3 justify-items-start ">Telefon: 021 795 3001</div>
+          <div className="hidden md:flex md:h-3 md:font-sans md:font-thin md:text-gray-700">
+            <div className=" md:w-56 md:px-3 md:justify-items-start">Telefon: 021 795 3001</div>
             <Link href="/Metro/koferi">
-              <div className="flex-auto hidden px-3 justify-items-start">
+              <div className="md:flex-auto md:px-3 md:justify-items-start">
                 <a>Koferi</a>
               </div>
             </Link>
-            <div className="justify-end w-56">
+            <div className="md:w-56 md:justify-end">
               <Link href="/Metro/prijavise">
                 <a>Prijavite se</a>
               </Link>
             </div>
-            <div className="justify-end w-56 ">
+            <div className="md:w-56 md:justify-end ">
               <Link href="/Metro/registrujse">
                 <a>Registrujte se</a>
               </Link>
@@ -31,7 +31,7 @@ export default function MetroMenu() {
               <div className="flex flex-row px-2 ">
                 <a>
                   <svg
-                    className="text-gray-700 w-9 h-9"
+                    className="text-gray-700 md:hidden w-9 h-9"
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 20 20"
                     fill="currentColor"
@@ -47,7 +47,7 @@ export default function MetroMenu() {
               <div className="flex flex-row">
                 <a>
                   <svg
-                    className="mt-2 ml-1 text-gray-700 w-7 h-7"
+                    className="mt-2 ml-1 text-gray-700 w-7 h-7 md:hidden"
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 20 20"
                     fill="currentColor"
@@ -65,7 +65,7 @@ export default function MetroMenu() {
               <Link href="/metro">
                 <a>
                   <img
-                    className="flex-auto w-24 h-15"
+                    className="flex-auto w-24 h-15 md:w-64 md:h-40 md:mt-3"
                     src="https://www.obucametro.rs/files/images/2019/7/29/LOGO%20METRO%20NOVI%286%29.png"
                     alt=""
                   />
@@ -115,67 +115,67 @@ export default function MetroMenu() {
               </div>
             </div>
           </div>
-        </div>
-        <div className="flex hidden px-48 mt-5 text-gray-700">
-          <div className="flex-auto ">
-            <Link href="/Metro/zensko">
-              <a>ZENSKO</a>
-            </Link>
-          </div>
-          <div className="flex-auto">
-            <Link href="/Metro/musko">
-              <a>MUSKO</a>
-            </Link>
-          </div>
-          <div className="flex-auto">
-            <Link href="/Metro/decije">
-              <a>DECIJE</a>
-            </Link>
-          </div>
-          <div className="flex-auto">
-            <Link href="/Metro/tekstil">
-              <a>TEKSTIL</a>
-            </Link>
-          </div>
-          <div className="flex-auto">
-            <Link href="/Metro/fitnes">
-              <a>FITNES</a>
-            </Link>
-          </div>
-          <div className="flex-auto">
-            <Link href="/Metro/modnidodaci">
-              <a>MODNI DODACI</a>
-            </Link>
-          </div>
-          <div className="flex-auto">
-            <Link href="/Metro/brendovi">
-              <a>BRENDOVI</a>
-            </Link>
-          </div>
-          <div className="flex-auto">
-            <Link href="/Metro/setovi">
-              <a>SETOVI</a>
-            </Link>
-          </div>
-          <div className="flex-auto text-red-600">
-            <Link href="/Metro/akcije">
-              <a>AKCIJE</a>
-            </Link>
-          </div>
-          <div className="flex-auto">
-            <Link href="/Metro/novo">
-              <a>NOVO</a>
-            </Link>
-          </div>
-          <div className="flex-auto">
-            <Link href="/Metro/lokacije">
-              <a>LOKACIJE</a>
-            </Link>
-          </div>
-          <div className="flex-auto border-gray-700 rounded-lg ">
-            <Link href="/Metro/pretrazisajt">
-              <a>Pretrazi sajt</a>
-            </Link>
+          <div className="hidden md:flex md:text-gray-700 md:border-b-2 md:border-black">
+            <div className="md:flex-auto ">
+              <Link href="/Metro/zensko">
+                <a>ZENSKO</a>
+              </Link>
+            </div>
+            <div className="md:flex-auto">
+              <Link href="/Metro/musko">
+                <a>MUSKO</a>
+              </Link>
+            </div>
+            <div className="md:flex-auto">
+              <Link href="/Metro/decije">
+                <a>DECIJE</a>
+              </Link>
+            </div>
+            <div className="md:flex-auto">
+              <Link href="/Metro/tekstil">
+                <a>TEKSTIL</a>
+              </Link>
+            </div>
+            <div className="md:flex-auto">
+              <Link href="/Metro/fitnes">
+                <a>FITNES</a>
+              </Link>
+            </div>
+            <div className="md:flex-auto">
+              <Link href="/Metro/modnidodaci">
+                <a>MODNI DODACI</a>
+              </Link>
+            </div>
+            <div className="md:flex-auto">
+              <Link href="/Metro/brendovi">
+                <a>BRENDOVI</a>
+              </Link>
+            </div>
+            <div className="md:flex-auto">
+              <Link href="/Metro/setovi">
+                <a>SETOVI</a>
+              </Link>
+            </div>
+            <div className="md:text-red-600 md:flex-auto">
+              <Link href="/Metro/akcije">
+                <a>AKCIJE</a>
+              </Link>
+            </div>
+            <div className="md:flex-auto">
+              <Link href="/Metro/novo">
+                <a>NOVO</a>
+              </Link>
+            </div>
+            <div className="md:flex-auto">
+              <Link href="/Metro/lokacije">
+                <a>LOKACIJE</a>
+              </Link>
+            </div>
+            <div className="md:flex-auto md:border-gray-700 md:rounded-lg ">
+              <Link href="/Metro/pretrazisajt">
+                <a>Pretrazi sajt</a>
+              </Link>
+            </div>
           </div>
         </div>
       </div>

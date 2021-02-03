@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable react/style-prop-object */
 /* eslint-disable react/button-has-type */
 /* eslint-disable no-unused-vars */
@@ -9,7 +10,7 @@ import MetroMenu from 'parts/MetroMenu';
 export default function Metro() {
   return (
     <div>
-      <div className="flex flex-col mt-15 ">
+      <div className="flex flex-col mt-15 md:mt-64">
         <MetroMenu />
         <div className="flex-auto ">
           <img
@@ -19,16 +20,17 @@ export default function Metro() {
             alt=""
           />
         </div>
-        <div className="flex flex-col mb-3 text-lg font-thin tracking-wider text-gray-800 md:flex-row mt-9">
+        <div className="flex flex-col mb-3 text-lg font-thin tracking-wider text-gray-800 md:justify-center md:flex-row mt-9">
           <div className="flex flex-row ">
-            <div className="flex w-1/2 ml-12 fle ">NAJPRODAVANIJE</div>
-            <div className="flex w-1/2 md:underline ">NAJNOVIJE</div>
+            <div className="flex w-1/2 ml-12 mr-2 fle ">NAJPRODAVANIJE</div>
+            <div className="flex w-1/2 mr-2 md:underline ">NAJNOVIJE</div>
           </div>
           <div className="mt-4 text-center ">AKCIJE</div>
         </div>
         <div className="flex px-2 mt-4 truncate">
-          <div className="flex flex-col w-1/2 ml-5 md:w-1/4">
+          <div className="flex flex-col w-1/3 ml-5 min-w-1/3 md:w-1/4">
             <img
+              className="w-full"
               src="https://www.obucametro.rs/files/thumbs/files/images/slike_proizvoda/thumbs_1200/N70458_1200_1200px.jpg"
               alt="metro"
             />
@@ -38,8 +40,7 @@ export default function Metro() {
             <div className="mt-4 text-xs text-gray-900"> 3.456.00 RSD </div>
             <div className="text-xs text-gray-600 "> 3.456.00 RSD </div>
           </div>
-
-          <div className="flex flex-col w-1/2 ml-5 md:w-1/4 ">
+          <div className="flex flex-col w-1/3 ml-5 min-w-1/3 md:w-1/4">
             <img
               src="https://www.obucametro.rs/files/thumbs/files/images/slike_proizvoda/thumbs_1200/N70942_1200_1200px.jpg"
               alt=""
@@ -50,8 +51,7 @@ export default function Metro() {
             <div className="mt-4 text-xs text-gray-900"> 1.780,00 RSD</div>
             <div className="text-xs text-gray-600"> 3.456.00 RSD </div>
           </div>
-
-          <div className="flex flex-col ml-5 md:w-1/4">
+          <div className="flex flex-col w-1/3 ml-5 min-w-1/3 md:w-1/4">
             <img
               src="https://www.obucametro.rs/files/thumbs/files/images/slike_proizvoda/thumbs_1200/N70458_1200_1200px.jpg"
               alt="metro"
@@ -62,72 +62,75 @@ export default function Metro() {
             <div className="mt-4 text-xs text-gray-900"> 3.456.00 RSD </div>
             <div className="text-xs text-gray-600 "> 3.456.00 RSD </div>
           </div>
-
-          <div className="flex flex-col ml-5 md:w-1/4 ">
+          <div className="flex flex-col w-1/3 ml-5 min-w-1/3 md:w-1/4 ">
             <img
-              src="https://www.obucametro.rs/files/thumbs/files/images/slike_proizvoda/thumbs_1200/N69342_1200_1200px.jpg"
+              src="https://www.obucametro.rs/files/thumbs/files/images/slike_proizvoda/thumbs_1200/N70942_1200_1200px.jpg"
               alt=""
             />
             <div className="-mt-5 -mr-5 text-red-500 rounded-full boreder-red-500">20%</div>
-            <div className="text-xs ">SPORTSKA PATIKA</div>
-            <div className="text-xs text-gray-900">N46732</div>
-            <div className="mt-4 text-xs text-gray-900">Cena 4.350,00 RSD</div>
-            <div className="text-xs ">Cena 3.456.00 RSD </div>
-          </div>
+            <div className="text-xs text-gray-600 truncate ">CIPELE DUBOKE ZA ZIMU</div>
+            <div className="text-xs text-gray-900">T34267</div>
+            <div className="mt-4 text-xs text-gray-900"> 1.780,00 RSD</div>
+            <div className="text-xs text-gray-600"> 3.456.00 RSD </div>
+          </div>{' '}
         </div>
         <div className="flex flex-col mt-7 md:flex-row">
           <div className="flex flex-col sm:flex-row ">
-            <div className="flex ml-2 mr-2 w-1/1 sm:w-1/2 md:w-1/3">
+            <div className="flex ml-2 mr-2 w-1/1 sm:w-1/2 md:w-1/3 md:flex-auto ">
               <img src="https://www.obucametro.rs/files/images/metro/GLAVNI-SLAJDER/muske%20majice.jpg" alt="" />
             </div>
-            <div className="flex mt-5 ml-2 mr-2 w-1/1 sm:w-1/2 md:w-1/3 md:mt-0">
+            <div className="flex mt-5 ml-2 mr-2 w-1/1 sm:mt-0 sm:w-1/2 md:w-1/3 md:mt-0 md:flex-auto">
               <img src="https://www.obucametro.rs/files/images/metro/GLAVNI-SLAJDER/letnje%20torbe.jpg" alt="" />
             </div>
           </div>
-          <div className="flex flex-col sm:w-1/2 md:w-1/3">
-            <div className="flex mt-5 ml-2 mr-2 w-1/1 ">
+          <div className="flex flex-col sm:flex-row sm:w-1/1 md:w-1/3 md:flex-col">
+            <div className="flex mt-5 ml-2 mr-2 w-1/1 md:flex-auto md:mt-0 ">
               <img src="https://www.obucametro.rs/files/images/metro/GLAVNI-SLAJDER/gleznjace.jpg" alt="" />
             </div>
-            <div className="flex mt-5 ml-2 mr-2 w-1/1 ">
+            <div className="flex mt-5 ml-2 mr-2 w-1/1 md:flex-auto ">
               <img src="https://www.obucametro.rs/files/images/2020/12/15/slajderwaterproof.jpg" alt="" />
             </div>
           </div>
         </div>
-        <div className="flex flex-col mt-10">
-          <div className="mt-5 mb-6 space-y-1 text-lg text-center">KATEGORIJE</div>
-          <div>
-            <div className="ml-20">
-              <img src="https://www.obucametro.rs/files/images/metro/GLAVNI-SLAJDER/zenskanovo.jpg" alt="" />
-            </div>
-            <div className="w-56 mt-3 ml-32 text-lg font-thin tracking-wider text-center border border-black">
-              ZENSKA KOLEKCIJA
-            </div>
-          </div>
-          <div>
-            <div className="mt-5 ml-20">
-              <img src="https://www.obucametro.rs/files/images/metro/GLAVNI-SLAJDER/muskanovo.jpg" alt="" />
-            </div>
-            <div className="w-56 mt-3 ml-32 text-lg font-thin tracking-wider text-center border border-black">
-              MUSKA KOLEKCIJA
-            </div>
-          </div>
-          <div>
-            <div className="mt-5 ml-20">
-              <img src="https://www.obucametro.rs/files/images/metro/GLAVNI-SLAJDER/decijanovo.jpg" alt="" />
-            </div>
-            <div className="w-56 mt-3 ml-32 text-lg font-thin tracking-wider text-center border border-black">
-              DECIJA KOLEKCIJA
-            </div>
-          </div>
-          <div>
-            <div className="mt-5 ml-20">
-              <img src="https://www.obucametro.rs/files/images/metro/GLAVNI-SLAJDER/musketorbe.jpg" alt="" />
-            </div>
-            <div className="w-56 mt-3 ml-32 text-lg font-thin tracking-wider text-center border border-black">
-              DODATNI PROGRAM
-            </div>
-          </div>
 
+        <div className="flex flex-col mt-10">
+          <div className="mt-5 space-y-1 text-lg text-center md:">KATEGORIJE</div>
+          <div className="flex-row mt-6 md:flex">
+            <div className="flex flex-col items-center">
+              <div className="md:flex-auto md:ml-2">
+                <img src="https://www.obucametro.rs/files/images/metro/GLAVNI-SLAJDER/zenskanovo.jpg" alt="" />
+              </div>
+              <div className="w-56 mt-3 text-lg font-thin tracking-wider text-center border border-black">
+                ZENSKA KOLEKCIJA
+              </div>
+            </div>
+            <div className="flex flex-col items-center">
+              <div className="mt-5 md:mt-0 md:ml-2">
+                <img src="https://www.obucametro.rs/files/images/metro/GLAVNI-SLAJDER/muskanovo.jpg" alt="" />
+              </div>
+              <div className="w-56 mt-3 text-lg font-thin tracking-wider text-center border border-black">
+                MUSKA KOLEKCIJA
+              </div>
+            </div>
+            <div className="flex flex-col items-center">
+              <div className="mt-5 md:mt-0 md:ml-2">
+                <img src="https://www.obucametro.rs/files/images/metro/GLAVNI-SLAJDER/decijanovo.jpg" alt="" />
+              </div>
+              <div className="w-56 mt-3 text-lg font-thin tracking-wider text-center border border-black">
+                DECIJA KOLEKCIJA
+              </div>
+            </div>
+            <div className="flex flex-col items-center">
+              <div className="mt-5 md:mr-2 md:mt-0 md:ml-2">
+                <img src="https://www.obucametro.rs/files/images/metro/GLAVNI-SLAJDER/musketorbe.jpg" alt="" />
+              </div>
+              <div className="w-56 mt-3 text-lg font-thin tracking-wider text-center border border-black">
+                DODATNI PROGRAM
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
           <div className="flex flex-row mt-16 ml-2 mr-2 space-x-2">
             <div>
               <img src="https://www.obucametro.rs/files/images/metro/GLAVNI-SLAJDER/salvatorerossinovo.jpg" alt="" />
@@ -136,6 +139,8 @@ export default function Metro() {
               <img src="https://www.obucametro.rs/files/images/metro/GLAVNI-SLAJDER/claudiadonatellinovo.jpg" alt="" />
             </div>
           </div>
+        </div>
+        <div>
           <div className="mt-4 bg-red-200">
             <div className="mt-12 text-3xl font-semibold text-center">NEWSLETTER</div>
             <div className="mt-2 mb-4 text-lg text-center ">Budite u toku sa najnovijim ponudama i novostima!</div>
@@ -150,6 +155,8 @@ export default function Metro() {
               </button>
             </div>
           </div>
+        </div>
+        <div>
           <div className="mt-10 mb-5 text-xl text-center">BRENDOVI PROIZVODA</div>
           <div className="flex flex-row overflow-x-scroll">
             <div className="flex-none">
@@ -195,6 +202,8 @@ export default function Metro() {
               <img src="https://www.obucametro.rs/files/images/brendovi/elly_shoes.png" alt="" />
             </div>
           </div>
+        </div>
+        <div>
           <div className="h-32 mt-12">PODACI O KOMPANIJI</div>
           <div>PODACI O KOMPANIJI</div>
           <div>PODACI O KOMPANIJI</div>
