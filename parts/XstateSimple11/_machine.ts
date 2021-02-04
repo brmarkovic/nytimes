@@ -163,6 +163,7 @@ export type Ievents =
   | { type: 'VIDICLAN' }
   | { type: 'VIDIKOMEDIJA' }
   | { type: 'ZAPOCNIIZNAJMI' }
+  | { type: 'VIDIVESTI' }
   | { type: 'BROWSER' };
 
 const send = (sendEvent: Ievents, sendOptions?: any) => untypedSend(sendEvent, sendOptions);
@@ -172,24 +173,24 @@ interface Istates {
     ssr: {};
     videoklub: {};
     // clan
-    // ucitajclanove: {};
-    // vidilistuclanova: {};
-    // dodajnoviclan: {};
+    ucitajclanove: {};
+    vidilistuclanova: {};
+    dodajnoviclan: {};
     // komedija
-    // ucitajkomedije: {};
-    // vidilistukomedija: {};
-    // dodajnovakomedija: {};
+    ucitajkomedije: {};
+    vidilistukomedija: {};
+    dodajnovakomedija: {};
     // vesti
-    // ucitajvesti: {};
-    // vidilistuvesti: {};
-    // dodajnovuvest: {};
+    ucitajvesti: {};
+    vidilistuvesti: {};
+    dodajnovuvest: {};
     // iznajmljivanje
-    // ucitajiznajmljivanje: {};
-    // ucitajiznajmljivanjeclan: {};
-    // ucitajiznajmljivanjekomedija: {};
-    // ucitajiznajmljivanjeiznajmljeno: {};
-    // vidilistuiznajmljivanja: {};
-    // dodajiznajmljivanje: {};
+    ucitajiznajmljivanje: {};
+    ucitajiznajmljivanjeclan: {};
+    ucitajiznajmljivanjekomedija: {};
+    ucitajiznajmljivanjeiznajmljeno: {};
+    vidilistuiznajmljivanja: {};
+    dodajiznajmljivanje: {};
   };
 }
 
@@ -220,6 +221,36 @@ export const XstateSimple11Machine = Machine<Icontext, Istates, Ievents>({
         ],
       },
     },
-    videoklub: {},
+    videoklub: {
+      on: {
+        VIDICLAN: {
+          target: 'vidilistuclanova',
+        },
+        VIDIKOMEDIJA: {
+          target: 'vidilistukomedija',
+        },
+        ZAPOCNIIZNAJMI: {
+          target: 'vidilistuiznajmljivanja',
+        },
+        VIDIVESTI: {
+          target: 'vidilistuvesti',
+        },
+      },
+    },
+    ucitajclanove: {},
+    vidilistuclanova: {},
+    dodajnoviclan: {},
+    ucitajkomedije: {},
+    vidilistukomedija: {},
+    dodajnovakomedija: {},
+    ucitajvesti: {},
+    vidilistuvesti: {},
+    dodajnovuvest: {},
+    ucitajiznajmljivanje: {},
+    ucitajiznajmljivanjeclan: {},
+    ucitajiznajmljivanjekomedija: {},
+    ucitajiznajmljivanjeiznajmljeno: {},
+    vidilistuiznajmljivanja: {},
+    dodajiznajmljivanje: {},
   },
 });
