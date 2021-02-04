@@ -60,7 +60,7 @@ type Iiznajmljivanje = {
   id_komedija: number;
 };
 
-type Ivesti = {
+type Ivest = {
   id: number;
   naslov: string;
   slika: string;
@@ -68,7 +68,6 @@ type Ivesti = {
 };
 // Icontext
 export interface Icontext {
-  show: boolean;
   noviclan: string;
   novakomedija: string;
   novavest: string;
@@ -77,32 +76,27 @@ export interface Icontext {
   listaclanova: Iclan[];
   listakomedija: Ikomedija[];
   listaiznajmljivanja: Iiznajmljivanje[];
-  listavesti: Ivesti[];
+  listavesti: Ivest[];
 }
 
 // Ievents
-type evSHOW = {
-  type: 'SHOW';
-  data: boolean;
-};
 
-type evINPUT = {
-  type: 'INPUT';
-  data: string;
-};
 type evNOVICLAN = {
+  type: 'NOVICLAN';
   data: {
     imeclan: string;
   };
 };
 
 type evNOVAKOMEDIJA = {
+  type: 'NOVAKOMEDIJA';
   data: {
     imekomedija: string;
   };
 };
 
 type evNOVAVEST = {
+  type: 'NOVAVEST';
   data: {
     naslov: string;
     slika: string;
@@ -111,18 +105,21 @@ type evNOVAVEST = {
 };
 
 type evDODAJNOVICLAN = {
+  type: 'DODAJNOVICLAN';
   data: {
     imeclan: string;
   };
 };
 
 type evDODAJNOVAKOMEDIJA = {
+  type: 'DODAJNOVAKOMEDIJA';
   data: {
     imekomedija: string;
   };
 };
 
 type evDODAJNOVAVEST = {
+  type: 'DODAJNOVAVEST';
   data: {
     naslov: string;
     slika: string;
@@ -131,26 +128,28 @@ type evDODAJNOVAVEST = {
 };
 
 type evIZABERICLAN = {
+  type: 'IZABERICLAN';
   data: {
     id: number;
   };
 };
 
 type evIZABERIKOMEDIJA = {
+  type: 'IZABERIKOMEDIJA';
   data: {
     id: number;
   };
 };
 
 type evIZNAJMI = {
+  type: 'IZNAJMI';
   data: {
     id_clan: number;
     id_komedija: number;
   };
 };
+
 export type Ievents =
-  | evINPUT
-  | evSHOW
   | evNOVICLAN
   | evNOVAKOMEDIJA
   | evNOVAVEST
@@ -160,6 +159,10 @@ export type Ievents =
   | evIZABERICLAN
   | evIZABERIKOMEDIJA
   | evIZNAJMI
+  | { type: 'HOME' }
+  | { type: 'VIDICLAN' }
+  | { type: 'VIDIKOMEDIJA' }
+  | { type: 'ZAPOCNIIZNAJMI' }
   | { type: 'BROWSER' };
 
 const send = (sendEvent: Ievents, sendOptions?: any) => untypedSend(sendEvent, sendOptions);
@@ -167,26 +170,26 @@ const send = (sendEvent: Ievents, sendOptions?: any) => untypedSend(sendEvent, s
 interface Istates {
   states: {
     ssr: {};
-    idle: {};
+    videoklub: {};
     // clan
-    ucitajclanove: {};
-    vidilistuclanova: {};
-    dodajnoviclan: {};
+    // ucitajclanove: {};
+    // vidilistuclanova: {};
+    // dodajnoviclan: {};
     // komedija
-    ucitajkomedije: {};
-    vidilistukomedija: {};
-    dodajnovakomedija: {};
+    // ucitajkomedije: {};
+    // vidilistukomedija: {};
+    // dodajnovakomedija: {};
     // vesti
-    ucitajvesti: {};
-    vidilistuvesti: {};
-    dodajnovuvest: {};
+    // ucitajvesti: {};
+    // vidilistuvesti: {};
+    // dodajnovuvest: {};
     // iznajmljivanje
-    ucitajiznajmljivanje: {};
-    ucitajiznajmljivanjeclan: {};
-    ucitajiznajmljivanjekomedija: {};
-    ucitajiznajmljivanjeiznajmljeno: {};
-    vidilistuiznajmljivanja: {};
-    dodajiznajmljivanje: {};
+    // ucitajiznajmljivanje: {};
+    // ucitajiznajmljivanjeclan: {};
+    // ucitajiznajmljivanjekomedija: {};
+    // ucitajiznajmljivanjeiznajmljeno: {};
+    // vidilistuiznajmljivanja: {};
+    // dodajiznajmljivanje: {};
   };
 }
 
@@ -195,7 +198,6 @@ export const XstateSimple11Machine = Machine<Icontext, Istates, Ievents>({
   initial: 'ssr',
   // BIKA FOKUS >>>>>>>>>>
   context: {
-    show: false,
     noviclan: '',
     novakomedija: '',
     novavest: '',
@@ -213,10 +215,11 @@ export const XstateSimple11Machine = Machine<Icontext, Istates, Ievents>({
       on: {
         BROWSER: [
           {
-            target: 'vidilistuclanova',
+            target: 'videoklub',
           },
         ],
       },
     },
+    videoklub: {},
   },
 });
