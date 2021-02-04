@@ -16,7 +16,7 @@ import { XstateSimple11Machine } from './_machine';
 export function XstateSimple11() {
   // STARTOVANJE MASINE
   const machine = useMachine(XstateSimple11Machine, {
-    show: false,
+    show: true,
   });
   const [{ context: cx, matches: ma, value: currentState }, send] = machine || [{}];
   useXstateDebugger({ machine, name: '__' });
@@ -71,12 +71,18 @@ export function XstateSimple11() {
           </a>
         </div>
       </div>
-      <div className="flex flex-row h-10 mt-1 bg-gray-300 border-t-2 border-gray-700">druga linija</div>
+      <div className="flex flex-row h-10 mt-1 bg-gray-300 border-t-2 border-b-2 border-gray-700">
+        <div className="flex w-1/2 p-2 ml-2 text-xs font-medium">Thrusday, February 4,2021 </div>
+        <div className="flex flex-row w-1/2 ">
+          <div className="flex p-2 ml-2 text-xs text-gray-600 border-r-2 border-gray-600">SUBSCRIBE NOW</div>
+          <div className="flex p-2 ml-2 text-xs text-gray-600 ">LOG IN </div>
+        </div>
+      </div>
       <div className="flex flex-col ">
         {['videoklub'].some(ma) && (
           <div className="flex flex-col">
             <button
-              className="p-5 mx-1 font-serif text-lg text-green-700 bg-yellow-600 rounded-lg"
+              className="p-5 mx-1 font-serif text-lg bg-gray-300 rounded-lg text-gray-"
               type="button"
               onClick={() => {
                 send({
@@ -315,6 +321,65 @@ export function XstateSimple11() {
                   </div>
                 );
               })}
+            </div>
+          </div>
+        )}
+        {['vidilistuvesti'].some(ma) && (
+          <div className="flex flex-col">
+            {cx?.listavesti?.map((r) => {
+              return (
+                <div className="flex flex-col">
+                  {r.naslov} {r.slika} {r.prica}
+                </div>
+              );
+            })}
+            <div className="flex flex-col">
+              <div className="font-serif font-semibold text-green-900"> Unesite vesti iz filma </div>
+              <div>
+                <textarea
+                  value={cx?.novavest}
+                  onChange={(ev) => {
+                    send({
+                      type: 'NOVAVEST',
+                      data: {
+                        naslov: ev.target.value,
+                        slika: ev.target.value,
+                        prica: ev.target.value,
+                      },
+                    });
+                  }}
+                  className="text-green-900 bg-yellow-600 border border-green-900"
+                />
+                <div className="flex flex-col">
+                  <button
+                    className="p-3 mx-1 font-semibold text-yellow-400 bg-green-900 rounded-lg"
+                    type="button"
+                    onClick={() => {
+                      send({
+                        type: 'DODAJNOVAVEST',
+                        data: {
+                          naslov: cx.novinaslov,
+                          slika: cx.novaslika,
+                          prica: cx.novaprica,
+                        },
+                      });
+                    }}
+                  >
+                    Potvrdi vest
+                  </button>
+                  <button
+                    className="p-3 mx-1 font-semibold text-yellow-400 bg-green-900 rounded-lg"
+                    type="button"
+                    onClick={() => {
+                      send({
+                        type: 'HOME',
+                      });
+                    }}
+                  >
+                    Vrati se na pocetnu stranu
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         )}
