@@ -204,9 +204,18 @@ export const XstateSimple11Machine = Machine<Icontext, Istates, Ievents>({
     novavest: '',
     trenutniclan: 0,
     trenutnakomedija: 0,
-    listaclanova: [],
-    listakomedija: [],
-    listaiznajmljivanja: [],
+    listaclanova: [
+      { id: 1, imeclan: 'BILJANA MARKOVIC' },
+      { id: 2, imeclan: 'PETAR PETROVIC' },
+    ],
+    listakomedija: [
+      { id: 1, imekomedija: 'PETAK 13' },
+      { id: 2, imekomedija: 'PUTOVANJE' },
+    ],
+    listaiznajmljivanja: [
+      { id: 1, id_clan: 1, id_komedija: 2 },
+      { id: 2, id_clan: 2, id_komedija: 1 },
+    ],
     listavesti: [],
   },
   // BIKA FOKUS END <<<<<<
@@ -238,10 +247,22 @@ export const XstateSimple11Machine = Machine<Icontext, Istates, Ievents>({
       },
     },
     ucitajclanove: {},
-    vidilistuclanova: {},
+    vidilistuclanova: {
+      on: {
+        NOVICLAN: {},
+        DODAJNOVICLAN: {},
+        HOME: {},
+      },
+    },
     dodajnoviclan: {},
     ucitajkomedije: {},
-    vidilistukomedija: {},
+    vidilistukomedija: {
+      on: {
+        NOVAKOMEDIJA: {},
+        DODAJNOVAKOMEDIJA: {},
+        HOME: {},
+      },
+    },
     dodajnovakomedija: {},
     ucitajvesti: {},
     vidilistuvesti: {},
@@ -250,7 +271,14 @@ export const XstateSimple11Machine = Machine<Icontext, Istates, Ievents>({
     ucitajiznajmljivanjeclan: {},
     ucitajiznajmljivanjekomedija: {},
     ucitajiznajmljivanjeiznajmljeno: {},
-    vidilistuiznajmljivanja: {},
+    vidilistuiznajmljivanja: {
+      on: {
+        IZABERICLAN: {},
+        IZABERIKOMEDIJA: {},
+        IZNAJMI: {},
+        HOME: {},
+      },
+    },
     dodajiznajmljivanje: {},
   },
 });
