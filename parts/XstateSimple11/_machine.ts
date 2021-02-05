@@ -85,6 +85,11 @@ export interface Icontext {
   listakomedija: Ikomedija[];
   listaiznajmljivanja: Iiznajmljivanje[];
   listavesti: Ivest[];
+  showMainMenu: boolean;
+  mainMenu: {
+    title: string;
+    type: any;
+  }[];
 }
 
 // Ievents
@@ -167,6 +172,10 @@ type evIZNAJMI = {
   };
 };
 
+type evSHOWMAINMENU = {
+  type: 'SHOWMAINMENU';
+};
+
 export type Ievents =
   | evNOVICLAN
   | evNOVAKOMEDIJA
@@ -184,6 +193,7 @@ export type Ievents =
   | { type: 'VIDIKOMEDIJA' }
   | { type: 'ZAPOCNIIZNAJMI' }
   | { type: 'VIDIVESTI' }
+  | evSHOWMAINMENU
   | { type: 'BROWSER' };
 
 const send = (sendEvent: Ievents, sendOptions?: any) => untypedSend(sendEvent, sendOptions);
@@ -219,6 +229,25 @@ export const XstateSimple11Machine = Machine<Icontext, Istates, Ievents>({
   initial: 'ssr',
   // BIKA FOKUS >>>>>>>>>>
   context: {
+    showMainMenu: false,
+    mainMenu: [
+      {
+        title: 'Clanovi kluba',
+        type: 'VIDICLAN',
+      },
+      {
+        title: 'Izbor filmova',
+        type: 'VIDIKOMEDIJA',
+      },
+      {
+        title: 'Iznajmi film',
+        type: 'ZAPOCNIIZNAJMI',
+      },
+      {
+        title: 'Novosti u svetu filma',
+        type: 'VIDIVESTI',
+      },
+    ],
     noviclan: '',
     novakomedija: '',
     novavest: '',
@@ -261,20 +290,7 @@ export const XstateSimple11Machine = Machine<Icontext, Istates, Ievents>({
       },
     },
     videoklub: {
-      on: {
-        VIDICLAN: {
-          target: 'ucitajclanove',
-        },
-        VIDIKOMEDIJA: {
-          target: 'ucitajkomedije',
-        },
-        ZAPOCNIIZNAJMI: {
-          target: 'ucitajiznajmljivanje',
-        },
-        VIDIVESTI: {
-          target: 'ucitajvesti',
-        },
-      },
+      on: {},
     },
     ucitajclanove: {
       invoke: {
@@ -483,7 +499,7 @@ export const XstateSimple11Machine = Machine<Icontext, Istates, Ievents>({
               // u navodnicima je ono sto smo u Hasuri definisali i radi
               query: gql`
                 query klubvesti {
-                  klubvesti {
+                  klubvesti(order_by: { id: desc }) {
                     id
                     naslov
                     prica
@@ -687,7 +703,6 @@ export const XstateSimple11Machine = Machine<Icontext, Istates, Ievents>({
         },
       },
     },
-
     ucitajiznajmljivanjeiznajmljeno: {
       invoke: {
         src: async () => {
@@ -805,6 +820,31 @@ export const XstateSimple11Machine = Machine<Icontext, Istates, Ievents>({
           target: 'ucitajiznajmljivanje',
         },
       },
+    },
+  },
+  // on kljuc ovde znaci da sve sto se u njemu nalazi treba da se izvuce u posebnu masinu
+  // root se ne koristi ako je moguce nikada!!!
+  // REDUX ovako radi!!!
+  on: {
+    // samo glavni meni, uvek i svuda mora da radi
+    SHOWMAINMENU: {
+      actions: [
+        assign((cx) => {
+          cx.showMainMenu = !cx.showMainMenu;
+        }),
+      ],
+    },
+    VIDICLAN: {
+      target: 'ucitajclanove',
+    },
+    VIDIKOMEDIJA: {
+      target: 'ucitajkomedije',
+    },
+    ZAPOCNIIZNAJMI: {
+      target: 'ucitajiznajmljivanje',
+    },
+    VIDIVESTI: {
+      target: 'ucitajvesti',
     },
   },
 });
