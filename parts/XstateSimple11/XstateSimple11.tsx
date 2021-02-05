@@ -318,10 +318,26 @@ export function XstateSimple11() {
             <div>
               {cx?.listaiznajmljivanja?.map((r) => {
                 return (
-                  <div className="flex flex-col">
+                  <div className="flex flex-col text-xs ">
                     {' '}
-                    Lista iznajlmljivanja {r.id_clan}
-                    {r.id_komedija}{' '}
+                    Clan:{' '}
+                    {
+                      cx.listaclanova.find((rr) => {
+                        if (r.id_clan === rr.id) {
+                          return true;
+                        }
+                        return false;
+                      }).imeclan
+                    }{' '}
+                    Film:{' '}
+                    {
+                      cx.listakomedija.find((rr) => {
+                        if (r.id_komedija === rr.id) {
+                          return true;
+                        }
+                        return false;
+                      }).imekomedija
+                    }{' '}
                   </div>
                 );
               })}
@@ -333,12 +349,16 @@ export function XstateSimple11() {
             {cx?.listavesti?.map((r) => {
               return (
                 <div className="flex flex-col">
-                  {r.naslov} {r.slika} {r.prica}
+                  <div className="mt-2 text-lg">{r.naslov} </div>
+                  <div>
+                    <img src="{r.slika}" alt="" />
+                  </div>
+                  <div>{r.prica}</div>
                 </div>
               );
             })}
             <div className="flex flex-col">
-              <div className="font-serif font-semibold text-green-900"> Unesite vesti iz filma </div>
+              <div className="font-serif font-semibold text-gray-900"> Unesite vesti iz filma </div>
               <div>
                 <div>
                   <div>Unesite naslov </div>
@@ -352,7 +372,7 @@ export function XstateSimple11() {
                         },
                       });
                     }}
-                    className="text-green-900 bg-yellow-600 border border-green-900"
+                    className="bg-gray-400 border border-gray-900"
                   />
                 </div>
                 <div>
@@ -367,7 +387,7 @@ export function XstateSimple11() {
                         },
                       });
                     }}
-                    className="text-green-900 bg-yellow-600 border border-green-900"
+                    className="bg-gray-400 border border-gray-900"
                   />
                 </div>
 
@@ -383,12 +403,12 @@ export function XstateSimple11() {
                         },
                       });
                     }}
-                    className="text-green-900 bg-yellow-600 border border-green-900"
+                    className="bg-gray-400 border border-gray-900"
                   />
                 </div>
                 <div className="flex flex-col">
                   <button
-                    className="p-3 mx-1 font-semibold text-yellow-400 bg-green-900 rounded-lg"
+                    className="p-3 mx-1 font-semibold text-gray-300 bg-gray-600 rounded-lg"
                     type="button"
                     onClick={() => {
                       send({
@@ -404,7 +424,7 @@ export function XstateSimple11() {
                     Potvrdi vest
                   </button>
                   <button
-                    className="p-3 mx-1 font-semibold text-yellow-400 bg-green-900 rounded-lg"
+                    className="p-3 mx-1 font-semibold text-gray-300 bg-gray-600 rounded-lg"
                     type="button"
                     onClick={() => {
                       send({
