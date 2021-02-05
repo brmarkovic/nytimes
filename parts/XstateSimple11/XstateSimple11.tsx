@@ -28,7 +28,7 @@ export function XstateSimple11() {
 
   // REACT (HTML+) KOMPONENTA
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col ">
       <div className="flex flex-row ">
         <div className="flex flex-row flex-auto w-1/6">
           <div>
@@ -82,7 +82,7 @@ export function XstateSimple11() {
         {['videoklub'].some(ma) && (
           <div className="flex flex-col">
             <button
-              className="p-5 mx-1 font-serif text-lg bg-gray-300 rounded-lg text-gray-"
+              className="p-5 mx-1 font-serif text-lg text-gray-800 bg-gray-300 rounded-lg"
               type="button"
               onClick={() => {
                 send({
@@ -93,7 +93,7 @@ export function XstateSimple11() {
               CLANOVI KLUBA
             </button>
             <button
-              className="p-5 mx-1 font-serif text-lg text-green-700 bg-yellow-600 rounded-lg"
+              className="p-5 mx-1 font-serif text-lg text-gray-800 bg-gray-300 rounded-lg"
               type="button"
               onClick={() => {
                 send({
@@ -104,7 +104,7 @@ export function XstateSimple11() {
               IZBOR FILMOVA
             </button>
             <button
-              className="p-5 mx-1 font-serif text-lg text-green-700 bg-yellow-600 rounded-lg"
+              className="p-5 mx-1 font-serif text-lg text-gray-800 bg-gray-300 rounded-lg"
               type="button"
               onClick={() => {
                 send({
@@ -115,7 +115,7 @@ export function XstateSimple11() {
               IZNAJMI FILM
             </button>
             <button
-              className="p-5 mx-1 font-serif text-lg text-green-700 bg-yellow-600 rounded-lg"
+              className="p-5 mx-1 font-serif text-lg text-gray-800 bg-gray-300 rounded-lg"
               type="button"
               onClick={() => {
                 send({
@@ -128,13 +128,14 @@ export function XstateSimple11() {
           </div>
         )}
         {['vidilistuclanova'].some(ma) && (
-          <div className="flex flex-col">
+          <div className="flex flex-col bg-gray-300">
             <div>
+              <div className="px-3 font-serif text-lg text-gray-900"> Lista clanova</div>
               {cx?.listaclanova?.map((r) => {
-                return <div className="flex flex-col">Lista clamova {r.imeclan}</div>;
+                return <div className="flex flex-col px-2">{r.imeclan}</div>;
               })}
               <div className="flex flex-col">
-                <div className="font-serif font-semibold text-green-900"> Uclanite se u klub </div>
+                <div className="font-serif font-semibold text-gray-800"> Uclanite se u klub </div>
                 <div>
                   <textarea
                     value={cx?.noviclan}
@@ -146,11 +147,11 @@ export function XstateSimple11() {
                         },
                       });
                     }}
-                    className="text-green-900 bg-yellow-600 border border-green-900"
+                    className="bg-gray-400 border border-gray-900 "
                   />
                   <div className="flex flex-col">
                     <button
-                      className="p-3 mx-1 font-semibold text-yellow-400 bg-green-900 rounded-lg"
+                      className="p-3 mx-1 font-semibold text-gray-300 bg-gray-600 rounded-lg"
                       type="button"
                       onClick={() => {
                         send({
@@ -164,7 +165,7 @@ export function XstateSimple11() {
                       Potvrdi clanstvo
                     </button>
                     <button
-                      className="p-3 mx-1 font-semibold text-yellow-400 bg-green-900 rounded-lg"
+                      className="p-3 mx-1 font-semibold text-gray-300 bg-gray-600 rounded-lg"
                       type="button"
                       onClick={() => {
                         send({
@@ -181,13 +182,14 @@ export function XstateSimple11() {
           </div>
         )}
         {['vidilistukomedija'].some(ma) && (
-          <div className="flex flex-col">
+          <div className="flex flex-col bg-gray-300">
             <div>
+              <div className="px-3 font-serif text-lg text-gray-900"> Lista filmova</div>
               {cx?.listakomedija?.map((r) => {
-                return <div className="flex flex-col">Lisa filmova {r.imekomedija}</div>;
+                return <div className="flex flex-col px-2"> {r.imekomedija}</div>;
               })}
               <div className="flex flex-col">
-                <div className="font-serif font-semibold text-green-900"> Unesite film koji zelite da gledate </div>
+                <div className="font-serif font-semibold text-gray-800"> Unesite film koji zelite da gledate </div>
                 <div>
                   <textarea
                     value={cx?.novakomedija}
@@ -199,11 +201,11 @@ export function XstateSimple11() {
                         },
                       });
                     }}
-                    className="text-green-900 bg-yellow-600 border border-green-900"
+                    className="bg-gray-400 border border-gray-900"
                   />
                   <div className="flex flex-col">
                     <button
-                      className="p-3 mx-1 font-semibold text-yellow-400 bg-green-900 rounded-lg"
+                      className="p-3 mx-1 font-semibold text-gray-300 bg-gray-600 rounded-lg"
                       type="button"
                       onClick={() => {
                         send({
@@ -217,7 +219,7 @@ export function XstateSimple11() {
                       Potvrdi film
                     </button>
                     <button
-                      className="p-3 mx-1 font-semibold text-yellow-400 bg-green-900 rounded-lg"
+                      className="p-3 mx-1 font-semibold text-gray-300 bg-gray-600 rounded-lg"
                       type="button"
                       onClick={() => {
                         send({
@@ -234,15 +236,16 @@ export function XstateSimple11() {
           </div>
         )}
         {['vidilistuiznajmljivanja'].some(ma) && (
-          <div className="flex flex-col">
-            <div className="flex flex-row">
+          <div className="flex flex-col bg-gray-300">
+            <div className="flex flex-row justify-between">
               <div className="flex flex-col">
+                <div className="flex justify-center px-3 font-serif text-lg text-gray-900 "> Lista clanova</div>
                 {cx?.listaclanova?.map((r) => {
                   return (
                     <div>
                       <button
-                        className={`p-1 mx-1 text-yellow-400 w-56 ${
-                          r.id === cx.trenutniclan ? `bg-blue-500` : `bg-green-900`
+                        className={`p-1 mx-1 w-48 truncate ${
+                          r.id === cx.trenutniclan ? `bg-gray-800 text-white` : `bg-gray-500 text-gray-700`
                         }`}
                         type="button"
                         onClick={() => {
@@ -261,12 +264,13 @@ export function XstateSimple11() {
                 })}
               </div>
               <div className="flex flex-col">
+                <div className="flex justify-center px-3 font-serif text-lg text-gray-900 "> Lista filmova</div>
                 {cx?.listakomedija?.map((r) => {
                   return (
                     <div>
                       <button
-                        className={`p-1 mx-1 text-yellow-400 w-56  ${
-                          r.id === cx.trenutnakomedija ? `bg-blue-500` : `bg-green-900`
+                        className={`p-1 mx-1 w-48 truncate  ${
+                          r.id === cx.trenutnakomedija ? `bg-gray-800 text-white` : `bg-gray-500 text-gray-700`
                         }`}
                         type="button"
                         onClick={() => {
@@ -286,7 +290,7 @@ export function XstateSimple11() {
               </div>
             </div>
             <button
-              className="p-3 mx-1 font-serif font-semibold text-yellow-400 bg-green-900 rounded-lg"
+              className="p-3 mx-1 mt-2 font-serif font-semibold text-gray-300 bg-gray-600 rounded-lg"
               type="button"
               onClick={() => {
                 send({
@@ -301,7 +305,7 @@ export function XstateSimple11() {
               IZNAJMI
             </button>
             <button
-              className="p-3 mx-1 font-serif font-semibold text-yellow-400 bg-green-900 rounded-lg"
+              className="p-3 mx-1 mt-2 font-serif font-semibold text-gray-300 bg-gray-600 rounded-lg"
               type="button"
               onClick={() => {
                 send({
@@ -336,20 +340,52 @@ export function XstateSimple11() {
             <div className="flex flex-col">
               <div className="font-serif font-semibold text-green-900"> Unesite vesti iz filma </div>
               <div>
-                <textarea
-                  value={cx?.novavest}
-                  onChange={(ev) => {
-                    send({
-                      type: 'NOVAVEST',
-                      data: {
-                        naslov: ev.target.value,
-                        slika: ev.target.value,
-                        prica: ev.target.value,
-                      },
-                    });
-                  }}
-                  className="text-green-900 bg-yellow-600 border border-green-900"
-                />
+                <div>
+                  <div>Unesite naslov </div>
+                  <textarea
+                    value={cx?.novinaslov}
+                    onChange={(ev) => {
+                      send({
+                        type: 'NOVAVESTNASLOV',
+                        data: {
+                          naslov: ev.target.value,
+                        },
+                      });
+                    }}
+                    className="text-green-900 bg-yellow-600 border border-green-900"
+                  />
+                </div>
+                <div>
+                  <div>Unesite sliku </div>
+                  <textarea
+                    value={cx?.novaslika}
+                    onChange={(ev) => {
+                      send({
+                        type: 'NOVAVESTSLIKA',
+                        data: {
+                          slika: ev.target.value,
+                        },
+                      });
+                    }}
+                    className="text-green-900 bg-yellow-600 border border-green-900"
+                  />
+                </div>
+
+                <div>
+                  <div>Unesite text </div>
+                  <textarea
+                    value={cx?.novaprica}
+                    onChange={(ev) => {
+                      send({
+                        type: 'NOVAVESTPRICA',
+                        data: {
+                          prica: ev.target.value,
+                        },
+                      });
+                    }}
+                    className="text-green-900 bg-yellow-600 border border-green-900"
+                  />
+                </div>
                 <div className="flex flex-col">
                   <button
                     className="p-3 mx-1 font-semibold text-yellow-400 bg-green-900 rounded-lg"

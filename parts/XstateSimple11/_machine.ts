@@ -1,3 +1,4 @@
+/* eslint-disable no-unreachable */
 import { Machine } from 'xstate';
 import { send as untypedSend } from 'xstate/lib/actions';
 import { assign } from '@xstate/immer';
@@ -71,11 +72,15 @@ export interface Icontext {
   noviclan: string;
   novakomedija: string;
   novavest: string;
+  naslov: string;
+  prica: string;
+  slika: string;
   novinaslov: string;
   novaslika: string;
   novaprica: string;
   trenutniclan: number;
   trenutnakomedija: number;
+  greska: string;
   listaclanova: Iclan[];
   listakomedija: Ikomedija[];
   listaiznajmljivanja: Iiznajmljivanje[];
@@ -98,11 +103,21 @@ type evNOVAKOMEDIJA = {
   };
 };
 
-type evNOVAVEST = {
-  type: 'NOVAVEST';
+type evNOVAVESTNASLOV = {
+  type: 'NOVAVESTNASLOV';
   data: {
     naslov: string;
+  };
+};
+type evNOVAVESTSLIKA = {
+  type: 'NOVAVESTSLIKA';
+  data: {
     slika: string;
+  };
+};
+type evNOVAVESTPRICA = {
+  type: 'NOVAVESTPRICA';
+  data: {
     prica: string;
   };
 };
@@ -155,7 +170,9 @@ type evIZNAJMI = {
 export type Ievents =
   | evNOVICLAN
   | evNOVAKOMEDIJA
-  | evNOVAVEST
+  | evNOVAVESTNASLOV
+  | evNOVAVESTPRICA
+  | evNOVAVESTSLIKA
   | evDODAJNOVAKOMEDIJA
   | evDODAJNOVAVEST
   | evDODAJNOVICLAN
@@ -205,9 +222,13 @@ export const XstateSimple11Machine = Machine<Icontext, Istates, Ievents>({
     noviclan: '',
     novakomedija: '',
     novavest: '',
+    naslov: '',
+    prica: '',
+    slika: '',
     novinaslov: '',
     novaslika: '',
     novaprica: '',
+    greska: '',
     trenutniclan: 0,
     trenutnakomedija: 0,
     listaclanova: [
@@ -248,7 +269,7 @@ export const XstateSimple11Machine = Machine<Icontext, Istates, Ievents>({
           target: 'ucitajkomedije',
         },
         ZAPOCNIIZNAJMI: {
-          target: 'vidilistuiznajmljivanja',
+          target: 'ucitajiznajmljivanje',
         },
         VIDIVESTI: {
           target: 'ucitajvesti',
@@ -493,24 +514,297 @@ export const XstateSimple11Machine = Machine<Icontext, Istates, Ievents>({
     },
     vidilistuvesti: {
       on: {
-        NOVAVEST: {},
-        DODAJNOVAVEST: {},
-        HOME: {},
+        NOVAVESTNASLOV: [
+          {
+            actions: [
+              assign((cx, ev: evNOVAVESTNASLOV) => {
+                cx.novinaslov = ev?.data.naslov || '';
+              }),
+            ],
+          },
+        ],
+        NOVAVESTSLIKA: [
+          {
+            actions: [
+              assign((cx, ev: evNOVAVESTSLIKA) => {
+                cx.novaslika = ev?.data.slika || '';
+              }),
+            ],
+          },
+        ],
+        NOVAVESTPRICA: [
+          {
+            actions: [
+              assign((cx, ev: evNOVAVESTPRICA) => {
+                cx.novaprica = ev?.data.prica || '';
+              }),
+            ],
+          },
+        ],
+        DODAJNOVAVEST: [
+          {
+            cond: (cx) => {
+              if ((cx?.novinaslov === null, cx?.novaslika === null, cx?.novaprica === null)) {
+                return true;
+              }
+              return false;
+            },
+            target: 'vidilistuvesti',
+          },
+          {
+            target: 'dodajnovuvest',
+          },
+        ],
+        HOME: {
+          target: 'videoklub',
+        },
       },
     },
-    dodajnovuvest: {},
-    ucitajiznajmljivanje: {},
-    ucitajiznajmljivanjeclan: {},
-    ucitajiznajmljivanjekomedija: {},
-    ucitajiznajmljivanjeiznajmljeno: {},
+    dodajnovuvest: {
+      invoke: {
+        src: async (cx, ev: evDODAJNOVAVEST) => {
+          const [ERRdata, data] = await backendServer
+            .mutate({
+              variables: {
+                naslov: ev.data.naslov,
+                slika: ev.data.slika,
+                prica: ev.data.prica,
+              },
+              mutation: gql`
+                mutation insertklubvesti($naslov: String, $slika: String, $prica: String) {
+                  insert_klubvesti(objects: { naslov: $naslov, prica: $prica, slika: $slika }) {
+                    affected_rows
+                  }
+                }
+              `,
+            })
+            .then((r) => [null, r])
+            .catch((e) => [e]);
+          if ((data && data.errors) || ERRdata) {
+            throw new Error('error');
+          }
+          return data;
+        },
+        onDone: {
+          actions: [
+            assign((cx) => {
+              cx.novinaslov = null;
+              cx.novaslika = null;
+              cx.novaprica = null;
+            }),
+          ],
+          target: 'ucitajvesti',
+        },
+        onError: {
+          target: 'videoklub',
+        },
+      },
+    },
+    ucitajiznajmljivanje: {
+      after: {
+        1: 'ucitajiznajmljivanjeclan',
+      },
+    },
+    ucitajiznajmljivanjeclan: {
+      invoke: {
+        src: async () => {
+          const [ERRdata, data] = await backendServer
+            .query({
+              // u navodnicima je ono sto smo u Hasuri definisali i radi
+              query: gql`
+                query clanovikluba {
+                  clanovikluba {
+                    id
+                    imeclan
+                  }
+                }
+              `,
+            })
+            .then((r) => [null, r])
+            .catch((e) => [e]);
+          if ((data && data.errors) || ERRdata) {
+            throw new Error('error');
+          }
+          return data;
+        },
+        onDone: {
+          actions: [
+            assign((cx, ev) => {
+              // console.log({ ev });
+              cx.listaclanova = ev.data.data.clanovikluba;
+            }),
+          ],
+          target: 'ucitajiznajmljivanjekomedija',
+        },
+        onError: {
+          actions: [
+            assign((cx, ev) => {
+              cx.greska = 'Server nije ucitao clanove!';
+            }),
+          ],
+          target: 'vidilistuiznajmljivanja',
+        },
+      },
+    },
+    ucitajiznajmljivanjekomedija: {
+      invoke: {
+        src: async () => {
+          const [ERRdata, data] = await backendServer
+            .query({
+              // u navodnicima je ono sto smo u Hasuri definisali i radi
+              query: gql`
+                query listakomedija {
+                  listakomedija {
+                    id
+                    imekomedija
+                  }
+                }
+              `,
+            })
+            .then((r) => [null, r])
+            .catch((e) => [e]);
+          if ((data && data.errors) || ERRdata) {
+            throw new Error('error');
+          }
+          return data;
+        },
+        onDone: {
+          actions: [
+            assign((cx, ev) => {
+              // console.log({ ev });
+              cx.listakomedija = ev.data.data.listakomedija;
+            }),
+          ],
+          target: 'ucitajiznajmljivanjeiznajmljeno',
+        },
+        onError: {
+          actions: [
+            assign((cx, ev) => {
+              cx.greska = 'Server nije ucitao filmove!';
+            }),
+          ],
+          target: 'vidilistuiznajmljivanja',
+        },
+      },
+    },
+
+    ucitajiznajmljivanjeiznajmljeno: {
+      invoke: {
+        src: async () => {
+          const [ERRdata, data] = await backendServer
+            .query({
+              // u navodnicima je ono sto smo u Hasuri definisali i radi
+              query: gql`
+                query listaiznajmljivanja($id_clan: Int, $id_komedija: Int) {
+                  listaiznajmljivanja(
+                    where: { id_clan: { _eq: $id_clan }, id_komedija: { _eq: $id_komedija } }
+                    order_by: { id: desc }
+                    limit: 100
+                  ) {
+                    id
+                    id_clan
+                    id_komedija
+                  }
+                }
+              `,
+            })
+            .then((r) => [null, r])
+            .catch((e) => [e]);
+          if ((data && data.errors) || ERRdata) {
+            throw new Error('error');
+          }
+          return data;
+        },
+
+        onDone: {
+          actions: [
+            assign((cx, ev) => {
+              cx.listaiznajmljivanja = ev.data.data.listaiznajmljivanja;
+            }),
+          ],
+          target: 'vidilistuiznajmljivanja',
+        },
+        onError: {
+          actions: [
+            assign((cx, ev) => {
+              cx.greska = 'Server nije ucitao iznajmljivanje!';
+            }),
+          ],
+          target: 'vidilistuiznajmljivanja',
+        },
+      },
+    },
     vidilistuiznajmljivanja: {
       on: {
-        IZABERICLAN: {},
-        IZABERIKOMEDIJA: {},
-        IZNAJMI: {},
-        HOME: {},
+        IZABERICLAN: [
+          {
+            actions: [
+              assign((cx, ev: evIZABERICLAN) => {
+                cx.trenutniclan = ev?.data.id;
+              }),
+            ],
+          },
+        ],
+        IZABERIKOMEDIJA: [
+          {
+            actions: [
+              assign((cx, ev: evIZABERIKOMEDIJA) => {
+                cx.trenutnakomedija = ev?.data.id;
+              }),
+            ],
+          },
+        ],
+        IZNAJMI: {
+          target: 'dodajiznajmljivanje',
+        },
+        HOME: {
+          target: 'videoklub',
+        },
       },
     },
-    dodajiznajmljivanje: {},
+    dodajiznajmljivanje: {
+      invoke: {
+        src: async (cx, ev: evIZNAJMI) => {
+          const [ERRdata, data] = await backendServer
+            .mutate({
+              variables: {
+                id_clan: ev.data.id_clan,
+                id_komedija: ev.data.id_komedija,
+              },
+              mutation: gql`
+                mutation listaiznajmljivanja($id_clan: Int, $id_komedija: Int) {
+                  insert_listaiznajmljivanja(objects: { id_clan: $id_clan, id_komedija: $id_komedija }) {
+                    affected_rows
+                  }
+                }
+              `,
+            })
+            .then((r) => [null, r])
+            .catch((e) => [e]);
+          if ((data && data.errors) || ERRdata) {
+            throw new Error('error');
+          }
+          return data;
+        },
+        onDone: {
+          actions: [
+            assign((cx, ev) => {
+              cx.greska = '';
+              cx.trenutnakomedija = 0;
+              cx.trenutniclan = 0;
+            }),
+          ],
+          target: 'ucitajiznajmljivanje',
+        },
+        onError: {
+          actions: [
+            assign((cx, ev) => {
+              cx.greska = 'Iznajmljivanje nije uspelo! Kliknite ponovo!';
+            }),
+          ],
+          target: 'ucitajiznajmljivanje',
+        },
+      },
+    },
   },
 });
