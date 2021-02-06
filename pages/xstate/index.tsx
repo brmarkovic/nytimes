@@ -11,6 +11,7 @@ import { XstateSimple8 } from '@/parts/XstateSimple8/XstateSimple8';
 import { XstateSimple9 } from '@/parts/XstateSimple9/XstateSimple9';
 import { XstateSimple10 } from '@/parts/XstateSimple10/XstateSimple10';
 import { XstateSimple11 } from '@/parts/XstateSimple11/XstateSimple11';
+import { XstateSimple12 } from '@/parts/XstateSimple12/XstateSimple12';
 import { XstateTodos } from '@/parts/XstateTodos/XstateTodos';
 
 export function PageXstate() {
@@ -25,7 +26,8 @@ export function PageXstate() {
       {/* <XstateSimple8 /> */}
       {/* <XstateSimple9 /> */}
       {/* <XstateSimple10 /> */}
-      <XstateSimple11 />
+      {/* <XstateSimple11 /> */}
+      <XstateSimple12 />
       {/* <XstateTodos /> */}
     </div>
   );
