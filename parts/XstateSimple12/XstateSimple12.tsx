@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 /* eslint-disable prettier/prettier */
 import React, { useEffect } from 'react';
 import { useMachine } from '@xstate/react';
@@ -74,6 +75,7 @@ export function XstateSimple12() {
                 <div>
                   <div className="flex flex-col">
                   <div>
+                   <div>Unesite ime firme </div>
                   <textarea
                     value={cx?.noviklijentfirmaime}
                     onChange={(ev) => {
@@ -88,6 +90,7 @@ export function XstateSimple12() {
                   />
                     </div>
                     <div>
+                     <div>Unesite PIB firme </div>
                     <textarea
                     value={cx?.noviklijentfirmapib}
                     onChange={(ev) => {
@@ -123,6 +126,174 @@ export function XstateSimple12() {
                 </div>
             </div>
           )}
+          <div className="flex flex-col">
+          {['vidilistaklijentfaktura'].some(ma) && (
+           <div className='flex flex-col'>
+            {cx?.listaklijentfaktura
+            ?.filter((r) => cx.trenutniklijentfirma === r.id_klijentfirma)
+            .map((r)=> {
+             return (
+              <div> Lista faktura klijenta {r.fakturabroj}
+              <button
+                      className="p-1 mx-1 text-white bg-purple-800 rounded-lg"
+                      type="button"
+                      onClick={() => {
+                        send({
+                          type: 'STAVKEFAKTURE',
+                          data: {
+                            id: r.id,
+                          },
+                        });
+                      }}
+                    >
+                      Vidi  stavke fakture klijenta
+                    </button>
+                </div>
+             )
+            }) }
+            <div className="flex flex-col ">
+                  <div>Unesite novu fakturu</div>
+                  <div>
+                    <textarea
+                      value={cx?.fakturabroj}
+                      onChange={(ev) => {
+                        send({
+                          type: 'NOVAKLIJENTFAKTURA',
+                          data: {
+                           fakturabroj: ev.target.value,
+                          },
+                    
+                        });
+                      }}
+                      className="border border-gray-500"
+                    />
+                    
+                    <div className="flex flex-col">
+                      <button
+                        className="p-1 mx-1 text-white bg-purple-800 rounded-lg"
+                        type="button"
+                        onClick={() => {
+                          send({
+                            type: 'DODAJNOVAKLIJENTFAKTURA',
+                            data: {
+                              fakturabroj: cx.fakturabroj,
+                              id_klijentfirma: cx.trenutniklijentfirma,
+                            },
+                          });
+                        }}
+                      >
+                        Dodaj novu fakturu klijenta
+                      </button>
+                      <button
+                        className="p-1 mx-1 text-white bg-purple-800 rounded-lg"
+                        type="button"
+                        onClick={() => {
+                          send({
+                            type: 'BACK',
+                            
+                          });
+                        }}
+                      >
+                        Vrati se na listu klijenata-FIRMI
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+             </div>  
+          )}             
+          </div>
+          <div className="flex flex-col">  
+          {['vidilistustavkefakture'].some(ma) && (
+           <div className="flex flex-col">
+            {cx?.listastavkefakture
+            ?.filter((r) => cx.trenutniklijentfaktura === r.id_faktura)
+            .map((r)=> {
+             return (
+              <div> Iznos fakture {r.iznosfaktura} PDV:{r.pdvfaktura} </div>
+             )
+            })}
+            <div className="flex flex-col">
+             <div>
+              <div>Unesite iznos fakture </div>
+             <textarea
+                      value={cx?.iznosfaktura}
+                      onChange={(ev) => {
+                        send({
+                          type: 'NOVASTAVKAFAKTUREIZNOS',
+                          data: {
+                           iznosfaktura:ev.target.value,
+                          },
+                          
+                        });
+                      }}
+                      className="border border-gray-500"
+                    />
+               </div>
+              <div>
+               <div>Unesite PDV </div>
+              <textarea
+                      value={cx?.pdvfaktura}
+                      onChange={(ev) => {
+                        send({
+                          type: 'NOVASTAVKAFAKTUREPDV',
+                          data: {
+                           pdvfaktura: ev.target.value,
+                          },
+                        });
+                      }}
+                      className="border border-gray-500"
+                    />
+                </div> 
+                <div className="flex flex-col">
+                      <button
+                        className="p-1 mx-1 text-white bg-purple-800 rounded-lg"
+                        type="button"
+                        onClick={() => {
+                          send({
+                            type: 'DODAJNOVASTAVKAFAKTURE',
+                            data: {
+                              iznosfaktura: cx.iznosfaktura,
+                              pdvfaktura: cx.pdvfaktura,
+                              id_faktura: cx.trenutniklijentfaktura,
+                            },
+                          });
+                        }}
+                      >
+                        Dodaj novu stavku fakture klijenta
+                      </button>
+                      <button
+                        className="p-1 mx-1 text-white bg-purple-800 rounded-lg"
+                        type="button"
+                        onClick={() => {
+                          send({
+                            type: 'BACK',
+                            
+                          });
+                        }}
+                      >
+                        Vrati se na listu klijenata-FIRMI
+                      </button>
+                    </div>
+
+              </div>
+
+           </div>
+          )}
+          </div>
+          <div className="flex flex-col">
+          {['vidilistuklijentplacanje'].some(ma) && (
+           <div className="flex flex-col">
+            {cx?.listaklijentplacanje
+            ?.filter((r) => cx.trenutniklijentfirma === r.id_klijentfirma)
+            .map((r)=> {
+             return (
+              <div> Lista placanja klijenata {r.datumplacanja} {r.iznosplacanja} </div>
+             )
+            })}
+             </div>
+          )}              
+          </div>
         </div>
         <div>
           <pre>{JSON.stringify({ currentState, cx }, null, 2)}</pre>

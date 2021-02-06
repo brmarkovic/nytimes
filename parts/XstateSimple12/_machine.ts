@@ -81,6 +81,9 @@ export interface Icontext {
   trenutniklijentfirma: number;
   trenutniklijentfaktura: number;
   trenutniklijentplacanje: number;
+  iznosfaktura: string;
+  pdvfaktura: string;
+  fakturabroj: string;
 }
 
 // Ievents
@@ -106,7 +109,6 @@ type evNOVAKLIJENTFAKTURA = {
   type: 'NOVAKLIJENTFAKTURA';
   data: {
     fakturabroj: string;
-    id_klijentfirma: number;
   };
 };
 type evNOVOKLIJENTPLACANJE = {
@@ -114,15 +116,18 @@ type evNOVOKLIJENTPLACANJE = {
   data: {
     datum: string;
     iznos: string;
-    id_klijentfirma: number;
   };
 };
-type evNOVASTAVKAFAKTURE = {
-  type: 'NOVASTAVKAFAKTURE';
+type evNOVASTAVKAFAKTUREIZNOS = {
+  type: 'NOVASTAVKAFAKTUREIZNOS';
   data: {
     iznosfaktura: string;
+  };
+};
+type evNOVASTAVKAFAKTUREPDV = {
+  type: 'NOVASTAVKAFAKTUREPDV';
+  data: {
     pdvfaktura: string;
-    id_faktura: number;
   };
 };
 type evKLIJENTFAKTURA = {
@@ -174,6 +179,12 @@ type evDODAJNOVASTAVKAFAKTURE = {
     id_faktura: number;
   };
 };
+type evLISTAKLIJENTFIRMA = {
+  type: 'LISTAKLIJENTFIRMA';
+  data: {
+    id_klijentfirma: number;
+  };
+};
 export type Ievents =
   | evNOVIKLIJENTFIRMAIME
   | evINPUT
@@ -186,8 +197,11 @@ export type Ievents =
   | evNOVOKLIJENTPLACANJE
   | evDODAJNOVOKLIJENTPLACANJE
   | evSTAVKEFAKTURE
-  | evNOVASTAVKAFAKTURE
+  | evNOVASTAVKAFAKTUREIZNOS
+  | evNOVASTAVKAFAKTUREPDV
   | evDODAJNOVASTAVKAFAKTURE
+  | evLISTAKLIJENTFIRMA
+  | { type: 'BACK' }
   | { type: 'BROWSER' };
 
 const send = (sendEvent: Ievents, sendOptions?: any) => untypedSend(sendEvent, sendOptions);
@@ -232,9 +246,18 @@ export const XstateSimple12Machine = Machine<Icontext, Istates, Ievents>({
       { id: 2, fakturabroj: '39', id_klijentfirma: 2 },
     ],
     novoklijentplacanje: '',
-    listaklijentplacanje: [],
+    listaklijentplacanje: [
+      { id: 1, datumplacanja: '20.02.2020', iznosplacanja: '200.000,00', id_klijentfirma: 1 },
+      { id: 2, datumplacanja: '10.01.2020', iznosplacanja: '100.000,00', id_klijentfirma: 2 },
+    ],
     novastavkafakture: '',
-    listastavkefakture: [],
+    iznosfaktura: '',
+    pdvfaktura: '',
+    fakturabroj: '',
+    listastavkefakture: [
+      { id: 1, iznosfaktura: '120.000,00', pdvfaktura: '12.000,00', id_faktura: 1 },
+      { id: 2, iznosfaktura: '150.000,00', pdvfaktura: '15.000,00', id_faktura: 2 },
+    ],
     trenutniklijentfirma: 1,
     trenutniklijentfaktura: 1,
     trenutniklijentplacanje: 1,
@@ -304,17 +327,94 @@ export const XstateSimple12Machine = Machine<Icontext, Istates, Ievents>({
             target: 'vidilistuklijentfirma',
           },
           {
-            target: 'dodajnovogklijentafirma',
+            target: 'dodajnovaklijentfirma',
           },
         ],
       },
     },
     dodajnovaklijentfirma: {},
     ucitajklijentfaktura: {},
-    vidilistaklijentfaktura: {},
+    vidilistaklijentfaktura: {
+      on: {
+        STAVKEFAKTURE: [
+          {
+            actions: [
+              assign((cx, ev: evSTAVKEFAKTURE) => {
+                cx.trenutniklijentfaktura = ev.data.id;
+              }),
+            ],
+            target: 'vidilistustavkefakture',
+          },
+        ],
+        NOVAKLIJENTFAKTURA: [
+          {
+            actions: [
+              assign((cx, ev: evNOVAKLIJENTFAKTURA) => {
+                cx.fakturabroj = ev?.data.fakturabroj || '';
+              }),
+            ],
+          },
+        ],
+        DODAJNOVAKLIJENTFAKTURA: [
+          {
+            cond: (cx) => {
+              if (cx?.fakturabroj === null) {
+                return true;
+              }
+              return false;
+            },
+            target: 'vidilistaklijentfaktura',
+          },
+          {
+            target: 'dodajnovaklijentfaktura',
+          },
+        ],
+        BACK: {
+          target: 'vidilistuklijentfirma',
+        },
+      },
+    },
     dodajnovaklijentfaktura: {},
     ucitajstavkefaktura: {},
-    vidilistustavkefakture: {},
+    vidilistustavkefakture: {
+      on: {
+        NOVASTAVKAFAKTUREIZNOS: [
+          {
+            actions: [
+              assign((cx, ev: evNOVASTAVKAFAKTUREIZNOS) => {
+                cx.iznosfaktura = ev?.data.iznosfaktura || '';
+              }),
+            ],
+          },
+        ],
+        NOVASTAVKAFAKTUREPDV: [
+          {
+            actions: [
+              assign((cx, ev: evNOVASTAVKAFAKTUREPDV) => {
+                cx.pdvfaktura = ev?.data.pdvfaktura || '';
+              }),
+            ],
+          },
+        ],
+        DODAJNOVASTAVKAFAKTURE: [
+          {
+            cond: (cx) => {
+              if ((cx?.iznosfaktura === null, cx?.pdvfaktura === null)) {
+                return true;
+              }
+              return false;
+            },
+            target: 'vidilistustavkefakture',
+          },
+          {
+            target: 'dodajnovastavkafakture',
+          },
+        ],
+        BACK: {
+          target: 'vidilistuklijentfirma',
+        },
+      },
+    },
     dodajnovastavkafakture: {},
     ucitaklijentplacanje: {},
     vidilistuklijentplacanje: {},
