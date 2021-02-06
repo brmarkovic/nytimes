@@ -48,30 +48,30 @@ export const backendServer = new ApolloClient({
 type Iklijentfirma = {
   id: number;
   imefirma: string;
-  pibfirma: number;
+  pibfirma: string;
 };
 type Iklijentfaktura = {
   id: number;
-  fakturabroj: number;
+  fakturabroj: string;
   id_klijentfirma: number;
 };
 type Istavkefakture = {
   id: number;
-  iznosfaktura: number;
-  pdvfaktura: number;
+  iznosfaktura: string;
+  pdvfaktura: string;
   id_faktura: number;
 };
 type Iklijentplacanje = {
   id: number;
-  datumplacanja: number;
-  iznosplacanja: number;
+  datumplacanja: string;
+  iznosplacanja: string;
   id_klijentfirma: number;
 };
 // Icontext
 export interface Icontext {
   listaklijentfirma: Iklijentfirma[];
   noviklijentfirmaime: string;
-  noviklijentfirmapib: number;
+  noviklijentfirmapib: string;
   listaklijentfaktura: Iklijentfaktura[];
   novaklijentfaktura: string;
   listaklijentplacanje: Iklijentplacanje[];
@@ -99,29 +99,29 @@ type evNOVIKLIJENTFIRMAIME = {
 type evNOVIKLIJENTFIRMAPIB = {
   type: 'NOVIKLIJENTFIRMAPIB';
   data: {
-    pibfirma: number;
+    pibfirma: string;
   };
 };
 type evNOVAKLIJENTFAKTURA = {
   type: 'NOVAKLIJENTFAKTURA';
   data: {
-    fakturabroj: number;
+    fakturabroj: string;
     id_klijentfirma: number;
   };
 };
 type evNOVOKLIJENTPLACANJE = {
   type: 'NOVOKLIJENTPLACANJE';
   data: {
-    datum: number;
-    iznos: number;
+    datum: string;
+    iznos: string;
     id_klijentfirma: number;
   };
 };
 type evNOVASTAVKAFAKTURE = {
   type: 'NOVASTAVKAFAKTURE';
   data: {
-    iznosfaktura: number;
-    pdvfaktura: number;
+    iznosfaktura: string;
+    pdvfaktura: string;
     id_faktura: number;
   };
 };
@@ -147,30 +147,30 @@ type evDODAJNOVIKLIJENTFIRMA = {
   type: 'DODAJNOVIKLIJENTFIRMA';
   data: {
     imefirma: string;
-    pibfirma: number;
+    pibfirma: string;
   };
 };
 
 type evDODAJNOVAKLIJENTFAKTURA = {
   type: 'DODAJNOVAKLIJENTFAKTURA';
   data: {
-    fakturabroj: number;
+    fakturabroj: string;
     id_klijentfirma: number;
   };
 };
 type evDODAJNOVOKLIJENTPLACANJE = {
   type: 'DODAJNOVOKLIJENTPLACANJE';
   data: {
-    datum: number;
-    iznos: number;
+    datum: string;
+    iznos: string;
     id_klijentfirma: number;
   };
 };
 type evDODAJNOVASTAVKAFAKTURE = {
   type: 'DODAJNOVASTAVKAFAKTURE';
   data: {
-    iznosfaktura: number;
-    pdvfaktura: number;
+    iznosfaktura: string;
+    pdvfaktura: string;
     id_faktura: number;
   };
 };
@@ -221,15 +221,15 @@ export const XstateSimple12Machine = Machine<Icontext, Istates, Ievents>({
   // BIKA FOKUS >>>>>>>>>>
   context: {
     noviklijentfirmaime: '',
-    noviklijentfirmapib: 1,
+    noviklijentfirmapib: '',
     listaklijentfirma: [
-      { id: 1, imefirma: 'BILJKADOO', pibfirma: 232323 },
-      { id: 2, imefirma: 'VASADOO', pibfirma: 999999 },
+      { id: 1, imefirma: 'BILJKADOO', pibfirma: '232323' },
+      { id: 2, imefirma: 'VASADOO', pibfirma: '999999' },
     ],
     novaklijentfaktura: '',
     listaklijentfaktura: [
-      { id: 1, fakturabroj: 34, id_klijentfirma: 1 },
-      { id: 2, fakturabroj: 39, id_klijentfirma: 2 },
+      { id: 1, fakturabroj: '34', id_klijentfirma: 1 },
+      { id: 2, fakturabroj: '39', id_klijentfirma: 2 },
     ],
     novoklijentplacanje: '',
     listaklijentplacanje: [],
@@ -254,11 +254,59 @@ export const XstateSimple12Machine = Machine<Icontext, Istates, Ievents>({
     ucitajklijentfirma: {},
     vidilistuklijentfirma: {
       on: {
-        KLIJENTFAKTURA: {},
-        KLIJENTPLACANJE: {},
-        NOVIKLIJENTFIRMAIME: {},
-        NOVIKLIJENTFIRMAPIB: {},
-        DODAJNOVIKLIJENTFIRMA: {},
+        KLIJENTFAKTURA: [
+          {
+            actions: [
+              assign((cx, ev: evKLIJENTFAKTURA) => {
+                cx.trenutniklijentfirma = ev.data.id;
+              }),
+            ],
+            target: 'vidilistaklijentfaktura',
+          },
+        ],
+        KLIJENTPLACANJE: [
+          {
+            actions: [
+              assign((cx, ev: evKLIJENTPLACANJE) => {
+                cx.trenutniklijentfirma = ev.data.id;
+              }),
+            ],
+            target: 'vidilistuklijentplacanje',
+          },
+        ],
+        NOVIKLIJENTFIRMAIME: [
+          {
+            actions: [
+              assign((cx, ev: evNOVIKLIJENTFIRMAIME) => {
+                cx.noviklijentfirmaime = ev?.data.imefirma || '';
+              }),
+            ],
+          },
+        ],
+        NOVIKLIJENTFIRMAPIB: [
+          {
+            actions: [
+              assign((cx, ev: evNOVIKLIJENTFIRMAPIB) => {
+                cx.noviklijentfirmapib = ev?.data.pibfirma || '';
+              }),
+            ],
+          },
+        ],
+        DODAJNOVIKLIJENTFIRMA: [
+          {
+            // cx?.noviklijent === null || false
+            cond: (cx) => {
+              if ((cx?.noviklijentfirmaime === null, cx?.noviklijentfirmapib === null)) {
+                return true;
+              }
+              return false;
+            },
+            target: 'vidilistuklijentfirma',
+          },
+          {
+            target: 'dodajnovogklijentafirma',
+          },
+        ],
       },
     },
     dodajnovaklijentfirma: {},
