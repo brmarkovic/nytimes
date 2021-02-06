@@ -22,23 +22,13 @@ export function XstateSimple12() {
 
   useEffect(() => {
     // boot machine
-    send({ type: 'idle' });
+    send({ type: 'BROWSER' });
   }, []);
 
   // REACT (HTML+) KOMPONENTA
   return (
-    <div className="p-2">
-      <div>Simple Machine6</div>
+    <div className="p-2 flex-flex-col">
       <div>
-        <button
-          type="button"
-          onClick={() => {
-            send({ type: 'SHOW', data: !cx.show });
-          }}
-        >
-          toggle show
-        </button>
-        {cx?.show && <div>prikazujem...</div>}
         <pre>{JSON.stringify({ currentState, cx }, null, 2)}</pre>
       </div>
     </div>

@@ -52,7 +52,7 @@ type Iklijentfirma = {
 };
 type Iklijentfaktura = {
   id: number;
-  fakturabroja: number;
+  fakturabroj: number;
   id_klijentfirma: number;
 };
 type Istavkefakture = {
@@ -69,9 +69,9 @@ type Iklijentplacanje = {
 };
 // Icontext
 export interface Icontext {
-  show: boolean;
   listaklijentfirma: Iklijentfirma[];
-  noviklijentfirma: string;
+  noviklijentfirmaime: string;
+  noviklijentfirmapib: number;
   listaklijentfaktura: Iklijentfaktura[];
   novaklijentfaktura: string;
   listaklijentplacanje: Iklijentplacanje[];
@@ -84,20 +84,21 @@ export interface Icontext {
 }
 
 // Ievents
-type evSHOW = {
-  type: 'SHOW';
-  data: boolean;
-};
 
 type evINPUT = {
   type: 'INPUT';
   data: string;
 };
 
-type evNOVIKLIJENTFIRMA = {
-  type: 'NOVIKLIJENTFIRMA';
+type evNOVIKLIJENTFIRMAIME = {
+  type: 'NOVIKLIJENTFIRMAIME';
   data: {
     imefirma: string;
+  };
+};
+type evNOVIKLIJENTFIRMAPIB = {
+  type: 'NOVIKLIJENTFIRMAPIB';
+  data: {
     pibfirma: number;
   };
 };
@@ -174,9 +175,9 @@ type evDODAJNOVASTAVKAFAKTURE = {
   };
 };
 export type Ievents =
+  | evNOVIKLIJENTFIRMAIME
   | evINPUT
-  | evSHOW
-  | evNOVIKLIJENTFIRMA
+  | evNOVIKLIJENTFIRMAPIB
   | evDODAJNOVIKLIJENTFIRMA
   | evNOVAKLIJENTFAKTURA
   | evDODAJNOVAKLIJENTFAKTURA
@@ -194,7 +195,7 @@ const send = (sendEvent: Ievents, sendOptions?: any) => untypedSend(sendEvent, s
 interface Istates {
   states: {
     ssr: {};
-    pregledfirma: {};
+
     // firma
     ucitajklijentfirma: {};
     vidilistuklijentfirma: {};
@@ -219,11 +220,17 @@ export const XstateSimple12Machine = Machine<Icontext, Istates, Ievents>({
   initial: 'ssr',
   // BIKA FOKUS >>>>>>>>>>
   context: {
-    show: false,
-    noviklijentfirma: '',
-    listaklijentfirma: [],
+    noviklijentfirmaime: '',
+    noviklijentfirmapib: 1,
+    listaklijentfirma: [
+      { id: 1, imefirma: 'BILJKADOO', pibfirma: 232323 },
+      { id: 2, imefirma: 'VASADOO', pibfirma: 999999 },
+    ],
     novaklijentfaktura: '',
-    listaklijentfaktura: [],
+    listaklijentfaktura: [
+      { id: 1, fakturabroj: 34, id_klijentfirma: 1 },
+      { id: 2, fakturabroj: 39, id_klijentfirma: 2 },
+    ],
     novoklijentplacanje: '',
     listaklijentplacanje: [],
     novastavkafakture: '',
@@ -239,16 +246,21 @@ export const XstateSimple12Machine = Machine<Icontext, Istates, Ievents>({
       on: {
         BROWSER: [
           {
-            target: 'pregledfirma',
+            target: 'vidilistuklijentfirma',
           },
         ],
       },
     },
-    pregledfirma: {
-      on: {},
-    },
     ucitajklijentfirma: {},
-    vidilistuklijentfirma: {},
+    vidilistuklijentfirma: {
+      on: {
+        KLIJENTFAKTURA: {},
+        KLIJENTPLACANJE: {},
+        NOVIKLIJENTFIRMAIME: {},
+        NOVIKLIJENTFIRMAPIB: {},
+        DODAJNOVIKLIJENTFIRMA: {},
+      },
+    },
     dodajnovaklijentfirma: {},
     ucitajklijentfaktura: {},
     vidilistaklijentfaktura: {},
