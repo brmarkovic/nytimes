@@ -80,12 +80,11 @@ export interface Icontext {
   listastavkefakture: Istavkefakture[];
   trenutniklijentfirma: number;
   trenutniklijentfaktura: number;
-  trenutniklijentplacanje: number;
   iznosfaktura: string;
   pdvfaktura: string;
   fakturabroj: string;
-  datum: string;
-  iznos: string;
+  datumplacanja: string;
+  iznosplacanja: string;
 }
 
 // Ievents
@@ -116,13 +115,13 @@ type evNOVAKLIJENTFAKTURA = {
 type evNOVOKLIJENTPLACANJEDATUM = {
   type: 'NOVOKLIJENTPLACANJEDATUM';
   data: {
-    datum: string;
+    datumplacanja: string;
   };
 };
 type evNOVOKLIJENTPLACANJEIZNOS = {
   type: 'NOVOKLIJENTPLACANJEIZNOS';
   data: {
-    iznos: string;
+    iznosplacanja: string;
   };
 };
 type evNOVASTAVKAFAKTUREIZNOS = {
@@ -173,8 +172,8 @@ type evDODAJNOVAKLIJENTFAKTURA = {
 type evDODAJNOVOKLIJENTPLACANJE = {
   type: 'DODAJNOVOKLIJENTPLACANJE';
   data: {
-    datum: string;
-    iznos: string;
+    datumplacanja: string;
+    iznosplacanja: string;
     id_klijentfirma: number;
   };
 };
@@ -231,7 +230,7 @@ interface Istates {
     vidilistustavkefakture: {};
     dodajnovastavkafakture: {};
     // placanje
-    ucitaklijentplacanje: {};
+    ucitajklijentplacanje: {};
     vidilistuklijentplacanje: {};
     dodajnovoklijentplacanje: {};
   };
@@ -268,9 +267,8 @@ export const XstateSimple12Machine = Machine<Icontext, Istates, Ievents>({
     ],
     trenutniklijentfirma: 1,
     trenutniklijentfaktura: 1,
-    trenutniklijentplacanje: 1,
-    datum: '',
-    iznos: '',
+    datumplacanja: '',
+    iznosplacanja: '',
   },
   // BIKA FOKUS END <<<<<<
   states: {
@@ -279,12 +277,47 @@ export const XstateSimple12Machine = Machine<Icontext, Istates, Ievents>({
       on: {
         BROWSER: [
           {
-            target: 'vidilistuklijentfirma',
+            target: 'ucitajklijentfirma',
           },
         ],
       },
     },
-    ucitajklijentfirma: {},
+    ucitajklijentfirma: {
+      invoke: {
+        src: async () => {
+          const [ERRdata, data] = await backendServer
+            .query({
+              // u navodnicima je ono sto smo u Hasuri definisali i radi
+              query: gql`
+                query klijentfirma {
+                  klijentfirma(order_by: { id: desc }) {
+                    imefirma
+                    pibfirma
+                    id
+                  }
+                }
+              `,
+            })
+            .then((r) => [null, r])
+            .catch((e) => [e]);
+          if ((data && data.errors) || ERRdata) {
+            throw new Error('error');
+          }
+          return data;
+        },
+        onDone: {
+          actions: [
+            assign((cx, ev) => {
+              cx.listaklijentfirma = ev.data.data.klijentfirma;
+            }),
+          ],
+          target: 'vidilistuklijentfirma',
+        },
+        onError: {
+          target: 'ucitajklijentfirma',
+        },
+      },
+    },
     vidilistuklijentfirma: {
       on: {
         KLIJENTFAKTURA: [
@@ -294,7 +327,7 @@ export const XstateSimple12Machine = Machine<Icontext, Istates, Ievents>({
                 cx.trenutniklijentfirma = ev.data.id;
               }),
             ],
-            target: 'vidilistaklijentfaktura',
+            target: 'ucitajklijentfaktura',
           },
         ],
         KLIJENTPLACANJE: [
@@ -304,7 +337,7 @@ export const XstateSimple12Machine = Machine<Icontext, Istates, Ievents>({
                 cx.trenutniklijentfirma = ev.data.id;
               }),
             ],
-            target: 'vidilistuklijentplacanje',
+            target: 'ucitajklijentplacanje',
           },
         ],
         NOVIKLIJENTFIRMAIME: [
@@ -342,8 +375,80 @@ export const XstateSimple12Machine = Machine<Icontext, Istates, Ievents>({
         ],
       },
     },
-    dodajnovaklijentfirma: {},
-    ucitajklijentfaktura: {},
+    dodajnovaklijentfirma: {
+      invoke: {
+        src: async (cx, ev: evDODAJNOVIKLIJENTFIRMA) => {
+          const [ERRdata, data] = await backendServer
+            .mutate({
+              variables: {
+                imefirma: ev.data.imefirma,
+                pibfirma: ev.data.pibfirma,
+              },
+              mutation: gql`
+                mutation MyMutation($imefirma: String, $pibfirma: String) {
+                  insert_klijentfirma(objects: { imefirma: $imefirma, pibfirma: $pibfirma }) {
+                    affected_rows
+                  }
+                }
+              `,
+            })
+            .then((r) => [null, r])
+            .catch((e) => [e]);
+          if ((data && data.errors) || ERRdata) {
+            throw new Error('error');
+          }
+          return data;
+        },
+        onDone: {
+          actions: [
+            assign((cx) => {
+              cx.noviklijentfirmaime = null;
+              cx.noviklijentfirmapib = null;
+            }),
+          ],
+          target: 'ucitajklijentfirma',
+        },
+        onError: {
+          target: 'vidilistuklijentfirma',
+        },
+      },
+    },
+    ucitajklijentfaktura: {
+      invoke: {
+        src: async () => {
+          const [ERRdata, data] = await backendServer
+            .query({
+              // u navodnicima je ono sto smo u Hasuri definisali i radi
+              query: gql`
+                query klijentfakture {
+                  klijentfakture(order_by: { id: desc }) {
+                    fakturabroj
+                    id
+                    id_klijentfirma
+                  }
+                }
+              `,
+            })
+            .then((r) => [null, r])
+            .catch((e) => [e]);
+          if ((data && data.errors) || ERRdata) {
+            throw new Error('error');
+          }
+          return data;
+        },
+        onDone: {
+          actions: [
+            assign((cx, ev) => {
+              cx.listaklijentfaktura = ev.data.data.klijentfakture;
+            }),
+          ],
+          target: 'vidilistaklijentfaktura',
+        },
+        onError: {
+          target: 'ucitajklijentfirma',
+        },
+      },
+    },
     vidilistaklijentfaktura: {
       on: {
         STAVKEFAKTURE: [
@@ -353,7 +458,7 @@ export const XstateSimple12Machine = Machine<Icontext, Istates, Ievents>({
                 cx.trenutniklijentfaktura = ev.data.id;
               }),
             ],
-            target: 'vidilistustavkefakture',
+            target: 'ucitajstavkefaktura',
           },
         ],
         NOVAKLIJENTFAKTURA: [
@@ -384,8 +489,80 @@ export const XstateSimple12Machine = Machine<Icontext, Istates, Ievents>({
         },
       },
     },
-    dodajnovaklijentfaktura: {},
-    ucitajstavkefaktura: {},
+    dodajnovaklijentfaktura: {
+      invoke: {
+        src: async (cx, ev: evDODAJNOVAKLIJENTFAKTURA) => {
+          const [ERRdata, data] = await backendServer
+            .mutate({
+              variables: {
+                fakturabroj: ev.data.fakturabroj,
+                id_klijentfirma: ev.data.id_klijentfirma,
+              },
+              mutation: gql`
+                mutation klijentfakture($fakturabroj: String, $id_klijentfirma: Int) {
+                  insert_klijentfakture(objects: { fakturabroj: $fakturabroj, id_klijentfirma: $id_klijentfirma }) {
+                    affected_rows
+                  }
+                }
+              `,
+            })
+            .then((r) => [null, r])
+            .catch((e) => [e]);
+          if ((data && data.errors) || ERRdata) {
+            throw new Error('error');
+          }
+          return data;
+        },
+        onDone: {
+          actions: [
+            assign((cx) => {
+              cx.fakturabroj = null;
+            }),
+          ],
+          target: 'ucitajklijentfaktura',
+        },
+        onError: {
+          target: 'vidilistuklijentfirma',
+        },
+      },
+    },
+    ucitajstavkefaktura: {
+      invoke: {
+        src: async () => {
+          const [ERRdata, data] = await backendServer
+            .query({
+              // u navodnicima je ono sto smo u Hasuri definisali i radi
+              query: gql`
+                query stavkefakture {
+                  stavkefakture(order_by: { id: desc }) {
+                    id
+                    id_faktura
+                    iznosfaktura
+                    pdvfaktura
+                  }
+                }
+              `,
+            })
+            .then((r) => [null, r])
+            .catch((e) => [e]);
+          if ((data && data.errors) || ERRdata) {
+            throw new Error('error');
+          }
+          return data;
+        },
+        onDone: {
+          actions: [
+            assign((cx, ev) => {
+              cx.listastavkefakture = ev.data.data.stavkefakture;
+            }),
+          ],
+          target: 'vidilistustavkefakture',
+        },
+        onError: {
+          target: 'ucitajklijentfirma',
+        },
+      },
+    },
     vidilistustavkefakture: {
       on: {
         NOVASTAVKAFAKTUREIZNOS: [
@@ -425,9 +602,167 @@ export const XstateSimple12Machine = Machine<Icontext, Istates, Ievents>({
         },
       },
     },
-    dodajnovastavkafakture: {},
-    ucitaklijentplacanje: {},
-    vidilistuklijentplacanje: {},
-    dodajnovoklijentplacanje: {},
+    dodajnovastavkafakture: {
+      invoke: {
+        src: async (cx, ev: evDODAJNOVASTAVKAFAKTURE) => {
+          const [ERRdata, data] = await backendServer
+            .mutate({
+              variables: {
+                iznosfaktura: ev.data.iznosfaktura,
+                pdvfaktura: ev.data.pdvfaktura,
+                id_faktura: ev.data.id_faktura,
+              },
+              mutation: gql`
+                mutation stavkefakture($id_faktura: Int, $iznosfaktura: String, $pdvfaktura: String) {
+                  insert_stavkefakture(
+                    objects: { id_faktura: $id_faktura, iznosfaktura: $iznosfaktura, pdvfaktura: $pdvfaktura }
+                  ) {
+                    affected_rows
+                  }
+                }
+              `,
+            })
+            .then((r) => [null, r])
+            .catch((e) => [e]);
+          if ((data && data.errors) || ERRdata) {
+            throw new Error('error');
+          }
+          return data;
+        },
+        onDone: {
+          actions: [
+            assign((cx) => {
+              cx.iznosfaktura = null;
+              cx.pdvfaktura = null;
+            }),
+          ],
+          target: 'ucitajstavkefaktura',
+        },
+        onError: {
+          target: 'vidilistuklijentfirma',
+        },
+      },
+    },
+    ucitajklijentplacanje: {
+      invoke: {
+        src: async () => {
+          const [ERRdata, data] = await backendServer
+            .query({
+              // u navodnicima je ono sto smo u Hasuri definisali i radi
+              query: gql`
+                query klijentplacanje {
+                  klijentplacanje(order_by: { id: desc }) {
+                    datumplacanja
+                    id
+                    id_klijentfirma
+                    iznosplacanja
+                  }
+                }
+              `,
+            })
+            .then((r) => [null, r])
+            .catch((e) => [e]);
+          if ((data && data.errors) || ERRdata) {
+            throw new Error('error');
+          }
+          return data;
+        },
+        onDone: {
+          actions: [
+            assign((cx, ev) => {
+              cx.listaklijentplacanje = ev.data.data.klijentplacanje;
+            }),
+          ],
+          target: 'vidilistuklijentplacanje',
+        },
+        onError: {
+          target: 'ucitajklijentfirma',
+        },
+      },
+    },
+    vidilistuklijentplacanje: {
+      on: {
+        NOVOKLIJENTPLACANJEDATUM: [
+          {
+            actions: [
+              assign((cx, ev: evNOVOKLIJENTPLACANJEDATUM) => {
+                cx.datumplacanja = ev?.data.datumplacanja || '';
+              }),
+            ],
+          },
+        ],
+        NOVOKLIJENTPLACANJEIZNOS: [
+          {
+            actions: [
+              assign((cx, ev: evNOVOKLIJENTPLACANJEIZNOS) => {
+                cx.iznosplacanja = ev?.data.iznosplacanja || '';
+              }),
+            ],
+          },
+        ],
+        DODAJNOVOKLIJENTPLACANJE: [
+          {
+            cond: (cx) => {
+              if ((cx?.iznosplacanja === null, cx?.datumplacanja === null)) {
+                return true;
+              }
+              return false;
+            },
+            target: 'vidilistuklijentplacanje',
+          },
+          {
+            target: 'dodajnovoklijentplacanje',
+          },
+        ],
+        BACK: {
+          target: 'ucitajklijentfirma',
+        },
+      },
+    },
+    dodajnovoklijentplacanje: {
+      invoke: {
+        src: async (cx, ev: evDODAJNOVOKLIJENTPLACANJE) => {
+          const [ERRdata, data] = await backendServer
+            .mutate({
+              variables: {
+                datumplacanja: ev.data.datumplacanja,
+                iznosplacanja: ev.data.iznosplacanja,
+                id_klijentfirma: ev.data.id_klijentfirma,
+              },
+              mutation: gql`
+                mutation klijentplacanje($datumplacanja: String, $id_klijentfirma: Int, $iznosplacanja: String) {
+                  insert_klijentplacanje(
+                    objects: {
+                      datumplacanja: $datumplacanja
+                      id_klijentfirma: $id_klijentfirma
+                      iznosplacanja: $iznosplacanja
+                    }
+                  ) {
+                    affected_rows
+                  }
+                }
+              `,
+            })
+            .then((r) => [null, r])
+            .catch((e) => [e]);
+          if ((data && data.errors) || ERRdata) {
+            throw new Error('error');
+          }
+          return data;
+        },
+        onDone: {
+          actions: [
+            assign((cx) => {
+              cx.datumplacanja = null;
+              cx.iznosplacanja = null;
+            }),
+          ],
+          target: 'ucitajklijentplacanje',
+        },
+        onError: {
+          target: 'vidilistuklijentfirma',
+        },
+      },
+    },
   },
 });

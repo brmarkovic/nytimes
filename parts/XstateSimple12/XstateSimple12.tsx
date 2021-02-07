@@ -295,12 +295,12 @@ export function XstateSimple12() {
              <div>
               <div>Unesite datum placanja </div>
              <textarea
-                      value={cx?.datum}
+                      value={cx?.datumplacanja}
                       onChange={(ev) => {
                         send({
                           type: 'NOVOKLIJENTPLACANJEDATUM',
                           data: {
-                          datum:ev.target.value,
+                          datumplacanja:ev.target.value,
                           },
                           
                         });
@@ -311,12 +311,12 @@ export function XstateSimple12() {
               <div>
                <div>Unesite iznos placanja </div>
               <textarea
-                      value={cx?.iznos}
+                      value={cx?.iznosplacanja}
                       onChange={(ev) => {
                         send({
                           type: 'NOVOKLIJENTPLACANJEIZNOS',
                           data: {
-                           iznos: ev.target.value,
+                           iznosplacanja: ev.target.value,
                           },
                         });
                       }}
@@ -331,8 +331,8 @@ export function XstateSimple12() {
                           send({
                             type: 'DODAJNOVOKLIJENTPLACANJE',
                             data: {
-                              datum: cx.datum,
-                              iznos: cx.iznos,
+                              datumplacanja: cx.datumplacanja,
+                              iznosplacanja: cx.iznosplacanja,
                               id_klijentfirma: cx.trenutniklijentfirma,
                             },
                           });
