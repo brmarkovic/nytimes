@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable array-callback-return */
 /* eslint-disable prettier/prettier */
 import React, { useEffect } from 'react';
@@ -29,18 +30,41 @@ export function XstateSimple12() {
 
   // REACT (HTML+) KOMPONENTA
   return (
-    <div className="p-2 flex-flex-col">
+    <div className="flex flex-col">
+      <div className="flex flex-col bg-blue-700">
+        <div className="flex flex-row ">
+          <div className="flex items-center w-1/2">
+            <img className="flex-auto w-20 mt-4 ml-3" 
+            src="https://www.calculus.rs/templates/OP/skins/main/images/logo/logo.png" alt=""/></div>
+          <div className="flex items-center justify-end w-1/2">
+            <a>
+            <svg className="w-16 text-white h-7"
+            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" />
+            </svg> 
+            </a>
+          </div>
+        </div>
+        <div className="h-10 mt-5 bg-blue-600 ">
+          <div className="flex justify-center font-bold text-blue-400 align-middle ">CALCULUS-ELEKTRONSKA RAZMENA RACUNA</div>
+        </div>
+          </div>
+      <div>
+      <div className="m-2 bg-white "><img src="https://www.calculus.rs/cached/www.calculus.rs/Images/Calculus-eRacun-730x0-0000007087.jpg" alt=""/> </div>
+    
+        </div>    
       <div>
         <div className="flex flex-col">
           {['vidilistuklijentfirma'].some(ma) && (
-            <div className="flex flex-col">
-              <div className="text-lg"> Lista firmi </div>
+            <div className="flex flex-col bg-blue-100">
+              <div className="text-lg text-center text-blue-700"> Lista firmi sa kojima CALCULUS saradjuje </div>
               {cx?.listaklijentfirma?.map((r) => {
                 return (
-                  <div className="text-base">
-                    {r.imefirma} (PIB:{r.pibfirma})
+                  <div className="flex flex-col font-semibold text-blue-600 ">
+                    <div>{r.imefirma} (PIB:{r.pibfirma}) </div>
+                    <div className="flex flex-row">
                     <button
-                      className="p-1 mx-1 text-white bg-purple-800 rounded-lg"
+                      className="p-1 mx-1 text-white bg-blue-800 rounded-lg"
                       type="button"
                       onClick={() => {
                         send({
@@ -54,7 +78,7 @@ export function XstateSimple12() {
                       Vidi fakture klijenta
                     </button>
                     <button
-                      className="p-1 mx-1 text-white bg-purple-800 rounded-lg"
+                      className="p-1 mx-1 text-white bg-blue-800 rounded-lg"
                       type="button"
                       onClick={() => {
                         send({
@@ -67,15 +91,16 @@ export function XstateSimple12() {
                     >
                       Vidi placanja klijenta
                     </button>
+                       </div>
                   </div>
                 );
               })}
               <div className="flex flex-col">
-              <div className="text-lg font-bold">Unesite novog klijenta-Firmu</div>
+              <div className="text-lg text-center text-blue-700">Unesite novog klijenta-Firmu</div>
                 <div>
                   <div className="flex flex-col">
                   <div>
-                   <div>Unesite ime firme </div>
+                   <div className="ml-2 text-blue-700">Unesite ime firme </div>
                   <textarea
                     value={cx?.noviklijentfirmaime}
                     onChange={(ev) => {
@@ -90,7 +115,7 @@ export function XstateSimple12() {
                   />
                     </div>
                     <div>
-                     <div>Unesite PIB firme </div>
+                     <div className="ml-2 text-blue-700">Unesite PIB firme </div>
                     <textarea
                     value={cx?.noviklijentfirmapib}
                     onChange={(ev) => {
@@ -107,7 +132,7 @@ export function XstateSimple12() {
                     </div>
                   <div className="flex flex-col">
                     <button
-                      className="p-1 mx-1 text-white bg-purple-800 rounded-lg"
+                      className="p-1 mx-1 text-white bg-blue-800 rounded-lg"
                       type="button"
                       onClick={() => {
                         send({
@@ -135,7 +160,7 @@ export function XstateSimple12() {
              return (
               <div> Lista faktura klijenta {r.fakturabroj}
               <button
-                      className="p-1 mx-1 text-white bg-purple-800 rounded-lg"
+                      className="p-1 mx-1 text-white bg-blue-800 rounded-lg"
                       type="button"
                       onClick={() => {
                         send({
@@ -170,7 +195,7 @@ export function XstateSimple12() {
                     
                     <div className="flex flex-col">
                       <button
-                        className="p-1 mx-1 text-white bg-purple-800 rounded-lg"
+                        className="p-1 mx-1 text-white bg-blue-800 rounded-lg"
                         type="button"
                         onClick={() => {
                           send({
@@ -185,7 +210,7 @@ export function XstateSimple12() {
                         Dodaj novu fakturu klijenta
                       </button>
                       <button
-                        className="p-1 mx-1 text-white bg-purple-800 rounded-lg"
+                        className="p-1 mx-1 text-white bg-blue-800 rounded-lg"
                         type="button"
                         onClick={() => {
                           send({
@@ -247,7 +272,7 @@ export function XstateSimple12() {
                 </div> 
                 <div className="flex flex-col">
                       <button
-                        className="p-1 mx-1 text-white bg-purple-800 rounded-lg"
+                        className="p-1 mx-1 text-white bg-blue-800 rounded-lg"
                         type="button"
                         onClick={() => {
                           send({
@@ -263,7 +288,7 @@ export function XstateSimple12() {
                         Dodaj novu stavku fakture klijenta
                       </button>
                       <button
-                        className="p-1 mx-1 text-white bg-purple-800 rounded-lg"
+                        className="p-1 mx-1 text-white bg-blue-800 rounded-lg"
                         type="button"
                         onClick={() => {
                           send({
@@ -325,7 +350,7 @@ export function XstateSimple12() {
                 </div> 
                 <div className="flex flex-col">
                       <button
-                        className="p-1 mx-1 text-white bg-purple-800 rounded-lg"
+                        className="p-1 mx-1 text-white bg-blue-800 rounded-lg"
                         type="button"
                         onClick={() => {
                           send({
@@ -341,7 +366,7 @@ export function XstateSimple12() {
                         Dodaj placanje klijenta klijenta
                       </button>
                       <button
-                        className="p-1 mx-1 text-white bg-purple-800 rounded-lg"
+                        className="p-1 mx-1 text-white bg-blue-800 rounded-lg"
                         type="button"
                         onClick={() => {
                           send({
