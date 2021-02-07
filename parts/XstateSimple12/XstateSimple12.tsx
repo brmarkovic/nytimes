@@ -30,7 +30,7 @@ export function XstateSimple12() {
 
   // REACT (HTML+) KOMPONENTA
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col ">
       <div className="flex flex-col bg-blue-700">
         <div className="flex flex-row ">
           <div className="flex items-center w-1/2">
@@ -45,18 +45,22 @@ export function XstateSimple12() {
             </a>
           </div>
         </div>
-        <div className="h-10 mt-5 bg-blue-600 ">
-          <div className="flex justify-center font-bold text-blue-400 align-middle ">CALCULUS-ELEKTRONSKA RAZMENA RACUNA</div>
+        <div className="flex items-center justify-center h-10 mt-5 bg-gradient-to-tr from-blue-300 via-blue-500 to-blue-800 ">
+          <div className="font-bold text-blue-200 ">CALCULUS-ELEKTRONSKA RAZMENA RACUNA</div>
         </div>
           </div>
+      <div className="w-auto mt-5 ml-2 mr-2 flex-flex-col">
       <div>
-      <div className="m-2 bg-white "><img src="https://www.calculus.rs/cached/www.calculus.rs/Images/Calculus-eRacun-730x0-0000007087.jpg" alt=""/> </div>
-    
-        </div>    
+      <div className="relative w-full bg-white "><img src="https://www.calculus.rs/cached/www.calculus.rs/Images/Calculus-eRacun-730x0-0000007087.jpg" alt=""/> </div>
+      <div className="absolute -mt-10 -mr-10 text-xl text-white bg-blue-500 left-4 botom-0">CALCULUS - E-RACUN</div>
+  
+      </div>
+      
+     </div>    
       <div>
-        <div className="flex flex-col">
+        <div className="flex flex-col mt-2">
           {['vidilistuklijentfirma'].some(ma) && (
-            <div className="flex flex-col bg-blue-100">
+            <div className="flex flex-col bg-blue-100"> 
               <div className="text-lg text-center text-blue-700"> Lista firmi sa kojima CALCULUS saradjuje </div>
               {cx?.listaklijentfirma?.map((r) => {
                 return (
