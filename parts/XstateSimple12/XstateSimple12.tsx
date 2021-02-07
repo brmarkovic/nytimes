@@ -291,6 +291,70 @@ export function XstateSimple12() {
               <div> Lista placanja klijenata {r.datumplacanja} {r.iznosplacanja} </div>
              )
             })}
+            <div className="flex flex-col">
+             <div>
+              <div>Unesite datum placanja </div>
+             <textarea
+                      value={cx?.datum}
+                      onChange={(ev) => {
+                        send({
+                          type: 'NOVOKLIJENTPLACANJEDATUM',
+                          data: {
+                          datum:ev.target.value,
+                          },
+                          
+                        });
+                      }}
+                      className="border border-gray-500"
+                    />
+               </div>
+              <div>
+               <div>Unesite iznos placanja </div>
+              <textarea
+                      value={cx?.iznos}
+                      onChange={(ev) => {
+                        send({
+                          type: 'NOVOKLIJENTPLACANJEIZNOS',
+                          data: {
+                           iznos: ev.target.value,
+                          },
+                        });
+                      }}
+                      className="border border-gray-500"
+                    />
+                </div> 
+                <div className="flex flex-col">
+                      <button
+                        className="p-1 mx-1 text-white bg-purple-800 rounded-lg"
+                        type="button"
+                        onClick={() => {
+                          send({
+                            type: 'DODAJNOVOKLIJENTPLACANJE',
+                            data: {
+                              datum: cx.datum,
+                              iznos: cx.iznos,
+                              id_klijentfirma: cx.trenutniklijentfirma,
+                            },
+                          });
+                        }}
+                      >
+                        Dodaj placanje klijenta klijenta
+                      </button>
+                      <button
+                        className="p-1 mx-1 text-white bg-purple-800 rounded-lg"
+                        type="button"
+                        onClick={() => {
+                          send({
+                            type: 'BACK',
+                            
+                          });
+                        }}
+                      >
+                        Vrati se na listu klijenata-FIRMI
+                      </button>
+                    </div>
+
+              </div>
              </div>
           )}              
           </div>

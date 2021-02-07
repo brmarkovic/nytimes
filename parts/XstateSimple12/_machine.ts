@@ -84,6 +84,8 @@ export interface Icontext {
   iznosfaktura: string;
   pdvfaktura: string;
   fakturabroj: string;
+  datum: string;
+  iznos: string;
 }
 
 // Ievents
@@ -111,10 +113,15 @@ type evNOVAKLIJENTFAKTURA = {
     fakturabroj: string;
   };
 };
-type evNOVOKLIJENTPLACANJE = {
-  type: 'NOVOKLIJENTPLACANJE';
+type evNOVOKLIJENTPLACANJEDATUM = {
+  type: 'NOVOKLIJENTPLACANJEDATUM';
   data: {
     datum: string;
+  };
+};
+type evNOVOKLIJENTPLACANJEIZNOS = {
+  type: 'NOVOKLIJENTPLACANJEIZNOS';
+  data: {
     iznos: string;
   };
 };
@@ -194,7 +201,8 @@ export type Ievents =
   | evDODAJNOVAKLIJENTFAKTURA
   | evKLIJENTFAKTURA
   | evKLIJENTPLACANJE
-  | evNOVOKLIJENTPLACANJE
+  | evNOVOKLIJENTPLACANJEIZNOS
+  | evNOVOKLIJENTPLACANJEDATUM
   | evDODAJNOVOKLIJENTPLACANJE
   | evSTAVKEFAKTURE
   | evNOVASTAVKAFAKTUREIZNOS
@@ -261,6 +269,8 @@ export const XstateSimple12Machine = Machine<Icontext, Istates, Ievents>({
     trenutniklijentfirma: 1,
     trenutniklijentfaktura: 1,
     trenutniklijentplacanje: 1,
+    datum: '',
+    iznos: '',
   },
   // BIKA FOKUS END <<<<<<
   states: {
