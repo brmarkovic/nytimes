@@ -30,12 +30,13 @@ export function XstateSimple12() {
 
   // REACT (HTML+) KOMPONENTA
   return (
-    <div className="flex flex-col ">
-      <div className="flex flex-col bg-blue-700">
+    <div className="flex flex-col bg-gray-100 ">
+      <div className="fixed top-0 left-0 flex flex-col bg-blue-700 ">
         <div className="flex flex-row ">
-          <div className="flex items-center w-1/2">
-            <img className="flex-auto w-20 mt-4 ml-3" 
-            src="https://www.calculus.rs/templates/OP/skins/main/images/logo/logo.png" alt=""/></div>
+          <div className="flex items-center justify-start w-1/2 h-24">
+            <img className="mt-2 ml-3 " 
+            src="https://www.calculus.rs/templates/OP/skins/main/images/logo/logo.png" alt=""/>
+          </div>
           <div className="flex items-center justify-end w-1/2">
             <a>
             <svg className="w-16 text-white h-7"
@@ -44,21 +45,31 @@ export function XstateSimple12() {
             </svg> 
             </a>
           </div>
-        </div>
-        <div className="flex items-center justify-center h-10 mt-5 bg-gradient-to-tr from-blue-300 via-blue-500 to-blue-800 ">
-          <div className="font-bold text-blue-200 ">CALCULUS-ELEKTRONSKA RAZMENA RACUNA</div>
-        </div>
-          </div>
-      <div className="w-auto mt-5 ml-2 mr-2 flex-flex-col">
-      <div>
-      <div className="relative w-full bg-white "><img src="https://www.calculus.rs/cached/www.calculus.rs/Images/Calculus-eRacun-730x0-0000007087.jpg" alt=""/> </div>
-      <div className="absolute -mt-10 -mr-10 text-xl text-white bg-blue-500 left-4 botom-0">CALCULUS - E-RACUN</div>
-  
+        </div> 
       </div>
-      
-     </div>    
+      <div className="flex items-center justify-center w-full h-12 mt-24 bg-gradient-to-tr from-blue-300 via-blue-500 to-blue-800 ">
+          <div className="font-bold text-teal-300 ">CALCULUS-ELEKTRONSKA RAZMENA RACUNA</div>
+      </div>
+      <div className="w-auto mt-5 ml-2 mr-2 flex-flex-col">
+      <div className="flex flex-col">
+      <div className="w-full bg-white ">
+        <img style={{ width:500 }} src="https://www.calculus.rs/cached/www.calculus.rs/Images/Calculus-eRacun-730x0-0000007087.jpg" alt=""/> </div>
+      <div className="-mt-10 text-xl text-white ">CALCULUS - E-RACUN</div>
+      </div>
+      <div className="flex flex-col w-full mt-5 mr-2 ml 2">
+        <div >
+          <img className="h-40" src="https://www.calculus.rs/virtualimage.axd?content_header_uid=14c209c4-1c00-4061-ae9a-35ea0306767f" alt=""/>
+        </div>
+        <div className="text-gray-500 bg-white ">
+           <div className="mt-5 ml-5 text-lg font-thin ">nedelja, 05.april 2020</div>
+           <div className="mt-4 ml-5 text-xl font-semibold text-gray-600">Calculusu u Cloudu </div>
+           <div className="mt-4 ml-5 font-sans text-lg">Calculus Cloud - Calculus 12 za rad preko interneta. Zelite calculus 12 na Oblaku za vasu kompaniju i to odmah? ...</div>
+           
+        </div>
+      </div>
+      </div>    
       <div>
-        <div className="flex flex-col mt-2">
+        <div className="flex flex-col mt-4 ml-2 mr-2">
           {['vidilistuklijentfirma'].some(ma) && (
             <div className="flex flex-col bg-blue-100"> 
               <div className="text-lg text-center text-blue-700"> Lista firmi sa kojima CALCULUS saradjuje </div>
