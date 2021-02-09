@@ -4,7 +4,7 @@ import { useMachine } from '@xstate/react';
 import { useXstateDebugger } from '../../helpers/xstate';
 
 // import { useMachine } from '../../helpers/useMachine';
-import { XstateSimple6Machine } from './_machine';
+import { XstateSimple13Machine } from './_machine';
 
 // inspect({
 //  // options
@@ -12,9 +12,9 @@ import { XstateSimple6Machine } from './_machine';
 //  iframe: false, // open in new window
 // });
 
-export function XstateSimple6() {
+export function XstateSimple13() {
   // STARTOVANJE MASINE
-  const machine = useMachine(XstateSimple6Machine, {
+  const machine = useMachine(XstateSimple13Machine, {
     show: false,
   });
   const [{ context: cx, matches: ma, value: currentState }, send] = machine || [{}];
@@ -22,27 +22,46 @@ export function XstateSimple6() {
 
   useEffect(() => {
     // boot machine
-    send({ type: 'idle' });
+    send({ type: 'BROWSER' });
   }, []);
 
   // REACT (HTML+) KOMPONENTA
   return (
     <div className="p-2">
-      <div>Simple Machine6</div>
+      <div>Pogledajte prognozu i vremenske prilike</div>
+
+      <div className="flex flex-col">
+        <div>Unesite naziv grada za koji zelite da proverite vremenske uslove</div>
+        <div>
+          <textarea
+            value={cx?.naziv}
+            onChange={(ev) => {
+              send({ type: 'INPUT', data: ev.target.value });
+            }}
+            className="border border-gray-500"
+          />
+        </div>
+      </div>
       <div>
         <button
+          className="p-1 mx-1 bg-green-500 rounded-lg"
           type="button"
           onClick={() => {
-            send({ type: 'SHOW', data: !cx.show });
+            send({
+              type: 'VIDILOKACIJA',
+              data: {
+                naziv: cx.naziv,
+              },
+            });
           }}
         >
-          toggle show
+          SETAM BEBU
         </button>
-        {cx?.show && <div>prikazujem...</div>}
-        <pre>{JSON.stringify({ cx, currentState }, null, 2)}</pre>
       </div>
+
+      <pre>{JSON.stringify({ cx, currentState }, null, 2)}</pre>
     </div>
   );
 }
 
-export default XstateSimple6;
+export default XstateSimple13;

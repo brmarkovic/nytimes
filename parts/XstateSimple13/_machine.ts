@@ -1,6 +1,11 @@
+/* eslint-disable no-sequences */
+/* eslint-disable no-unused-vars */
+/* eslint-disable prettier/prettier */
+/* eslint-disable no-undef */
 import { Machine } from 'xstate';
 import { send as untypedSend } from 'xstate/lib/actions';
 import { assign } from '@xstate/immer';
+import axios from 'axios';
 
 // SNIMANJE NA SERVER POCETAK
 // SNIMANJE NA SERVER POCETAK
@@ -47,60 +52,171 @@ export const backendServer = new ApolloClient({
 
 // Icontext
 export interface Icontext {
-  show: boolean;
+  naziv: string;
+  lokacija: any;
+  prognoza: any;
+  zagadjenje: any;
 }
 
 // Ievents
-type evSHOW = {
-  type: 'SHOW';
-  data: boolean;
-};
 
 type evINPUT = {
   type: 'INPUT';
   data: string;
 };
 
-export type Ievents = evINPUT | evSHOW | { type: 'idle' };
+type evVIDILOKACIJA = {
+  type: 'VIDILOKACIJA';
+  data: {
+    naziv: string;
+  };
+};
+export type Ievents = evINPUT | evVIDILOKACIJA | { type: 'BROWSER' };
 
 const send = (sendEvent: Ievents, sendOptions?: any) => untypedSend(sendEvent, sendOptions);
 
 interface Istates {
   states: {
     ssr: {};
-    idle: {};
+    vidiuslove: {};
+    ucitajlokacija: {};
+    ucitajprognoza: {};
+    ucitajzagadjenje: {};
   };
 }
 
-export const XstateSimple6Machine = Machine<Icontext, Istates, Ievents>({
-  id: 'XstateSimple6Machine',
+export const XstateSimple13Machine = Machine<Icontext, Istates, Ievents>({
+  id: 'XstateSimple13Machine',
   initial: 'ssr',
   // BIKA FOKUS >>>>>>>>>>
   context: {
-    show: false,
+    naziv: '',
+    lokacija: '',
+    prognoza: '',
+    zagadjenje: '',
   },
   // BIKA FOKUS END <<<<<<
   states: {
     // DEFAULT MILAN STATE
     ssr: {
       on: {
-        idle: [
+        BROWSER: {
+          target: 'vidiuslove',
+        },
+      },
+    },
+    vidiuslove: {
+      on: {
+        INPUT: [
           {
-            target: 'idle',
+            actions: [
+              assign((cx, ev: evINPUT) => {
+                cx.naziv = ev?.data || '';
+              }),
+            ],
+          },
+        ],
+        VIDILOKACIJA: [
+          {
+            cond: (cx) => {
+              if (cx?.naziv === null) {
+                return true;
+              }
+              return false;
+            },
+            target: 'vidiuslove',
+          },
+          {
+            target: 'ucitajlokacija',
           },
         ],
       },
     },
-    idle: {
-      on: {
-        SHOW: {
+    ucitajlokacija: {
+      invoke: {
+        src: async (cx, ev) => {
+          const [ERRserverData, serverData] = await axios({
+            method: 'get',
+            url: `http://api.positionstack.com/v1/forward?access_key=be0165e75645e06764fe1cd76bae3b3c&query=${cx.naziv}`,
+          })
+            .then((r) => [null, r])
+            .catch((e) => [e]);
+          if ((serverData && serverData.errors) || ERRserverData) {
+            throw new Error('error');
+          }
+          return serverData;
+        },
+        onDone: {
           actions: [
-            assign((cx, ev: evSHOW) => {
-              cx.show = ev.data;
+            assign((cx, ev) => {
+              cx.lokacija = ev;
             }),
           ],
+          target: 'ucitajprognoza',
+        },
+        onError: {
+          target: 'vidiuslove',
         },
       },
+    },
+    ucitajprognoza: {
+      invoke: {
+        src: async (cx, ev) => {
+          const [ERRserverData, serverData] = await axios({
+            method: 'get',
+            url: `http://api.positionstack.com/v1/forward?access_key=be0165e75645e06764fe1cd76bae3b3c&query=${
+              ev?.data?.[0]?.latitude, ev?.data?.[0]?.longitude
+            }`,
+          })
+            .then((r) => [null, r])
+            .catch((e) => [e]);
+          if ((serverData && serverData.errors) || ERRserverData) {
+            throw new Error('error');
+          }
+          return serverData;
+        },
+        onDone: {
+          actions: [
+            assign((cx, ev) => {
+              cx.prognoza = ev;
+            }),
+          ],
+          target: 'ucitajzagadjenje',
+        },
+        onError: {
+          target: 'vidiuslove',
+        },
+      },
+    },
+    ucitajzagadjenje: {
+     invoke: {
+      src: async (cx, ev) => {
+        const [ERRserverData, serverData] = await axios({
+          method: 'get',
+          url: `http://api.positionstack.com/v1/forward?access_key=be0165e75645e06764fe1cd76bae3b3c&query=${
+            { "latitude": 44.782449,
+            "longitude": 20.46444, }
+          }`,
+        })
+          .then((r) => [null, r])
+          .catch((e) => [e]);
+        if ((serverData && serverData.errors) || ERRserverData) {
+          throw new Error('error');
+        }
+        return serverData;
+      },
+      onDone: {
+        actions: [
+          assign((cx, ev) => {
+            cx.zagadjenje = ev;
+          }),
+        ],
+        target: 'vidiuslove',
+      },
+      onError: {
+        target: 'ucitajlokacija',
+      },
+    },
     },
   },
 });
