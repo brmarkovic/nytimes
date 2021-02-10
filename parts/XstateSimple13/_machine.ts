@@ -159,6 +159,7 @@ export const XstateSimple13Machine = Machine<Icontext, Istates, Ievents>({
             assign((cx, ev) => {
               // jedini isparavn nacin da se formira context sa velikog json sa servera
               // most izmdju contexta i backenda
+              //
               cx.lokacija = {
                 latituda:ev?.data?.data?.data?.[0]?.latitude,
                 longituda:ev?.data?.data?.data?.[0]?.longitude
