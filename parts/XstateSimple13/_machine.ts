@@ -195,6 +195,7 @@ export const XstateSimple13Machine = Machine<Icontext, Istates, Ievents>({
                 temperatura: ev?.data?.data?.current?.temp
                
               }
+              cx.naziv=''
             }),
           ],
           target: 'ucitajzagadjenje',
