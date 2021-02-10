@@ -54,13 +54,16 @@ export const backendServer = new ApolloClient({
 export interface Icontext {
   naziv: string;
   lokacija: {
-    longituda:string;
-    latituda:string;
+    longituda?:number;
+    latituda?:number;
   };
   prognoza: {
-    pritisak:number;
+    pritisak?:number;
+    temperatura?:number;
   };
-  zagadjenje: any;
+  zagadjenje:{
+    pm2?:number;
+  };
 }
 
 // Ievents
@@ -155,6 +158,7 @@ export const XstateSimple13Machine = Machine<Icontext, Istates, Ievents>({
           actions: [
             assign((cx, ev) => {
               // jedini isparavn nacin da se formira context sa velikog json sa servera
+              // most izmdju contexta i backenda
               cx.lokacija = {
                 latituda:ev?.data?.data?.data?.[0]?.latitude,
                 longituda:ev?.data?.data?.data?.[0]?.longitude
@@ -185,8 +189,11 @@ export const XstateSimple13Machine = Machine<Icontext, Istates, Ievents>({
         onDone: {
           actions: [
             assign((cx, ev) => {
+              // console.log({ ev })
               cx.prognoza = {
-                pritisak:ev?.data?.data?.current?.pressure
+                pritisak:ev?.data?.data?.current?.pressure,
+                temperatura: ev?.data?.data?.current?.temp
+               
               }
             }),
           ],

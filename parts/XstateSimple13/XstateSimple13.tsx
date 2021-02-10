@@ -18,7 +18,7 @@ export function XstateSimple13() {
     show: false,
   });
   const [{ context: cx, matches: ma, value: currentState }, send] = machine || [{}];
-  useXstateDebugger({ machine, name: '__' });
+  // useXstateDebugger({ machine, name: '__' });
 
   useEffect(() => {
     // boot machine
@@ -59,7 +59,7 @@ export function XstateSimple13() {
         </button>
       </div>
 
-      <pre>{JSON.stringify({ cx, currentState }, null, 2)}</pre>
+      <pre>{JSON.stringify({ currentState, cx }, null, 2)}</pre>
     </div>
   );
 }
