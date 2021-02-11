@@ -30,8 +30,8 @@ export function XstateSimple13() {
     <div className="flex flex-col">
       <div className="bg-teal-500">
         <div className="flex flex-col">
-          <div className="flex-auto h-16 bg-gradient-to-tr from-teal-300 via-teal-500 to-teal-700 justify-items-center">
-            <div className="text-xl text-center text-white "> Prognoza i vremenske prilike</div>
+          <div className="flex items-center justify-center h-16 bg-gradient-to-tr from-teal-300 via-teal-500 to-teal-700 justify-items-center">
+            <div className="text-xl text-white "> Prognoza i vremenske prilike</div>
           </div>
           <div>
             <img
