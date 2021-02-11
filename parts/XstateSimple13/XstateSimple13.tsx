@@ -58,7 +58,11 @@ export function XstateSimple13() {
           SETAM BEBU
         </button>
       </div>
-
+      <div className="flex flex-col">
+        <div>Prognoza za izabrani grad</div>
+        <div>Pritisak:{cx?.prognoza?.pritisak}mbr</div>
+        <div>Zagadjenje:{cx?.zagadjenje?.pm2}</div>
+      </div>
       <pre>{JSON.stringify({ currentState, cx }, null, 2)}</pre>
     </div>
   );
