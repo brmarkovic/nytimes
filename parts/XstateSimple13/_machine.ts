@@ -145,7 +145,7 @@ export const XstateSimple13Machine = Machine<Icontext, Istates, Ievents>({
         src: async (cx, ev) => {
           const [ERRserverData, serverData] = await axios({
             method: 'get',
-            url: `https://api.positionstack.com/v1/forward?access_key=be0165e75645e06764fe1cd76bae3b3c&query=${cx.naziv}`,
+            url: `http://api.positionstack.com/v1/forward?access_key=be0165e75645e06764fe1cd76bae3b3c&query=${cx.naziv}`,
           })
             .then((r) => [null, r])
             .catch((e) => [e]);
@@ -178,7 +178,7 @@ export const XstateSimple13Machine = Machine<Icontext, Istates, Ievents>({
         src: async (cx, ev) => {
           const [ERRserverData, serverData] = await axios({
             method: 'get',
-            url: `https://api.openweathermap.org/data/2.5/onecall?lat=${cx.lokacija.latituda}&lon=${cx.lokacija.longituda}&appid=c9c1cec712999f6b8f02e41994e3ce7d`,
+            url: `http://api.openweathermap.org/data/2.5/onecall?lat=${cx.lokacija.latituda}&lon=${cx.lokacija.longituda}&appid=c9c1cec712999f6b8f02e41994e3ce7d`,
           })
             .then((r) => [null, r])
             .catch((e) => [e]);
@@ -211,7 +211,7 @@ export const XstateSimple13Machine = Machine<Icontext, Istates, Ievents>({
       src: async (cx, ev) => {
         const [ERRserverData, serverData] = await axios({
           method: 'get',
-          url: `https://api.openweathermap.org/data/2.5/air_pollution?lat=${cx.lokacija.latituda}&lon=${cx.lokacija.longituda}&appid=c9c1cec712999f6b8f02e41994e3ce7d`,
+          url: `http://api.openweathermap.org/data/2.5/air_pollution?lat=${cx.lokacija.latituda}&lon=${cx.lokacija.longituda}&appid=c9c1cec712999f6b8f02e41994e3ce7d`,
         })
           .then((r) => [null, r])
           .catch((e) => [e]);

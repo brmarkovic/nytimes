@@ -122,7 +122,8 @@ export const XstateSimple14Machine = Machine<Icontext, Istates, Ievents>({
               }
               return false;
             },
-
+          },
+          {
             target: 'ucitajlokacija',
           },
         ],
