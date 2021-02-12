@@ -191,7 +191,7 @@ export const XstateSimple14Machine = Machine<Icontext, Istates, Ievents>({
               // console.log({ ev });
               cx.prognoza = {
                 pritisak: ev?.data?.data?.current?.pressure,
-                temperatura: ev?.data?.current?.temp,
+                temperatura: ev?.data?.data?.current?.temp,
               };
               cx.naziv = '';
             }),
