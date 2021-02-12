@@ -55,9 +55,11 @@ export interface Icontext {
   };
   prognoza: {
     pritisak?: number;
+    temperatura?: number;
   };
   zagadjenje: {
     pm2?: number;
+    pm10?: number;
   };
 }
 
@@ -185,9 +187,13 @@ export const XstateSimple14Machine = Machine<Icontext, Istates, Ievents>({
         onDone: {
           actions: [
             assign((cx, ev) => {
+              // eslint-disable-next-line no-console
+              // console.log({ ev });
               cx.prognoza = {
                 pritisak: ev?.data?.data?.current?.pressure,
+                temperatura: ev?.data?.current?.temp,
               };
+              cx.naziv = '';
             }),
           ],
           target: 'ucitajzagadjenje',
@@ -217,6 +223,7 @@ export const XstateSimple14Machine = Machine<Icontext, Istates, Ievents>({
             assign((cx, ev) => {
               cx.zagadjenje = {
                 pm2: ev?.data?.data?.list?.[0]?.components?.pm2_5,
+                pm10: ev?.data?.data?.list?.[0]?.components?.pm10,
               };
             }),
           ],
