@@ -49,9 +49,16 @@ export const backendServer = new ApolloClient({
 // Icontext
 export interface Icontext {
   naziv: string;
-  lokacija: any;
-  prognoza: any;
-  zagadjenje: any;
+  lokacija: {
+    latituda?: number;
+    longituda?: number;
+  };
+  prognoza: {
+    pritisak?: number;
+  };
+  zagadjenje: {
+    pm2?: number;
+  };
 }
 
 // Ievents
@@ -147,7 +154,10 @@ export const XstateSimple14Machine = Machine<Icontext, Istates, Ievents>({
         onDone: {
           actions: [
             assign((cx, ev) => {
-              cx.lokacija = ev;
+              cx.lokacija = {
+                latituda: ev?.data?.data?.data?.[0]?.latitude,
+                longituda: ev?.data?.data?.data?.[0]?.longitude,
+              };
             }),
           ],
           target: 'ucitajprognoza',
@@ -157,7 +167,65 @@ export const XstateSimple14Machine = Machine<Icontext, Istates, Ievents>({
         },
       },
     },
-    ucitajprognoza: {},
-    ucitajzagadjenje: {},
+    ucitajprognoza: {
+      invoke: {
+        src: async (cx, ev) => {
+          const [ERRserverData, serverData] = await axios({
+            method: 'get',
+            url: `https://api.openweathermap.org/data/2.5/onecall?lat=${cx.lokacija.latituda}&lon=${cx.lokacija.longituda}&appid=c9c1cec712999f6b8f02e41994e3ce7d`,
+          })
+            .then((r) => [null, r])
+            .catch((e) => [e]);
+
+          if ((serverData && serverData.errors) || ERRserverData) {
+            throw new Error('error');
+          }
+          return serverData;
+        },
+        onDone: {
+          actions: [
+            assign((cx, ev) => {
+              cx.prognoza = {
+                pritisak: ev?.data?.data?.current?.pressure,
+              };
+            }),
+          ],
+          target: 'ucitajzagadjenje',
+        },
+        onError: {
+          target: 'vidiuslove',
+        },
+      },
+    },
+    ucitajzagadjenje: {
+      invoke: {
+        src: async (cx, ev) => {
+          const [ERRserverData, serverData] = await axios({
+            method: 'get',
+            url: `http://api.openweathermap.org/data/2.5/air_pollution?lat=${cx.lokacija.latituda}&lon=${cx.lokacija.longituda}&appid=c9c1cec712999f6b8f02e41994e3ce7d`,
+          })
+            .then((r) => [null, r])
+            .catch((e) => [e]);
+
+          if ((serverData && serverData.errors) || ERRserverData) {
+            throw new Error('error');
+          }
+          return serverData;
+        },
+        onDone: {
+          actions: [
+            assign((cx, ev) => {
+              cx.zagadjenje = {
+                pm2: ev?.data?.data?.list?.[0]?.components?.pm2_5,
+              };
+            }),
+          ],
+          target: 'vidiuslove',
+        },
+        onError: {
+          target: 'vidiuslove',
+        },
+      },
+    },
   },
 });
