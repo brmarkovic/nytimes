@@ -32,7 +32,7 @@ export function PageXstate() {
       {/* <XstateSimple11 /> */}
       {/* <XstateSimple12 /> */}
       {/*  <XstateSimple13 /> */}
-      <XstateSimple14 />
+      {/* <XstateSimple14 /> */}
       <XstateSimple15 />
       {/* <XstateTodos /> */}
     </div>

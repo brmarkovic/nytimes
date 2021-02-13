@@ -28,47 +28,71 @@ export function XstateSimple15() {
 
   // REACT (HTML+) KOMPONENTA
   return (
-    <div className="p-2">
-      <div>Setam bebu</div>
-      <div>
-        <div>
-          <textarea
-            value={cx.naziv}
-            onChange={(ev) => {
-              send({
-                type: 'INPUT',
-                data: ev.target.value,
-              });
-            }}
-            className="border border-gray-300 "
-          />
-        </div>
-
-        <button
-          className=" bg-red-400 p-2 rounded-lg text=white "
-          type="button"
-          onClick={() => {
-            send({
-              type: 'VIDILOKACIJA',
-              data: {
-                naziv: cx.naziv,
-              },
-            });
-          }}
-        >
-          SETAM BEBU
-        </button>
+    <div className="flex flex-col ">
+      <div className="bg-indigo-200">
         <div className="flex flex-col">
-          <div className="text-xl text-red-800">
-            <div>Vremenska prognoza za izabrani grad</div>
-            <div className="text-base font-black">
-              <div>Pritisak:{cx.prognoza.pressure}milibara</div>
-              <div>Temperatura:{cx.prognoza.temp}farenhajta</div>
-              <div>Zagadjenje:{cx.zagadjenje.pm2_5} pm2_5</div>
-            </div>
+          <div className="flex items-center justify-center h-12 text-xl text-blue-300 bg-gradient-to-tr from-blue-300 via-blue-500 to-blue-900">
+            <div>Vremnska prognoza</div>
+          </div>
+          <div className="flex-auto">
+            <img
+              className="object-cover w-full "
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7czCT4YITre5hpR8uF5X3Mc5r8wg02-v-YQ&usqp=CAU"
+              alt=""
+            />
           </div>
         </div>
-        <pre>{JSON.stringify({ currentState, cx }, null, 2)}</pre>
+        <div className="flex flex-col mt-7">
+          <div className="flex flex-row items-center justify-center">
+            <div>
+              <textarea
+                value={cx.naziv}
+                onChange={(ev) => {
+                  send({
+                    type: 'INPUT',
+                    data: ev.target.value,
+                  });
+                }}
+                className="border border-blue-900 rounded-lg "
+              />
+            </div>
+
+            <button
+              className="h-10 ml-4 text-white bg-blue-700 rounded-lg hover:bg-blue-900 "
+              type="button"
+              onClick={() => {
+                send({
+                  type: 'VIDILOKACIJA',
+                  data: {
+                    naziv: cx.naziv,
+                  },
+                });
+              }}
+            >
+              <div className="ml-2 mr-2">SETAM BEBU</div>
+            </button>
+          </div>
+          <div className="flex flex-col">
+            <div className="text-xl text-blue-800 border-indigo-500 group hover:bg-white hover:shadow-lg hover:border-transparent">
+              <div className="text-center">Vremenska prognoza za izabrani grad</div>
+              <div className="mt-3 ml-4 text-base font-medium">
+                <div>Pritisak:{cx.prognoza.pressure}milibara</div>
+                <div>Temperatura:{cx.prognoza.temp}farenhajta</div>
+                <div>Zagadjenje:{cx.zagadjenje.pm2_5} pm2_5</div>
+              </div>
+            </div>
+          </div>
+          <div className="flex flex-col mt-3">
+            <div>
+              <img
+                className="object-cover w-full"
+                src="https://www.vijesti.me/data/images/2020/06/18/21/5218251_shutterstock-286242953_ls-xs.jpg"
+                alt=""
+              />
+            </div>
+          </div>
+          <pre>{JSON.stringify({ currentState, cx }, null, 2)}</pre>
+        </div>
       </div>
     </div>
   );
