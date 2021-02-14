@@ -59,6 +59,11 @@ export function XstateSimple16() {
               SETAM BEBU
             </button>
           </div>
+          <div>
+            <div>Vidi prilike za izabrani grad</div>
+            <div> pritisak:{cx.prognoza.pressure}</div>
+            <div> zagadjenje{cx.zagadjenje.pm2_5}</div>
+          </div>
         </div>
         <pre>{JSON.stringify({ currentState, cx }, null, 2)}</pre>
       </div>
