@@ -216,6 +216,7 @@ export const XstateSimple16Machine = Machine<Icontext, Istates, Ievents>({
               cx.zagadjenje = {
                 pm2_5: ev?.data?.data?.list?.[0]?.components?.pm2_5,
               };
+              cx.naziv = '';
             }),
           ],
           target: 'vidiuslove',
