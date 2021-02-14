@@ -75,8 +75,8 @@ export function XstateSimple16() {
           </div>
           <div className="flex flex-col mt-2 ml-3 border-b border-pink-800">
             <div>Vidi prilike za izabrani grad</div>
-            <div> pritisak:{cx.prognoza.pressure}</div>
-            <div> zagadjenje{cx.zagadjenje.pm2_5}</div>
+            <div>Pritisak: {cx.prognoza.pressure}</div>
+            <div> Zagadjenje:{cx.zagadjenje.pm2_5}</div>
           </div>
         </div>
         <pre>{JSON.stringify({ currentState, cx }, null, 2)}</pre>
