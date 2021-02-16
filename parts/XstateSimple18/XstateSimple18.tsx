@@ -221,6 +221,7 @@ export function XstateSimple18() {
               </div>
             </div>
           )}
+          {['zahvalnica'].some(ma) && <div>IKEA vam se zahvaljuje na popunjenoj anket! </div>}
         </div>
         <div>
           <pre>{JSON.stringify({ cx }, null, 2)}</pre>
