@@ -110,7 +110,39 @@ export const XstateSimple18Machine = Machine<Icontext, Istates, Ievents>({
         },
       },
     },
-    kritika: {},
-    zahvalnica: {},
+    kritika: {
+      on: {
+        INPUT: {
+          actions: (cx, ev: evINPUT) => {
+            cx.kritikatekst = ev?.data || '';
+          },
+        },
+        SUBMIT: [
+          {
+            cond: (cx) => cx?.kritikatekst?.length === 0 || false,
+            target: 'kritika',
+          },
+          {
+            actions: (cx) => {
+              cx.kritikatekst = '';
+            },
+            target: 'zahvalnica',
+          },
+        ],
+        ABORT: {
+          actions: (cx) => {
+            cx.kritikatekst = '';
+          },
+          target: 'anketa',
+        },
+      },
+    },
+    zahvalnica: {
+      after: {
+        1000: {
+          target: 'anketa',
+        },
+      },
+    },
   },
 });

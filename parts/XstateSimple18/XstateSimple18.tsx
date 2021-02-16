@@ -184,6 +184,43 @@ export function XstateSimple18() {
               </div>
             </div>
           )}
+          {['kritika'].some(ma) && (
+            <div className="mt-4 ml-6">
+              <div>Molimo unesite vasu kritiku</div>
+              <div>
+                <textarea
+                  value={cx.kritikatekst}
+                  onChange={(ev) => {
+                    send({
+                      type: 'INPUT',
+                      data: ev.target.value,
+                    });
+                  }}
+                  className="border border-gray-500 rounded-lg"
+                />
+              </div>
+              <div className="mt-4 ">
+                <button
+                  className="p-1 mx-1 text-white bg-blue-800 rounded-full"
+                  type="button"
+                  onClick={() => {
+                    send({ type: 'SUBMIT' });
+                  }}
+                >
+                  Potvrdi
+                </button>
+                <button
+                  className="p-1 mx-1 text-white bg-blue-800 rounded-full"
+                  type="button"
+                  onClick={() => {
+                    send({ type: 'ABORT' });
+                  }}
+                >
+                  Odustani
+                </button>
+              </div>
+            </div>
+          )}
         </div>
         <div>
           <pre>{JSON.stringify({ cx }, null, 2)}</pre>
