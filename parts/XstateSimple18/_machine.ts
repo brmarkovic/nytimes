@@ -46,34 +46,71 @@ export const backendServer = new ApolloClient({
 // SNIMANJE NA SERVER KRAJ
 
 // Icontext
-export interface Icontext {}
+export interface Icontext {
+  kritikatekst: string;
+}
 
 // Ievents
-export type Ievents = { type: 'BROWSER' };
+
+type evINPUT = {
+  type: 'INPUT';
+  data: string;
+};
+export type Ievents =
+  | evINPUT
+  | { type: 'BROWSER' }
+  | { type: 'ANKETA' }
+  | { type: 'YES' }
+  | { type: 'NO' }
+  | { type: 'SUBMIT' }
+  | { type: 'ABORT' };
 const send = (sendEvent: Ievents, sendOptions?: any) => untypedSend(sendEvent, sendOptions);
 
 // Istates
 interface Istates {
   states: {
     ssr: {};
-    idle: {};
+    anketa: {};
+    pitanje: {};
+    kritika: {};
+    zahvalnica: {};
   };
 }
 
 export const XstateSimple18Machine = Machine<Icontext, Istates, Ievents>({
   id: 'XstateSimple18Machine',
   initial: 'ssr',
-  context: {},
+  context: {
+    kritikatekst: '',
+  },
   states: {
     ssr: {
       on: {
         BROWSER: [
           {
-            target: 'idle',
+            target: 'anketa',
           },
         ],
       },
     },
-    idle: {},
+    anketa: {
+      on: {
+        ANKETA: {
+          target: 'pitanje',
+        },
+      },
+    },
+    pitanje: {
+      on: {
+        YES: {
+          target: 'zahvalnica',
+        },
+        NO: {
+          target: 'kritika',
+        },
+      },
+    },
+    kritika: {},
+    zahvalnica: {},
   },
 });
