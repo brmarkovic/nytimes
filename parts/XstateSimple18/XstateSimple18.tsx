@@ -40,7 +40,7 @@ export function XstateSimple18() {
         <div className="flex flex-row items-center mt-3">
           <div className="flex-auto ml-4">
             <img
-              className="w-16 h-8"
+              className="w-16 h-8 "
               src="https://www.ikea.com/rs/sr/static/ikea-logo.f88b07ceb5a8c356b7a0fdcc9a563d63.svg"
               alt=""
             />
