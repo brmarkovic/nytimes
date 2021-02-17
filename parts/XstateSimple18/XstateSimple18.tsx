@@ -1,4 +1,6 @@
+/* eslint-disable react/jsx-no-undef */
 import React, { useEffect } from 'react';
+import Link from 'next/link';
 import { useMachine } from '@xstate/react';
 // import { inspect } from '@xstate/inspect';
 import { useXstateDebugger } from '../../helpers/xstate';
@@ -75,7 +77,24 @@ export function XstateSimple18() {
               />
             </svg>
           </div>
-          <div>1</div>
+          <div className="flex justify-end mr-5 ">
+            <Link href="/XstateSimple18/menu">
+              <svg
+                className="w-5 h-5 rounded-full hover:bg-gray-400"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
+                />
+              </svg>
+            </Link>
+          </div>
           <div className="mr-5">
             <svg
               className="w-5 h-5 rounded-full hover:bg-gray-400 hover:w-7 hover:h-7"
@@ -89,7 +108,7 @@ export function XstateSimple18() {
           </div>
         </div>
         <div className="flex flex-row h-10 mt-4 ml-5 mr-5 bg-gray-300 rounded-6xl hover:bg-gray-600">
-          <div className="flex items-center ml-3">
+          <div className="flex items-center w-1/6 ml-3">
             <svg
               className="w-5 h-5"
               xmlns="http://www.w3.org/2000/svg"
@@ -105,8 +124,8 @@ export function XstateSimple18() {
               />
             </svg>
           </div>
-          <div className="flex items-center justify-center ml-3 text-gray-900">Sta trazis?</div>
-          <div className="flex items-center justify-items-end">
+          <div className="flex items-center justify-start w-4/6 ml-3 text-gray-900">Sta trazis?</div>
+          <div className="flex items-center justify-start w-1/6">
             <svg
               className="w-5 h-5 "
               xmlns="http://www.w3.org/2000/svg"
