@@ -80,10 +80,55 @@ export function XstateSimple19() {
           Vas u svim našim poslovnicama, gde možete da se raspitate o prednostima naših paketa tekućih računa.
         </div>
         <div className="flex justify-center ">
-          <button className="px-8 py-2 mt-8 ml-5 text-red-600 border border-red-600 rounded-6xl hover:bg-red-600 hover:text-white">
-            Saznajte vise
-          </button>
+          {['idle'].some(ma) && (
+            <button
+              className="px-8 py-2 mt-8 ml-5 text-red-600 border border-red-600 rounded-6xl hover:bg-red-600 hover:text-white"
+              type="button"
+              onClick={() => {
+                send({
+                  type: 'UPITNIK',
+                });
+              }}
+            >
+              Saznajte vise
+            </button>
+          )}
+          {['pitanje'].some(ma) && (
+            <div className="flex flex-col">
+              <div className="p-2 border border-red-600 rounded-lg ">Da li imate otvoren TR kod Direktne banke? </div>
+              <div className="flex justify-center mt-5">
+                <button
+                  className="p-1 mx-1 text-white bg-red-600 border border-red-600 rounded-lg hover:bg-white hover:text-red-600 hover:"
+                  type="button"
+                  onClick={() => {
+                    send({ type: 'YES' });
+                  }}
+                >
+                  DA
+                </button>
+                <button
+                  className="p-1 mx-1 text-red-600 bg-white border border-red-600 rounded-lg hover:bg-red-600 hover:text-white"
+                  type="button"
+                  onClick={() => {
+                    send({ type: 'NO' });
+                  }}
+                >
+                  NE
+                </button>
+                <button
+                  className="p-1 mx-1 text-white bg-red-500 rounded-lg"
+                  type="button"
+                  onClick={() => {
+                    send({ type: 'ABORT' });
+                  }}
+                >
+                  Odustani
+                </button>{' '}
+              </div>
+            </div>
+          )}
         </div>
+
         <div className="mt-16">
           <img
             src="https://images.direktnabanka.rs/1593680260/desktop/content-pages-home/80116379287money-bag.jpg"

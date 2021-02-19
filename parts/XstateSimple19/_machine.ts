@@ -46,34 +46,98 @@ export const backendServer = new ApolloClient({
 // SNIMANJE NA SERVER KRAJ
 
 // Icontext
-export interface Icontext {}
+export interface Icontext {
+  brracuna: string;
+  brcekova: string;
+  brkartice: string;
+  imeprezime: string;
+  jmbg: string;
+  telefon: string;
+}
 
 // Ievents
-export type Ievents = { type: 'BROWSER' };
+
+type evINPUT = {
+  type: 'INPUT';
+  data: string;
+};
+export type Ievents =
+  | { type: 'BROWSER' }
+  | { type: 'UPITNIK' }
+  | { type: 'PITANJE' }
+  | { type: 'YES' }
+  | { type: 'NO' }
+  | { type: 'BACK' }
+  | { type: 'ABORT' }
+  | { type: 'SUBMIT' }
+  | { type: 'STANJE' }
+  | { type: 'BLOKADA' }
+  | { type: 'CEKOVI' }
+  | evINPUT;
+
 const send = (sendEvent: Ievents, sendOptions?: any) => untypedSend(sendEvent, sendOptions);
 
 // Istates
 interface Istates {
   states: {
     ssr: {};
+    idle: {};
     pitanje: {};
+    racun: {};
+    transakcija: {};
+    stanje: {};
+    cekovi: {};
+    kartica: {};
+    novausluga: {};
+    otvoriracun: {};
+    imeprezime: {};
+    jmbg: {};
+    telefon: {};
+    potvrda: {};
+    zahvalnica: {};
   };
 }
 
 export const XstateSimple19Machine = Machine<Icontext, Istates, Ievents>({
   id: 'XstateSimple19Machine',
   initial: 'ssr',
-  context: {},
+  context: {
+    brracuna: '',
+    brcekova: '',
+    brkartice: '',
+    imeprezime: '',
+    jmbg: '',
+    telefon: '',
+  },
   states: {
     ssr: {
       on: {
         BROWSER: [
           {
-            target: 'pitanje',
+            target: 'idle',
           },
         ],
       },
     },
+    idle: {
+      on: {
+        UPITNIK: {
+          target: 'pitanje',
+        },
+      },
+    },
     pitanje: {},
+    racun: {},
+    transakcija: {},
+    stanje: {},
+    cekovi: {},
+    kartica: {},
+    novausluga: {},
+    otvoriracun: {},
+    imeprezime: {},
+    jmbg: {},
+    telefon: {},
+    potvrda: {},
+    zahvalnica: {},
   },
 });
