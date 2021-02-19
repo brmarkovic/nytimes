@@ -56,7 +56,7 @@ const send = (sendEvent: Ievents, sendOptions?: any) => untypedSend(sendEvent, s
 interface Istates {
   states: {
     ssr: {};
-    idle: {};
+    pitanje: {};
   };
 }
 
@@ -69,11 +69,11 @@ export const XstateSimple19Machine = Machine<Icontext, Istates, Ievents>({
       on: {
         BROWSER: [
           {
-            target: 'idle',
+            target: 'pitanje',
           },
         ],
       },
     },
-    idle: {},
+    pitanje: {},
   },
 });

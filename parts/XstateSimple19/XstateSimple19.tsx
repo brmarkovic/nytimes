@@ -2,6 +2,7 @@
 import React, { useEffect } from 'react';
 import { useMachine } from '@xstate/react';
 // import { inspect } from '@xstate/inspect';
+import Link from 'next/link';
 import { useXstateDebugger } from '../../helpers/xstate';
 
 // import { useMachine } from '../../helpers/useMachine';
@@ -35,15 +36,17 @@ export function XstateSimple19() {
             <img className="ml-3 h-7" src="https://images.direktnabanka.rs/logo.png" alt="" />
           </div>
           <div>
-            <svg
-              className="w-5 mr-3 h-7"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
+            <Link href="/XstateSimple19/menu">
+              <svg
+                className="w-5 mr-3 h-7"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </Link>
           </div>
         </div>
         <div className="flex">
@@ -60,7 +63,9 @@ export function XstateSimple19() {
           vrednost vasem novcu.
         </div>
         <div>
-          <button className="px-8 py-2 ml-5 text-red-600 border border-red-600 rounded-6xl mt-7">Saznajte vise</button>
+          <button className="px-8 py-2 ml-5 text-red-600 border border-red-600 rounded-6xl mt-7 hover:bg-red-600 hover:text-white">
+            Saznajte vise
+          </button>
         </div>
         <div className="mt-16">
           <img
@@ -75,13 +80,25 @@ export function XstateSimple19() {
           Vas u svim našim poslovnicama, gde možete da se raspitate o prednostima naših paketa tekućih računa.
         </div>
         <div className="flex justify-center ">
-          <button className="px-8 py-2 mt-8 ml-5 text-red-600 border border-red-600 rounded-6xl">Saznajte vise</button>
+          <button className="px-8 py-2 mt-8 ml-5 text-red-600 border border-red-600 rounded-6xl hover:bg-red-600 hover:text-white">
+            Saznajte vise
+          </button>
         </div>
-        <div>
+        <div className="mt-16">
           <img
             src="https://images.direktnabanka.rs/1593680260/desktop/content-pages-home/80116379287money-bag.jpg"
             alt=""
           />
+        </div>
+        <div className="mt-10 text-4xl text-center text-red-600">Stednja</div>
+        <div className="mt-5 ml-5 mr-5 text-center text-gray-700">
+          Neka Banka radi za Vas. Oročite novac, uz besplatno otvaranje i vođenje štednog računa. Bilo da želite
+          dinarsku ili deviznu štednju, očekujemo Vas u svim našim poslovnicama.
+        </div>
+        <div className="flex justify-center ">
+          <button className="px-8 py-2 mt-8 ml-5 text-red-600 border border-red-600 rounded-6xl hover:bg-red-600 hover:text-white">
+            Saznajte vise
+          </button>
         </div>
       </div>
       <pre>{JSON.stringify({ currentState, cx }, null, 2)}</pre>
