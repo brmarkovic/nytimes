@@ -127,6 +127,45 @@ export function XstateSimple19() {
               </div>
             </div>
           )}
+          {['racun'].some(ma) && (
+            <div className="flex flex-col">
+              <div className="mt-3 text-center"> Unesite broj TR</div>
+              <div>
+                <textarea
+                  value={cx.brracuna}
+                  onChange={(ev) => {
+                    send({
+                      type: 'INPUT',
+                      data: ev.target.value,
+                    });
+                  }}
+                  className="mt-3 border border-red-600"
+                />
+              </div>
+              <div className="flex">
+                <div>
+                  <button
+                    className="p-1 mx-1 text-white bg-red-500 rounded-lg"
+                    type="button"
+                    onClick={() => {
+                      send({ type: 'SUBMIT' });
+                    }}
+                  >
+                    Potvrdi
+                  </button>
+                  <button
+                    className="p-1 mx-1 text-white bg-red-500 rounded-lg"
+                    type="button"
+                    onClick={() => {
+                      send({ type: 'ABORT' });
+                    }}
+                  >
+                    Odustani
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
 
         <div className="mt-16">

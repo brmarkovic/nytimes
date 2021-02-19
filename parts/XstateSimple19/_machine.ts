@@ -126,7 +126,19 @@ export const XstateSimple19Machine = Machine<Icontext, Istates, Ievents>({
         },
       },
     },
-    pitanje: {},
+    pitanje: {
+      on: {
+        YES: {
+          target: 'racun',
+        },
+        NO: {
+          target: 'otvoriracun',
+        },
+        ABORT: {
+          target: 'idle',
+        },
+      },
+    },
     racun: {},
     transakcija: {},
     stanje: {},
