@@ -187,11 +187,95 @@ export const XstateSimple19Machine = Machine<Icontext, Istates, Ievents>({
         CEKOVI: {
           target: 'cekovi',
         },
+        ABORT: {
+          target: 'idle',
+        },
       },
     },
-    stanje: {},
-    cekovi: {},
-    kartica: {},
+    stanje: {
+      on: {
+        SUBMIT: {
+          target: 'novausluga',
+        },
+        ABORT: {
+          target: 'idle',
+        },
+      },
+    },
+    cekovi: {
+      on: {
+        INPUT: [
+          {
+            actions: [
+              assign((cx, ev: evINPUT) => {
+                cx.brcekova = ev?.data || '';
+              }),
+            ],
+          },
+        ],
+        SUBMIT: [
+          {
+            cond: (cx) => cx?.brcekova?.length === 0 || false,
+            target: 'cekovi',
+          },
+          {
+            actions: [
+              assign((cx) => {
+                cx.brcekova = '';
+              }),
+            ],
+            target: 'novausluga',
+          },
+        ],
+        ABORT: [
+          {
+            actions: [
+              assign((cx) => {
+                cx.brcekova = '';
+              }),
+            ],
+            target: 'idle',
+          },
+        ],
+      },
+    },
+    kartica: {
+      on: {
+        INPUT: [
+          {
+            actions: [
+              assign((cx, ev: evINPUT) => {
+                cx.brkartice = ev?.data || '';
+              }),
+            ],
+          },
+        ],
+        SUBMIT: [
+          {
+            cond: (cx) => cx?.brcekova?.length === 0 || false,
+            target: 'kartica',
+          },
+          {
+            actions: [
+              assign((cx) => {
+                cx.brkartice = '';
+              }),
+            ],
+            target: 'novausluga',
+          },
+        ],
+        ABORT: [
+          {
+            actions: [
+              assign((cx) => {
+                cx.brkartice = '';
+              }),
+            ],
+            target: 'idle',
+          },
+        ],
+      },
+    },
     novausluga: {},
     otvoriracun: {},
     imeprezime: {},

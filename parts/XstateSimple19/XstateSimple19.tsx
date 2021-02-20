@@ -211,7 +211,7 @@ export function XstateSimple19() {
           {['stanje'].some(ma) && (
             <div className="flex flex-col mt-5 text-center">
               <div className="text-xl text-red-600"> Raspolozivo stanje po TR je 10.000,00 RSD </div>
-              <div>
+              <div className="mt-4">
                 <button
                   className="p-2 mx-1 text-white bg-red-500 rounded-lg"
                   type="button"
@@ -223,6 +223,71 @@ export function XstateSimple19() {
                 </button>
                 <button
                   className="p-2 mx-1 text-white bg-red-500 rounded-lg"
+                  type="button"
+                  onClick={() => {
+                    send({ type: 'ABORT' });
+                  }}
+                >
+                  Odustani
+                </button>
+              </div>
+            </div>
+          )}
+          {['kartica'].some(ma) && (
+            <div className="flex flex-col">
+              <div>
+                <div> Unesite br kartice koju zelite da blokirate </div>
+                <textarea
+                  value={cx.brkartice}
+                  onChange={(ev) => {
+                    send({ type: 'INPUT', data: ev.target.value });
+                  }}
+                  className="mt-3 border border-red-600"
+                />
+              </div>
+              <div>
+                <button
+                  className="p-1 mx-1 text-white bg-red-500 rounded-lg"
+                  type="button"
+                  onClick={() => {
+                    send({ type: 'SUBMIT' });
+                  }}
+                >
+                  Potvrdi
+                </button>
+                <button
+                  className="p-1 mx-1 text-white bg-red-500 rounded-lg"
+                  type="button"
+                  onClick={() => {
+                    send({ type: 'ABORT' });
+                  }}
+                >
+                  Odustani
+                </button>
+              </div>
+            </div>
+          )}
+          {['cekovi'].some(ma) && (
+            <div className="flex flex-col">
+              <textarea
+                value={cx.brcekova}
+                onChange={(ev) => {
+                  send({ type: 'INPUT', data: ev.target.value });
+                }}
+                className="mt-3 border border-red-600"
+              />
+              <div>
+                <button
+                  className="p-1 mx-1 text-white bg-red-500 rounded-lg"
+                  type="button"
+                  onClick={() => {
+                    send({ type: 'SUBMIT' });
+                  }}
+                >
+                  Potvrdi
+                </button>
+                <button
+                  className="p-1 mx-1 text-white bg-red-500 rounded-lg"
                   type="button"
                   onClick={() => {
                     send({ type: 'ABORT' });
