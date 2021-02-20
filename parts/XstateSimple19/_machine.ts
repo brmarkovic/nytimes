@@ -139,8 +139,56 @@ export const XstateSimple19Machine = Machine<Icontext, Istates, Ievents>({
         },
       },
     },
-    racun: {},
-    transakcija: {},
+    racun: {
+      on: {
+        INPUT: [
+          {
+            actions: [
+              assign((cx, ev: evINPUT) => {
+                cx.brracuna = ev?.data || '';
+              }),
+            ],
+          },
+        ],
+        SUBMIT: [
+          {
+            cond: (cx) => cx?.brracuna?.length === 0 || false,
+            target: 'racun',
+          },
+          {
+            actions: [
+              assign((cx) => {
+                cx.brracuna = '';
+              }),
+            ],
+            target: 'transakcija',
+          },
+        ],
+        ABORT: [
+          {
+            actions: [
+              assign((cx) => {
+                cx.brracuna = '';
+              }),
+            ],
+            target: 'idle',
+          },
+        ],
+      },
+    },
+    transakcija: {
+      on: {
+        STANJE: {
+          target: 'stanje',
+        },
+        BLOKADA: {
+          target: 'kartica',
+        },
+        CEKOVI: {
+          target: 'cekovi',
+        },
+      },
+    },
     stanje: {},
     cekovi: {},
     kartica: {},

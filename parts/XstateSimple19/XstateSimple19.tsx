@@ -166,6 +166,73 @@ export function XstateSimple19() {
               </div>
             </div>
           )}
+          {['transakcija'].some(ma) && (
+            <div className="flex justify-center mt-4">
+              <div>
+                <button
+                  className="p-2 mx-1 text-white bg-red-500 rounded-lg"
+                  type="button"
+                  onClick={() => {
+                    send({ type: 'STANJE' });
+                  }}
+                >
+                  Proveri stanje po TR
+                </button>
+                <button
+                  className="p-2 mx-1 text-white bg-red-500 rounded-lg"
+                  type="button"
+                  onClick={() => {
+                    send({ type: 'BLOKADA' });
+                  }}
+                >
+                  Blokada kartica
+                </button>
+                <button
+                  className="p-2 mx-1 text-white bg-red-500 rounded-lg"
+                  type="button"
+                  onClick={() => {
+                    send({ type: 'CEKOVI' });
+                  }}
+                >
+                  Poruci cekove
+                </button>
+                <button
+                  className="p-2 mx-1 text-white bg-red-500 rounded-lg"
+                  type="button"
+                  onClick={() => {
+                    send({ type: 'ABORT' });
+                  }}
+                >
+                  Odustani
+                </button>
+              </div>
+            </div>
+          )}
+          {['stanje'].some(ma) && (
+            <div className="flex flex-col mt-5 text-center">
+              <div className="text-xl text-red-600"> Raspolozivo stanje po TR je 10.000,00 RSD </div>
+              <div>
+                <button
+                  className="p-2 mx-1 text-white bg-red-500 rounded-lg"
+                  type="button"
+                  onClick={() => {
+                    send({ type: 'SUBMIT' });
+                  }}
+                >
+                  Potvrdi
+                </button>
+                <button
+                  className="p-2 mx-1 text-white bg-red-500 rounded-lg"
+                  type="button"
+                  onClick={() => {
+                    send({ type: 'ABORT' });
+                  }}
+                >
+                  Odustani
+                </button>
+              </div>
+            </div>
+          )}
         </div>
 
         <div className="mt-16">
