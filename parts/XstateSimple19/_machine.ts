@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import { Machine } from 'xstate';
 import { send as untypedSend } from 'xstate/lib/actions';
 import { assign } from '@xstate/immer';
@@ -73,6 +74,8 @@ export type Ievents =
   | { type: 'STANJE' }
   | { type: 'BLOKADA' }
   | { type: 'CEKOVI' }
+  | { type: 'POTVRDA' }
+  | { type: 'ZAHVALNICA' }
   | evINPUT;
 
 const send = (sendEvent: Ievents, sendOptions?: any) => untypedSend(sendEvent, sendOptions);
@@ -94,6 +97,7 @@ interface Istates {
     jmbg: {};
     telefon: {};
     potvrda: {};
+    snimiubazu: {};
     zahvalnica: {};
   };
 }
@@ -276,12 +280,195 @@ export const XstateSimple19Machine = Machine<Icontext, Istates, Ievents>({
         ],
       },
     },
-    novausluga: {},
-    otvoriracun: {},
-    imeprezime: {},
-    jmbg: {},
-    telefon: {},
-    potvrda: {},
-    zahvalnica: {},
+    novausluga: {
+      on: {
+        YES: {
+          target: 'transakcija',
+        },
+        NO: {
+          target: 'zahvalnica',
+        },
+      },
+    },
+    otvoriracun: {
+      on: {
+        YES: {
+          target: 'imeprezime',
+        },
+        NO: {
+          target: 'zahvalnica',
+        },
+      },
+    },
+    imeprezime: {
+      on: {
+        INPUT: [
+          {
+            actions: [
+              assign((cx, ev: evINPUT) => {
+                cx.imeprezime = ev?.data || '';
+              }),
+            ],
+          },
+        ],
+        SUBMIT: [
+          {
+            cond: (cx) => cx?.imeprezime?.length === 0 || false,
+            target: 'imeprezime',
+          },
+          {
+            target: 'jmbg',
+          },
+        ],
+        ABORT: [
+          {
+            actions: [
+              assign((cx) => {
+                cx.imeprezime = '';
+              }),
+            ],
+            target: 'idle',
+          },
+        ],
+      },
+    },
+    jmbg: {
+      on: {
+        INPUT: [
+          {
+            actions: [
+              assign((cx, ev: evINPUT) => {
+                cx.jmbg = ev?.data || '';
+              }),
+            ],
+          },
+        ],
+        SUBMIT: [
+          {
+            cond: (cx) => cx?.jmbg?.length === 0 || false,
+            target: 'jmbg',
+          },
+          {
+            target: 'telefon',
+          },
+        ],
+        ABORT: [
+          {
+            actions: [
+              assign((cx) => {
+                cx.jmbg = '';
+              }),
+            ],
+            target: 'idle',
+          },
+        ],
+      },
+    },
+    telefon: {
+      on: {
+        INPUT: [
+          {
+            actions: [
+              assign((cx, ev: evINPUT) => {
+                cx.telefon = ev?.data || '';
+              }),
+            ],
+          },
+        ],
+        SUBMIT: [
+          {
+            cond: (cx) => cx?.telefon?.length === 0 || false,
+            target: 'telefon',
+          },
+          {
+            target: 'potvrda',
+          },
+        ],
+        ABORT: [
+          {
+            actions: [
+              assign((cx) => {
+                cx.telefon = '';
+              }),
+            ],
+            target: 'idle',
+          },
+        ],
+      },
+    },
+    potvrda: {
+      on: {
+        SUBMIT: {
+          target: 'snimiubazu',
+        },
+        BACK: {
+          target: 'imeprezime',
+        },
+      },
+    },
+    snimiubazu: {
+      invoke: {
+        src: async (cx) => {
+          const [ERRdata, data] = await backendServer
+            .mutate({
+              variables: {
+                imeprezime: cx.imeprezime,
+                jmbg: cx.jmbg,
+                telefon: cx.telefon,
+              },
+              mutation: gql`
+                mutation insert_otvaranjeracuna($imeprezime: String, $jmbg: String, $telefon: String) {
+                  insert_otvaranjeracuna(objects: { imeprezime: $imeprezime, jmbg: $jmbg, telefon: $telefon }) {
+                    affected_rows
+                  }
+                }
+              `,
+            })
+            .then((r) => [null, r])
+            .catch((e) => [e]);
+          if ((data && data.errors) || ERRdata) {
+            throw new Error('error');
+          }
+          return data;
+        },
+        onDone: {
+          // kada server vrati odgovor
+          actions: [
+            assign((cx) => {
+              cx.imeprezime = null;
+              cx.jmbg = null;
+              cx.telefon = null;
+            }),
+            send({ type: 'ZAHVALNICA' }),
+          ],
+        },
+        onError: {
+          // kada server napravi gresku
+          // internet ne radi, ne vidi server
+          actions: [send({ type: 'POTVRDA' })],
+        },
+      },
+      on: {
+        ZAHVALNICA: [
+          {
+            target: 'zahvalnica',
+          },
+        ],
+        POTVRDA: [
+          {
+            target: 'potvrda',
+          },
+        ],
+      },
+    },
+    zahvalnica: {
+      after: {
+        1000: [
+          {
+            target: 'idle',
+          },
+        ],
+      },
+    },
   },
 });
