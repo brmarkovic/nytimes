@@ -31,9 +31,9 @@ export function XstateSimple19() {
   return (
     <div className="flex flex-col">
       <div className="bg-white">
-        <div className="flex flex-row justify-between p-3">
+        <div className="flex flex-row justify-between p-3 ">
           <div>
-            <img className="ml-3 h-7 md:h-10 md:mt-5" src="https://images.direktnabanka.rs/logo.png" alt="" />
+            <img className="ml-3 h-7 md:h-10 " src="https://images.direktnabanka.rs/logo.png" alt="" />
           </div>
           <div className=" md:flex md:mt-5 md:items-center sm:hidden">
             <div className="ml-5 text-gray-600 hover:text-red-600 hover:underline">Stanovnistvo</div>
