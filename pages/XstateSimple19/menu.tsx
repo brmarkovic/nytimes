@@ -33,15 +33,15 @@ export default function XstateSimple19() {
           <div className="mt-4 text-lg text-gray-600 hover:text-red-600 hover:underline ">Prigovori</div>
           <div className="mt-4 text-lg text-gray-600 hover:text-red-600 hover:underline ">Kontakt</div>
         </div>
-        <div className="flex ">
-          <div className="flex justify-center ">
-            <button className="px-8 py-2 mt-8 ml-16 text-white bg-red-600 border border-red-600 rounded-6xl">
+        <div className="flex justify-center ">
+          <div className="flex ">
+            <button className="px-8 py-2 mt-8 text-white bg-red-600 border border-red-600 rounded-6xl">
               011 333 60 00
             </button>
           </div>
 
           <div className="flex justify-center ">
-            <button className="px-8 py-2 mt-8 ml-5 text-red-600 border border-red-600 rounded-6xl hover:bg-red-600 hover:text-white">
+            <button className="px-8 py-2 mt-8 ml-3 text-red-600 border border-red-600 rounded-6xl hover:bg-red-600 hover:text-white">
               e-banking
             </button>
           </div>

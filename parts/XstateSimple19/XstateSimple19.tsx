@@ -88,15 +88,17 @@ export function XstateSimple19() {
               alt=""
             />
           </div>
-          <div className="md:w-1/2">
+          <div className="md:w-1/2 md:mt-4 ">
             <div className="mt-12 font-medium text-center text-red-600"> ZA GRADJANE</div>
-            <div className="mt-10 text-4xl text-center text-red-600">Tekuci racuni</div>
-            <div className="mt-5 ml-5 mr-5 text-center text-gray-700">
+            <div className="mt-10 text-4xl text-center text-red-600 md:text-5xl md:text-left md:ml-3">
+              Tekuci racuni
+            </div>
+            <div className="mt-5 ml-5 mr-5 text-center text-gray-700 md:text-lg md:text-justify md:max-w-md md:flex ">
               Upravljajte svojim vremenom i novcem otvorite tekući račun u našoj Banci, uz jednostavnu proceduru.
               Očekujemo Vas u svim našim poslovnicama, gde možete da se raspitate o prednostima naših paketa tekućih
               računa.
             </div>
-            <div className="flex justify-center ">
+            <div className="flex justify-center md:justify-start ">
               {['idle'].some(ma) && (
                 <button
                   className="px-8 py-2 mt-8 ml-5 text-red-600 border border-red-600 rounded-6xl hover:bg-red-600 hover:text-white"
@@ -500,23 +502,26 @@ export function XstateSimple19() {
             </div>
           </div>
         </div>
-
-        <div className="mt-16">
-          <img
-            src="https://images.direktnabanka.rs/1593680260/desktop/content-pages-home/80116379287money-bag.jpg"
-            alt=""
-          />
-        </div>
-        <div className="mt-10 text-4xl text-center text-red-600">Stednja</div>
-        <div className="mt-5 ml-5 mr-5 text-center text-gray-700">
-          Neka Banka radi za Vas. Oročite novac, uz besplatno otvaranje i vođenje štednog računa. Bilo da želite
-          dinarsku ili deviznu štednju, očekujemo Vas u svim našim poslovnicama.
-        </div>
-        <div className="flex justify-center ">
-          <button className="px-8 py-2 mt-8 ml-5 text-red-600 border border-red-600 rounded-6xl hover:bg-red-600 hover:text-white">
-            Saznajte vise
-          </button>
-        </div>
+        <div className="md:flex md:mt-24 ">
+          <div className="mt-16 md:w-1/2">
+            <img
+              src="https://images.direktnabanka.rs/1593680260/desktop/content-pages-home/80116379287money-bag.jpg"
+              alt=""
+            />
+          </div>
+          <div className="flex-col md:flex md:w-1/2">
+            <div className="mt-10 text-4xl text-center text-red-600 md:text-5xl md:text-left md:ml-3">Stednja</div>
+            <div className="mt-5 ml-5 mr-5 text-center text-gray-700 md:text-lg md:max-w-md md:text-justify">
+              Neka Banka radi za Vas. Oročite novac, uz besplatno otvaranje i vođenje štednog računa. Bilo da želite
+              dinarsku ili deviznu štednju, očekujemo Vas u svim našim poslovnicama.
+            </div>
+            <div className="flex justify-center md:justify-start ">
+              <button className="px-8 py-2 mt-8 ml-5 text-red-600 border border-red-600 rounded-6xl hover:bg-red-600 hover:text-white">
+                Saznajte vise
+              </button>
+            </div>
+          </div>
+        </div>{' '}
       </div>
       <pre>{JSON.stringify({ currentState, cx }, null, 2)}</pre>
     </div>
