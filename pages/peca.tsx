@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 /* eslint-disable react/button-has-type */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
@@ -17,11 +18,25 @@ const valute = [
   { label: 'rsd', ratio: 185 },
 ];
 
+const companies = [
+  { name: 'one', category: 'finance', start: 1981, end: 2003 },
+  { name: 'two', category: 'retail', start: 1992, end: 2008 },
+  { name: 'three', category: 'reatil', start: 1999, end: 2007 },
+];
+
 const popUpAlerter = () => {
   alert('popUp!');
 };
 
-const PrvaKomponenta = ({ nameInput, ageInput, personInput, valuteInput, showInfoInput, popUpAlerterInput }) => {
+const PrvaKomponenta = ({
+  nameInput,
+  ageInput,
+  personInput,
+  valuteInput,
+  showInfoInput,
+  popUpAlerterInput,
+  companiesInput,
+}) => {
   return (
     <>
       <div>
@@ -48,6 +63,10 @@ const PrvaKomponenta = ({ nameInput, ageInput, personInput, valuteInput, showInf
           );
         })}
       </div>
+      {companiesInput.filter((r) => {
+        return <>{r.riteal}</>;
+      })}
+      <div />
       <button className="mx-10 bg-gray-500 rounded" onClick={popUpAlerterInput}>
         Alert!
       </button>
@@ -68,6 +87,7 @@ export default function Peca() {
         personInput={person}
         valuteInput={valute}
         showInfoInput={showInfo}
+        companiesInput={companies}
         popUpAlerterInput={popUpAlerter}
       />
     </>
