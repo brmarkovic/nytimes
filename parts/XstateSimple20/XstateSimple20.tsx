@@ -29,7 +29,7 @@ export function XstateSimple20() {
   // REACT (HTML+) KOMPONENTA
   return (
     <div className="flex flex-col">
-      <div className="bg-white">
+      <div className="bg-white ">
         <div className="flex bg-black">
           <div className="w-5/6 ml-4">
             <img
@@ -68,114 +68,198 @@ export function XstateSimple20() {
             </div>
           </div>
         </div>
-        <div className="flex flex-col">
-          <div className="ml-5 mr-5 text-4xl font-bold leading-tight text-center hover:text-red-600">
-            Former capitol Polce Chief says rioters'came prepared for war'
+        <div className="md:text-sm md:font-bold md:flex md:ml-56 md:mr-56 md:p-3 md:justify-between sm:hidden">
+          <div className="mr-2 border-r border-gray-400 ">
+            <span className="text-red-600 ">Covid 19:</span>Live updates
           </div>
-          <div className="p-2">
-            <img
-              className="object-cover w-full"
-              src="https://cdn.cnn.com/cnnnext/dam/assets/210205104923-104-january-6-capitol-riots-small-tease.jpg"
-              alt=""
-            />
+          <div>Tracking corona virus vaccinations worldwide</div>
+          <div>
+            <span className="text-red-600 ">TRANDING:</span>Lawrence Ferllingheti
           </div>
-          <div className="flex w-1/4 ml-2 -mt-40 text-white bg-red-600 border border-red-600 ">
-            <div className="p-2 font-bold">LIVE UPDATES</div>
-          </div>
-          <div className="ml-2 mr-2 bg-gray-100 opacity-75">
-            <div className="p-2 text-2xl font-bold leading-tight text-left hover:text-red-600">
-              Law enforcement says they readied for a protest but didnt knowe they needed to prep for a battle{' '}
+          <div>Rolerrblading cops</div>
+          <div>Gerard Depardeiu</div>
+        </div>
+
+        <div className="flex flex-col md:bg-red-200 md:flex md:ml-56 md:mr-56">
+          <div className="md:flex md:w-2/4">
+            <div className="md:flex-flex-col">
+              <div className="ml-5 mr-5 text-4xl font-bold leading-tight text-center md:mt-3 md:text-5xl hover:text-red-600 md:flex md:ml-1">
+                Former capitol Polce Chief says rioters'came prepared for war'
+              </div>
+              <div className="p-2">
+                <img
+                  className="object-cover w-full "
+                  src="https://cdn.cnn.com/cnnnext/dam/assets/210205104923-104-january-6-capitol-riots-small-tease.jpg"
+                  alt=""
+                />
+              </div>
+              <div className="flex w-1/4 ml-2 -mt-40 text-white md:mt-0">
+                <div className="p-2 font-bold bg-red-600 md:-mt-10 ">LIVE UPDATES</div>
+              </div>
+              <div className="h-32 ml-2 mr-2 bg-gray-100 opacity-75 md:bg-white md:h-auto ">
+                <div className="p-2 text-2xl font-bold leading-tight text-left hover:text-red-600 md:p-0 md:text-lg md:mr-2 md:ml-2">
+                  Law enforcement says they readied for a protest but didnt knowe they needed to prep for a battle{' '}
+                </div>
+              </div>
+              <div className="p-1 ml-2 mr-2 text-xl font-thin leading-tight text-gray-900 bg-white border-b border-gray-400 md:text-lg hover:text-red-600">
+                Police officer describes suffering chemical burns on her face
+              </div>
+              <div className="p-1 ml-2 mr-2 text-xl font-thin leading-tight text-gray-900 bg-white border-b border-gray-400 md:text-lg hover:text-red-600">
+                Capitol security officials point fingers over disastrous january 6 riot response
+              </div>
+              <div className="flex p-2 ml-2 mr-2 text-xl font-thin leading-tight text-gray-900 bg-white border-b border-gray-400 hover:text-red-600 md:text-lg">
+                <div className="flex items-center">
+                  <svg
+                    className="w-6 h-6 text-red-600 "
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"
+                    />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                </div>
+                <div className="ml-2 text-left">Capitol Officer recounts responding to insurrection</div>
+              </div>
+              <div className="p-1 ml-2 mr-2 text-xl font-thin leading-tight text-gray-900 bg-white md:text-lg hover:text-red-600">
+                Inside a 'Patriot Party' rally where Trump loyalists search for path forward
+              </div>
+            </div>
+          </div>{' '}
+          <div className="md:flex md:w-1/4">
+            <div className=" md:flex-col">
+              <div className="flex p-2">
+                <img
+                  src="https://cdn.cnn.com/cnnnext/dam/assets/210222211637-01-boeing-aircraft-engine-failure-ntsb-exlarge-tease.jpg"
+                  alt=""
+                />
+              </div>
+              <div className="ml-2 mr-2 -mt-48 bg-gray-100 opacity-75">
+                <div className="p-2 text-3xl leading-tight text-left font-tini hover:text-red-600">
+                  Unitedd Airlines flight engine failure findings released.Here`s what we know
+                </div>
+                <div className="mt-2 ml-2 mr-2 text-base list-disc list-inside hover:text-red-600">
+                  Captain 'Sully' explains why its very rare to hear someone say 'Mayday' on radio
+                </div>
+              </div>
+
+              <div className="p-2 mt-2 bg-white ">
+                <div>
+                  <img
+                    src="https://cdn.cnn.com/cnnnext/dam/assets/170417184020-cnnmoney-trump-tax-returns-exlarge-tease.jpg"
+                    alt=""
+                  />
+                </div>
+                <div className="flex w-1/4 -mt-48 text-white ">
+                  <div className="p-2 font-bold bg-black border border-black">ANALYSIS</div>
+                </div>
+                <div className="bg-gray-100 opacity-75 ">
+                  <div className="ml-2 text-3xl leading-tight text-left font-tini hover:text-red-600">
+                    Why has Trump fought so hard keep his tax returns secret?
+                  </div>
+                  <div className="h-16 mt-4 ml-2 mr-2 text-base list-disc list-inside hover:text-red-600">
+                    What the Supreme Court ruling means for Manhatns DA`s Trump criminal probe
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-          <div className="p-1 ml-2 mr-2 text-xl font-thin leading-tight text-gray-900 bg-white border-b border-gray-400 hover:text-red-600">
-            Police officer describes suffering chemical burns on her face
-          </div>
-          <div className="p-1 ml-2 mr-2 text-xl font-thin leading-tight text-gray-900 bg-white border-b border-gray-400 hover:text-red-600">
-            Capitol security officials point fingers over disastrous january 6 riot response
-          </div>
-          <div className="flex p-2 ml-2 mr-2 text-xl font-thin leading-tight text-gray-900 bg-white border-b border-gray-400 hover:text-red-600">
-            <div className="flex items-center">
-              <svg
-                className="w-6 h-6 text-red-600 "
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"
+          <div className="md:flex md:w-1/4">
+            <div className="p-2 mt-2 bg-white ">
+              <div>
+                <img
+                  src="https://cdn.cnn.com/cnnnext/dam/assets/210223011600-01-coronavirus-los-angeles-icu-0217-exlarge-tease.jpg"
+                  alt=""
                 />
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>
+              </div>
+              <div className="-mt-20 bg-gray-100 opacity-75 ">
+                <div className="h-20 ml-2 text-3xl leading-tight text-left font-tini hover:text-red-600">
+                  'We've done worse than most any other country, fauci says
+                </div>
+              </div>
             </div>
-            <div className="ml-2 text-left">Capitol Officer recounts responding to insurrection</div>
-          </div>
-          <div className="p-1 ml-2 mr-2 text-xl font-thin leading-tight text-gray-900 bg-white hover:text-red-600">
-            Inside a 'Patriot Party' rally where Trump loyalists search for path forward
+            <div className="p-1 ml-2 mr-2 text-xl font-thin leading-tight text-gray-900 bg-white border-b border-gray-400 hover:text-red-600">
+              <span className="text-red-600">LIVE</span> Johnson & Johnson vaccine doses will be 'backloaded with more
+              coming later'
+            </div>
+            <div className="flex p-2 ml-2 mr-2 text-xl font-thin leading-tight text-gray-900 bg-white border-b border-gray-400 hover:text-red-600">
+              <div className="flex items-center">
+                <svg
+                  className="w-6 h-6 text-red-600 "
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+              </div>
+              <div className="ml-2 text-left">Lithuanian FM: Russia 'absolutely' playing politics with its vaccine</div>
+            </div>
+            <div className="p-1 ml-2 mr-2 text-xl font-thin leading-tight text-gray-900 bg-white border-b border-gray-400 hover:text-red-600">
+              Biden admin.prepares to impose sanctions on Russia over navalny poisioning
+            </div>
+            <div className="p-1 ml-2 mr-2 text-xl font-thin leading-tight text-gray-900 bg-white border-b border-gray-400 hover:text-red-600">
+              Garland draws sharp contrast with Barr
+            </div>
+            <div className="p-1 ml-2 mr-2 text-xl font-thin leading-tight text-gray-900 bg-white border-b border-gray-400 hover:text-red-600">
+              princePhilip being treated for an infection
+            </div>
+            <div className="p-1 ml-2 mr-2 text-xl font-thin leading-tight text-gray-900 bg-white border-b border-gray-400 hover:text-red-600">
+              Corruption inquiry wants former president jailed for two years after no-show
+            </div>
+            <div className="p-1 ml-2 mr-2 text-xl font-thin leading-tight text-gray-900 bg-white border-b border-gray-400 hover:text-red-600">
+              Biden admin.prepares to impose sanctions on Russia over navalny poisioning
+            </div>
+            <div className="p-1 ml-2 mr-2 text-xl font-thin leading-tight text-gray-900 bg-white border-b border-gray-400 hover:text-red-600">
+              4 reasonns Teslas stock is tumbling
+            </div>
           </div>
         </div>
-        <div>
-          <div className="p-2">
+
+        <div className="flex flex-col">
+          <div className="p-2 mt-5">
             <img
-              src="https://cdn.cnn.com/cnnnext/dam/assets/210222211637-01-boeing-aircraft-engine-failure-ntsb-exlarge-tease.jpg"
+              src="https://cdn.cnn.com/cnnnext/dam/assets/210219164226-jetblue-mint-studio-tuft-and-needle-bed-exlarge-tease.jpg"
               alt=""
-            />
+            />{' '}
           </div>
-          <div className="ml-2 mr-2 -mt-48 bg-gray-100 opacity-75">
-            <div className="p-2 text-3xl leading-tight text-left font-tini hover:text-red-600">
-              Unitedd Airlines flight engine failure findings released.Here`s what we know
-            </div>
-            <div className="mt-2 ml-2 mr-2 text-base list-disc list-inside hover:text-red-600">
-              Captain 'Sully' explains why its very rare to hear someone say 'Mayday' on radio
+          <div className="ml-8 mr-8 -mt-10 bg-gray-400">
+            <div className="p-2 text-2xl font-bold leading-tight text-center">
+              Airplane seat revolution creates one of biggest beds in the sky
             </div>
           </div>
 
-          <div className="p-2 mt-2 bg-white ">
-            <div>
-              <img
-                src="https://cdn.cnn.com/cnnnext/dam/assets/170417184020-cnnmoney-trump-tax-returns-exlarge-tease.jpg"
-                alt=""
-              />
-            </div>
-            <div className="flex w-1/4 -mt-48 text-white ">
-              <div className="p-2 font-bold bg-black border border-black">ANALYSIS</div>
-            </div>
-            <div className="bg-gray-100 opacity-75 ">
-              <div className="ml-2 text-3xl leading-tight text-left font-tini hover:text-red-600">
-                Why has Trump fought so hard keep his tax returns secret?
-              </div>
-              <div className="h-16 mt-4 ml-2 mr-2 text-base list-disc list-inside hover:text-red-600">
-                What the Supreme Court ruling means for Manhatns DA`s Trump criminal probe
-              </div>
-            </div>
+          <div className="p-2 mt-5">
+            <img
+              src="https://cdn.cnn.com/cnnnext/dam/assets/210223205529-rollerblading-cops-exlarge-tease.jpg"
+              alt=""
+            />
           </div>
-          <div className="p-2 mt-2 bg-white ">
-            <div>
-              <img
-                src="https://cdn.cnn.com/cnnnext/dam/assets/210223011600-01-coronavirus-los-angeles-icu-0217-exlarge-tease.jpg"
-                alt=""
-              />
-            </div>
-            <div className="-mt-20 bg-gray-100 opacity-75 ">
-              <div className="h-20 ml-2 text-3xl leading-tight text-left font-tini hover:text-red-600">
-                'We've done worse than most any other country, fauci says
-              </div>
-            </div>
-          </div>
-          <div className="p-1 ml-2 mr-2 text-xl font-thin leading-tight text-gray-900 bg-white border-b border-gray-400 hover:text-red-600">
-            <span className="text-red-600">LIVE</span> Johnson & Johnson vaccine doses will be 'backloaded with more
-            coming later'
-          </div>
-          <div className="flex p-2 ml-2 mr-2 text-xl font-thin leading-tight text-gray-900 bg-white border-b border-gray-400 hover:text-red-600">
-            <div className="flex items-center">
+          <div className="flex flex-col ml-8 mr-8 -mt-10 bg-gray-400">
+            <div className="flex justify-center mt-2 leading-tight ">
               <svg
                 className="w-6 h-6 text-red-600 "
                 xmlns="http://www.w3.org/2000/svg"
@@ -197,25 +281,26 @@ export function XstateSimple20() {
                 />
               </svg>
             </div>
-            <div className="ml-2 text-left">Lithuanian FM: Russia 'absolutely' playing politics with its vaccine</div>
+            <div className="p-1 text-2xl font-bold leading-tight text-center ">
+              Internet reacst to Pakistan's rollerblading cops
+            </div>
           </div>
-          <div className="p-1 ml-2 mr-2 text-xl font-thin leading-tight text-gray-900 bg-white border-b border-gray-400 hover:text-red-600">
-            Biden admin.prepares to impose sanctions on Russia over navalny poisioning
+
+          <div className="p-2 mt-5">
+            <img
+              src="https://cdn.cnn.com/cnnnext/dam/assets/210222175906-01-laurence-philomene-puberty-series-exlarge-tease.jpg"
+              alt=""
+            />
           </div>
-          <div className="p-1 ml-2 mr-2 text-xl font-thin leading-tight text-gray-900 bg-white border-b border-gray-400 hover:text-red-600">
-            Garland draws sharp contrast with Barr
+          <div className="flex flex-col ml-8 mr-8 -mt-10 bg-gray-400">
+            <div className="p-1 text-2xl font-bold leading-tight text-center ">
+              Photographer shows beauty of their transition trough vivid self-portratias
+            </div>
           </div>
-          <div className="p-1 ml-2 mr-2 text-xl font-thin leading-tight text-gray-900 bg-white border-b border-gray-400 hover:text-red-600">
-            princePhilip being treated for an infection
-          </div>
-          <div className="p-1 ml-2 mr-2 text-xl font-thin leading-tight text-gray-900 bg-white border-b border-gray-400 hover:text-red-600">
-            Corruption inquiry wants former president jailed for two years after no-show
-          </div>
-          <div className="p-1 ml-2 mr-2 text-xl font-thin leading-tight text-gray-900 bg-white border-b border-gray-400 hover:text-red-600">
-            Biden admin.prepares to impose sanctions on Russia over navalny poisioning
-          </div>
-          <div className="p-1 ml-2 mr-2 text-xl font-thin leading-tight text-gray-900 bg-white border-b border-gray-400 hover:text-red-600">
-            4 reasonns Teslas stock is tumbling
+
+          <div>
+            <div>1</div>
+            <div>2</div>
           </div>
         </div>
       </div>
