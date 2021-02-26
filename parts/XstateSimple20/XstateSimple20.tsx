@@ -246,16 +246,18 @@ export function XstateSimple20() {
           <div className="md:flex-col md:col-span-1 md:max-w-xl md:ml-56">
             <img
               className="p-2 mt-5"
-              src="https://cdn.cnn.com/cnnnext/dam/assets/210219164226-jetblue-mint-studio-tuft-and-needle-bed-exlarge-tease.jpg"
+              src="https://cdn.cnn.com/cnnnext/dam/assets/210222175906-01-laurence-philomene-puberty-series-exlarge-tease.jpg"
               alt=""
-            />{' '}
-            <div className="ml-8 mr-8 -mt-10 ">
-              <div className="p-2 text-2xl font-bold leading-tight text-center bg-gray-400">
-                Airplane seat revolution creates one of biggest beds in the sky
+            />
+
+            <div className="flex flex-col ml-8 mr-8 -mt-16">
+              <div className="p-1 text-2xl font-bold leading-tight text-center bg-gray-400 ">
+                Photographer shows beauty of their transition trough vivid self-portratias
               </div>
             </div>
+
             <img
-              className="p-2 mt-5"
+              className="p-2 mt-5 "
               src="https://cdn.cnn.com/cnnnext/dam/assets/210223205529-rollerblading-cops-exlarge-tease.jpg"
               alt=""
             />
@@ -302,13 +304,13 @@ export function XstateSimple20() {
             </div>
 
             <img
-              className="p-2 mt-5"
-              src="https://images.outbrainimg.com/transform/v3/eyJpdSI6IjhiNTgxZWI3Nzc0N2IxMGNiMzRiNTVmNGFiNmMyMDZlMzBkNzEyMmQ0MTljOTkwMDcyODZhMjE2YTFhM2Q2NjMiLCJ3Ijo1NDAsImgiOjMwMywiZCI6MS41LCJjcyI6MCwiZiI6NH0.webp"
+              className="p-2 mt-5 "
+              src="https://images.outbrainimg.com/transform/v3/eyJpdSI6ImZiZmJlMWM1YjdmOTJlOGVhYzE5MjRlYTZiNTQxYzE3ODYyMDUyOWQzNzg3YWU5MDQ0NmQ3YzBmMjQ0YmQ3NmQiLCJ3Ijo1NDAsImgiOjMwMywiZCI6MS41LCJjcyI6MCwiZiI6NH0.webp"
               alt=""
             />
 
-            <div className="flex flex-col ml-8 mr-8 -mt-16 ">
-              <div className="p-1 text-2xl font-bold leading-tight text-center bg-gray-400 ">
+            <div className="flex flex-col ml-8 mr-8 -mt-16 md:mt-5 ">
+              <div className="p-1 text-2xl font-bold leading-tight text-center bg-gray-400 md:-mt-16 ">
                 Watch a bilion years of tectoinic plates moving in one minute
               </div>
             </div>
