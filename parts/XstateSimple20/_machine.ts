@@ -46,34 +46,73 @@ export const backendServer = new ApolloClient({
 // SNIMANJE NA SERVER KRAJ
 
 // Icontext
-export interface Icontext {}
+export interface Icontext {
+  imeprezime: string;
+  mail: string;
+  telefon: string;
+}
+
+type evINPUT = {
+  type: 'INPUT';
+  data: string;
+};
 
 // Ievents
-export type Ievents = { type: 'BROWSER' };
+export type Ievents =
+  | { type: 'BROWSER' }
+  | evINPUT
+  | { type: 'YES' }
+  | { type: 'NO' }
+  | { type: 'SUBMIT' }
+  | { type: 'ABORT' };
 const send = (sendEvent: Ievents, sendOptions?: any) => untypedSend(sendEvent, sendOptions);
 
 // Istates
 interface Istates {
   states: {
     ssr: {};
-    idle: {};
+
+    pitanje: {};
+    imeprezime: {};
+    mail: {};
+    telefon: {};
+    potvrda: {};
+    zahvalnica: {};
+    snimiubazu: {};
+    maillistread: {};
+    deletesinglebaza: {};
+    snimikorisnikaubazu: {};
   };
 }
 
 export const XstateSimple20Machine = Machine<Icontext, Istates, Ievents>({
   id: 'XstateSimple20Machine',
   initial: 'ssr',
-  context: {},
+  context: {
+    imeprezime: '',
+    mail: '',
+    telefon: '',
+  },
   states: {
     ssr: {
       on: {
         BROWSER: [
           {
-            target: 'idle',
+            target: 'pitanje',
           },
         ],
       },
     },
-    idle: {},
+
+    pitanje: {},
+    imeprezime: {},
+    mail: {},
+    telefon: {},
+    potvrda: {},
+    zahvalnica: {},
+    snimiubazu: {},
+    maillistread: {},
+    deletesinglebaza: {},
+    snimikorisnikaubazu: {},
   },
 });
