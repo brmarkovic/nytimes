@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 
-export default function XstateSimple20() {
+export default function XstateSimple21() {
   return (
     <div>
       <div className="flex flex-col">
@@ -29,7 +29,7 @@ export default function XstateSimple20() {
           <div className="flex w-1/6 mr-7 md:justify-end md:mr-48 md:text-white">
             <div className="md:flex md:items-center md:justify-end md:mr-5 md:font-semibold ">Edition</div>
             <div className="md:flex md:items-center sm:hidden md:mr-5">
-              <Link href="/XstateSimple20/user">
+              <Link href="/XstateSimple21/user">
                 <svg
                   className="text-white w-7 h-7"
                   xmlns="http://www.w3.org/2000/svg"
