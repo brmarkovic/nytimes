@@ -1,6 +1,7 @@
 import { Machine } from 'xstate';
 import { send as untypedSend } from 'xstate/lib/actions';
 import { assign } from '@xstate/immer';
+import {is-object} from 'is-object';
 
 // SNIMANJE NA SERVER POCETAK
 // SNIMANJE NA SERVER POCETAK
