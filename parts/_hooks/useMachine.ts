@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 import React from 'react';
 import { State, interpret } from 'xstate';
 
@@ -42,7 +43,7 @@ export function useMachine(machine, options: any = {}) {
             : undefined,
         )
         .onTransition((state) => {
-          latestStateRef.current = state
+          latestStateRef.current = state;
         }),
     [],
   );
